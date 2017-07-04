@@ -204,10 +204,12 @@ static void _prvQueueReceiveTask(void *pParameters) {
     xQueueReceive(_xQueue, &ulReceivedValue, portMAX_DELAY);
     printf("Value: %d\n", ulReceivedValue);
 
-    if(_kbhit() != 0) {
-      (void) _getch();
+    if (_kbhit() != 0) {
+      (void)_getch();
 
       xTimerReset(_xTimer, portMAX_DELAY);
     }
   }
 }
+
+
