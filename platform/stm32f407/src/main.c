@@ -5,6 +5,8 @@
 #include "stm32f4xx_conf.h"
 #include "utils.h"
 
+int coreMain();
+
 // Private variables
 volatile uint32_t time_var1, time_var2;
 
@@ -17,14 +19,7 @@ void dac_test();
 int main(void) {
   init();
 
-  for(;;) {
-    GPIO_SetBits(GPIOD, GPIO_Pin_12);
-    Delay(50);
-    GPIO_ResetBits(GPIOD, GPIO_Pin_12);
-    Delay(50);
-  }
-
-  return 0;
+  return coreMain();
 }
 
 void init() {
