@@ -8,3 +8,5 @@
 *.idb
 *.db
 *.opendb
+*.o
+*.a
