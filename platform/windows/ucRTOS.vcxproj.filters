@@ -5,13 +5,6 @@
       <UniqueIdentifier>{38712199-cebf-4124-bf15-398f7c3419ea}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{34567deb-d5ab-4a56-8640-0aaec609521a}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
-    </Filter>
-    <Filter Include="hdr">
-      <UniqueIdentifier>{d368f802-a22e-4d26-b404-d8ac7f2e3c6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="lib">
       <UniqueIdentifier>{2dff4165-7888-4d9d-bf0d-04006f8ce6f2}</UniqueIdentifier>
     </Filter>
@@ -28,11 +21,21 @@
     <Filter Include="lib\FreeRTOS\Include">
       <UniqueIdentifier>{a60060e3-3949-4f60-b025-cb84164ae9ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{73c60b4a-5dc1-4652-886d-4e15d01975bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{98f048ea-d67d-4637-afec-d4c0f282771b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\hdr">
+      <UniqueIdentifier>{d368f802-a22e-4d26-b404-d8ac7f2e3c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\src">
+      <UniqueIdentifier>{34567deb-d5ab-4a56-8640-0aaec609521a}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\FreeRTOS\Source\list.c">
       <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
@@ -57,11 +60,11 @@
     <ClCompile Include="..\..\FreeRTOS\Source\portable\MemMang\heap_5.c">
       <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\core\main.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FreeRTOSConfig.h">
-      <Filter>hdr</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\FreeRTOS\Source\include\timers.h">
       <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="..\..\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h">
       <Filter>lib\FreeRTOS\Source\Portable</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeRTOSConfig.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
