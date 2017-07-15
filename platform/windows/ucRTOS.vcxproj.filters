@@ -34,7 +34,13 @@
       <UniqueIdentifier>{34567deb-d5ab-4a56-8640-0aaec609521a}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
     </Filter>
-    <Filter Include="platform\drivers">
+    <Filter Include="platform\src">
+      <UniqueIdentifier>{f2b1325e-4ba0-4b57-96e0-1d7efdb5202e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\hdr">
+      <UniqueIdentifier>{60334d38-bc50-42e0-ba97-1a4decf36031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\src\drivers">
       <UniqueIdentifier>{05a118be-6696-463e-aa30-ef0e8abd0420}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -66,11 +72,11 @@
     <ClCompile Include="..\..\core\core_main.c">
       <Filter>core\src</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>platform</Filter>
+    <ClCompile Include="src\main.cpp">
+      <Filter>platform\src</Filter>
     </ClCompile>
-    <ClCompile Include="drivers\hardware.c">
-      <Filter>platform\drivers</Filter>
+    <ClCompile Include="src\drivers\hardware.c">
+      <Filter>platform\src\drivers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,11 +113,11 @@
     <ClInclude Include="..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h">
       <Filter>lib\FreeRTOS\Source\Portable</Filter>
     </ClInclude>
-    <ClInclude Include="FreeRTOSConfig.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\core\ucrtos.h">
       <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="hdr\FreeRTOSConfig.h">
+      <Filter>platform\hdr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
