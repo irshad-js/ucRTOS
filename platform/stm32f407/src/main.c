@@ -4,17 +4,6 @@
 #include <math.h>
 #include "stm32f4xx_conf.h"
 
-int coreMain();
-
-// Private variables
-volatile uint32_t time_var1, time_var2;
-
-// Private function prototypes
-void Delay(volatile uint32_t nCount);
-void init();
-void calculation_test();
-void dac_test();
-
 int main(void) {
   init();
 
@@ -95,22 +84,6 @@ void init() {
 
   // Set DAC Channel1 DHR12L register
   DAC_SetChannel1Data(DAC_Align_12b_R, 0);
-}
-
-// Called from systick handler
-void timing_handler() {
-  if (time_var1) {
-    time_var1--;
-  }
-
-  time_var2++;
-}
-
-// Delay a number of systick cycles (1ms)
-void Delay(volatile uint32_t nCount) {
-  time_var1 = nCount;
-
-  while(time_var1){};
 }
 
 // Dummy function to avoid compiler error
