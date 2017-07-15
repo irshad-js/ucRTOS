@@ -4,6 +4,7 @@
 #include "task.h"
 #include "timers.h"
 #include "semphr.h"
+#include "ucrtos.h"
 
 #define mainREGION_1_SIZE	7001
 #define mainREGION_2_SIZE	18105
@@ -25,6 +26,20 @@ static TimerHandle_t _xTimer = NULL;
 static SemaphoreHandle_t _xTaskMutex = NULL;
 
 int coreMain(void) {
+  onHwInit();
+  statusLedOff();
+
+  while (1) {
+    statusLedOn();
+    blockMs(100);
+    statusLedOff();
+    blockMs(100);
+    statusLedOn();
+    blockMs(100);
+    statusLedOff();
+    blockMs(1000);
+  }
+
   prvInitialiseHeap();
 
   const TickType_t xTimerPeriod = mainTIMER_SEND_FREQUENCY_MS;

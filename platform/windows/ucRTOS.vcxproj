@@ -220,9 +220,11 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="drivers\hardware.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\core\ucrtos.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\Source\include\event_groups.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\Source\include\timers.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h" />
