@@ -24,15 +24,6 @@ static QueueHandle_t _xQueue = NULL;
 static TimerHandle_t _xTimer = NULL;
 static SemaphoreHandle_t _xTaskMutex = NULL;
 
-void vApplicationMallocFailedHook(void);
-void vApplicationIdleHook(void);
-void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName);
-void vApplicationTickHook(void);
-void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize);
-void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize);
-
-StackType_t uxTimerTaskStack[ configTIMER_TASK_STACK_DEPTH ];
-
 int coreMain(void) {
   prvInitialiseHeap();
 
@@ -92,50 +83,12 @@ static void _prvQueueReceiveTask(void *pParameters) {
 
   for(;;) {
     xQueueReceive(_xQueue, &ulReceivedValue, portMAX_DELAY);
-    printf("Value: %d\n", ulReceivedValue);
-  }
-}
-
-void vApplicationMallocFailedHook(void) {
-  vAssertCalled(__LINE__, __FILE__);
-}
-
-void vApplicationIdleHook(void) {
-
-}
-
-void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName ) {
-  (void) pcTaskName;
-  (void) pxTask;
-
-  vAssertCalled(__LINE__, __FILE__);
-}
-
-void vApplicationTickHook(void) {
-
-}
-
-void vApplicationDaemonTaskStartupHook(void) {
-
-}
-
-void vAssertCalled(unsigned long ulLine, const char * const pcFileName) {
-  static portBASE_TYPE xPrinted = pdFALSE;
-  volatile uint32_t ulSetToNonZeroInDebuggerToContinue = 0;
-
-  (void) ulLine;
-  (void) pcFileName;
-
-  printf("ASSERT! Line %d, file %s, GetLastError() %d\r\n", ulLine, pcFileName, GetLastError());
-
-  while(ulSetToNonZeroInDebuggerToContinue == 0) {
-    __asm{ NOP };
-    __asm{ NOP };
+    printf("Value: %u\n", ulReceivedValue);
   }
 }
 
 static void  prvInitialiseHeap(void) {
-  static uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
+  static uint8_t ucHeap[configTOTAL_HEAP_SIZE];
   volatile uint32_t ulAdditionalOffset = 19;
 
   const HeapRegion_t xHeapRegions[] = {
@@ -149,23 +102,4 @@ static void  prvInitialiseHeap(void) {
 
   (void) ulAdditionalOffset;
   vPortDefineHeapRegions(xHeapRegions);
-}
-
-void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer,
-    uint32_t *pulIdleTaskStackSize) {
-  static StaticTask_t xIdleTaskTCB;
-  static StackType_t uxIdleTaskStack[ configMINIMAL_STACK_SIZE ];
-
-  *ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
-  *ppxIdleTaskStackBuffer = uxIdleTaskStack;
-  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-}
-
-void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer,
-    uint32_t *pulTimerTaskStackSize) {
-  static StaticTask_t xTimerTaskTCB;
-
-  *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
-  *ppxTimerTaskStackBuffer = uxTimerTaskStack;
-  *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
 }
