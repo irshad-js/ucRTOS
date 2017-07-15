@@ -19,8 +19,6 @@
 static void _prvQueueReceiveTask(void *pParameters);
 static void _prvQueueSendTask(void *pParameters);
 static void _prvQueueSendTimerCallback(TimerHandle_t xTimerHandle);
-
-extern void main_blinky(void);
 static void prvInitialiseHeap( void );
 
 static QueueHandle_t _xQueue = NULL;
@@ -106,15 +104,14 @@ static void _prvQueueReceiveTask(void *pParameters) {
 }
 
 void vApplicationMallocFailedHook(void) {
-  vAssertCalled( __LINE__, __FILE__ );
+  vAssertCalled(__LINE__, __FILE__);
 }
 
 void vApplicationIdleHook(void) {
 
 }
 
-void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
-{
+void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName ) {
   (void) pcTaskName;
   (void) pxTask;
 
@@ -179,4 +176,3 @@ void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer, StackT
   *ppxTimerTaskStackBuffer = uxTimerTaskStack;
   *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
 }
-

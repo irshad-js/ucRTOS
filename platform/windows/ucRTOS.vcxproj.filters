@@ -60,7 +60,7 @@
     <ClCompile Include="..\..\FreeRTOS\Source\portable\MemMang\heap_5.c">
       <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\core\main.c">
+    <ClCompile Include="..\..\core\core_main.c">
       <Filter>core\src</Filter>
     </ClCompile>
   </ItemGroup>

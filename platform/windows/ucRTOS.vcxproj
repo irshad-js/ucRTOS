@@ -187,7 +187,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\core\main.c" />
+    <ClCompile Include="..\..\core\core_main.c" />
     <ClCompile Include="..\..\FreeRTOS\Source\croutine.c" />
     <ClCompile Include="..\..\FreeRTOS\Source\event_groups.c" />
     <ClCompile Include="..\..\FreeRTOS\Source\portable\MemMang\heap_5.c" />
