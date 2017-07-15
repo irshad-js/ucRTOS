@@ -10,3 +10,6 @@
 *.opendb
 *.o
 *.a
+*.bin
+*.elf
+*.hex
