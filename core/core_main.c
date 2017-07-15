@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
@@ -94,12 +93,6 @@ static void _prvQueueReceiveTask(void *pParameters) {
   for(;;) {
     xQueueReceive(_xQueue, &ulReceivedValue, portMAX_DELAY);
     printf("Value: %d\n", ulReceivedValue);
-
-    if (_kbhit() != 0) {
-      (void)_getch();
-
-      xTimerReset(_xTimer, portMAX_DELAY);
-    }
   }
 }
 
