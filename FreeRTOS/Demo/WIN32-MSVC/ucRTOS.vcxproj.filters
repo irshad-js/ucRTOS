@@ -5,99 +5,95 @@
       <UniqueIdentifier>{38712199-cebf-4124-bf15-398f7c3419ea}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
-    <Filter Include="FreeRTOS Source">
-      <UniqueIdentifier>{af3445a1-4908-4170-89ed-39345d90d30c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FreeRTOS Source\Source">
-      <UniqueIdentifier>{f32be356-4763-4cae-9020-974a2638cb08}</UniqueIdentifier>
-      <Extensions>*.c</Extensions>
-    </Filter>
-    <Filter Include="FreeRTOS Source\Include">
-      <UniqueIdentifier>{a60060e3-3949-4f60-b025-cb84164ae9ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Demo App Source">
+    <Filter Include="src">
       <UniqueIdentifier>{34567deb-d5ab-4a56-8640-0aaec609521a}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
     </Filter>
-    <Filter Include="FreeRTOS Source\Source\Portable">
+    <Filter Include="hdr">
+      <UniqueIdentifier>{d368f802-a22e-4d26-b404-d8ac7f2e3c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{2dff4165-7888-4d9d-bf0d-04006f8ce6f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\FreeRTOS">
+      <UniqueIdentifier>{af3445a1-4908-4170-89ed-39345d90d30c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\FreeRTOS\Source">
+      <UniqueIdentifier>{f32be356-4763-4cae-9020-974a2638cb08}</UniqueIdentifier>
+      <Extensions>*.c</Extensions>
+    </Filter>
+    <Filter Include="lib\FreeRTOS\Source\Portable">
       <UniqueIdentifier>{88f409e6-d396-4ac5-94bd-7a99c914be46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Configuration Files">
-      <UniqueIdentifier>{19ff1a34-36de-4c48-9d10-3fb1fa0d1fa4}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl</Extensions>
-    </Filter>
-    <Filter Include="Demo App Source\Blinky_Demo">
-      <UniqueIdentifier>{fb86fa48-ac27-4f87-9215-ce9e1a1a85f9}</UniqueIdentifier>
+    <Filter Include="lib\FreeRTOS\Include">
+      <UniqueIdentifier>{a60060e3-3949-4f60-b025-cb84164ae9ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
-      <Filter>Demo App Source</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\list.c">
-      <Filter>FreeRTOS Source\Source</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\queue.c">
-      <Filter>FreeRTOS Source\Source</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\tasks.c">
-      <Filter>FreeRTOS Source\Source</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\portable\MSVC-MingW\port.c">
-      <Filter>FreeRTOS Source\Source\Portable</Filter>
+      <Filter>lib\FreeRTOS\Source\Portable</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\timers.c">
-      <Filter>FreeRTOS Source\Source</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\croutine.c">
-      <Filter>FreeRTOS Source\Source</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\event_groups.c">
-      <Filter>FreeRTOS Source\Source</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\portable\MemMang\heap_5.c">
-      <Filter>FreeRTOS Source\Source\Portable</Filter>
-    </ClCompile>
-    <ClCompile Include="main_blinky.c">
-      <Filter>Demo App Source\Blinky_Demo</Filter>
+      <Filter>lib\FreeRTOS\Source\Portable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FreeRTOSConfig.h">
-      <Filter>Configuration Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\include\croutine.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\FreeRTOS.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\list.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\portable.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\projdefs.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\queue.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\semphr.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\task.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\portable\MSVC-MingW\portmacro.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\timers.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\include\event_groups.h">
-      <Filter>FreeRTOS Source\Include</Filter>
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeRTOSConfig.h">
+      <Filter>hdr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
