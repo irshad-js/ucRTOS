@@ -23,8 +23,8 @@ endif
 
 vpath %.c .
 vpath %.c src
+vpath %.c src/drivers
 vpath %.c lib/src/stdperiph
-vpath %.c drivers
 vpath %.c ../../core
 vpath %.c ../../lib/FreeRTOS/Source
 vpath %.c ../../lib/FreeRTOS/Source/portable/MemMang
@@ -53,7 +53,7 @@ endif
 
 OBJDIR=obj
 BINDIR=bin
-MAIN_SRCS  = main.c core_main.c hardware.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c utils.c \
+MAIN_SRCS  = main.c core_main.c hardware.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c \
 			 port.c heap_5.c tasks.c list.c timers.c queue.c \
 	         lib/startup_stm32f4xx.s # add startup file to build
 
