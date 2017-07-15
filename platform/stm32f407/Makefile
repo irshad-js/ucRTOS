@@ -24,6 +24,8 @@ endif
 vpath %.c .
 vpath %.c src
 vpath %.c lib/src/stdperiph
+vpath %.c drivers
+vpath %.c ../../core
 vpath %.c ../../lib/FreeRTOS/Source
 vpath %.c ../../lib/FreeRTOS/Source/portable/MemMang
 vpath %.c ../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
@@ -33,6 +35,7 @@ CFLAGS  = -std=gnu99 -g -O2 -Wall -Tstm32_flash.ld
 CFLAGS += -mlittle-endian -mthumb -mthumb-interwork -nostartfiles -mcpu=cortex-m4
 CFLAGS += -Iinc -Ilib -Ilib/inc
 CFLAGS += -Ilib/inc/core -Ilib/inc/stdperiph
+CFLAGS += -I../../core
 CFLAGS += -I../../lib/FreeRTOS/Source/include
 CFLAGS += -I../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
 
@@ -50,8 +53,8 @@ endif
 
 OBJDIR=obj
 BINDIR=bin
-MAIN_SRCS  = main_rtos.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c utils.c \
-			 port.c heap_1.c list.c timers.c queue.c \
+MAIN_SRCS  = main.c core_main.c hardware.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c utils.c \
+			 port.c heap_5.c tasks.c list.c timers.c queue.c \
 	         lib/startup_stm32f4xx.s # add startup file to build
 
 LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
