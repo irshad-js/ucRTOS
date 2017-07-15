@@ -3,7 +3,6 @@
 #include <stdint.h>
 #include <math.h>
 #include "stm32f4xx_conf.h"
-#include "utils.h"
 
 int coreMain();
 
