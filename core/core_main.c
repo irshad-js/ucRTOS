@@ -34,7 +34,7 @@ void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer, StackT
 
 StackType_t uxTimerTaskStack[ configTIMER_TASK_STACK_DEPTH ];
 
-int main(void) {
+int coreMain(void) {
   prvInitialiseHeap();
 
   const TickType_t xTimerPeriod = mainTIMER_SEND_FREQUENCY_MS;
@@ -55,7 +55,7 @@ int main(void) {
     vTaskStartScheduler();
   }
 
-  for (;;);
+  return 0;
 }
 
 static void _prvQueueSendTask(void *pParameters) {

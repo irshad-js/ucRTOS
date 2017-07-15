@@ -63,6 +63,9 @@
     <ClCompile Include="..\..\core\core_main.c">
       <Filter>core\src</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\FreeRTOS\Source\include\timers.h">

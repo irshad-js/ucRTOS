@@ -220,6 +220,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\FreeRTOS\Source\include\event_groups.h" />
