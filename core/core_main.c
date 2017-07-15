@@ -15,6 +15,7 @@
 #define mainTASK_SEND_FREQUENCY_MS			pdMS_TO_TICKS(200UL)
 #define mainTIMER_SEND_FREQUENCY_MS			pdMS_TO_TICKS(2000UL)
 #define mainQUEUE_LENGTH					      (10)
+#define blinkTASK_FREQUENY_MS     			pdMS_TO_TICKS(100UL)
 
 static void _prvQueueReceiveTask(void *pParameters);
 static void _prvQueueSendTask(void *pParameters);
@@ -25,22 +26,28 @@ static QueueHandle_t _xQueue = NULL;
 static TimerHandle_t _xTimer = NULL;
 static SemaphoreHandle_t _xTaskMutex = NULL;
 
-int coreMain(void) {
-  onHwInit();
-  statusLedOff();
-
+static void _prvBlinkTask(void *pParameters) {
   while (1) {
     statusLedOn();
-    blockMs(100);
+    vTaskDelay(blinkTASK_FREQUENY_MS);
     statusLedOff();
-    blockMs(100);
+    vTaskDelay(blinkTASK_FREQUENY_MS);
     statusLedOn();
-    blockMs(100);
+    vTaskDelay(blinkTASK_FREQUENY_MS);
     statusLedOff();
-    blockMs(1000);
+    vTaskDelay(10 * blinkTASK_FREQUENY_MS);
   }
+}
 
+int coreMain(void) {
   prvInitialiseHeap();
+  statusLedOff();
+  xTaskCreate(_prvBlinkTask, "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
+  vTaskStartScheduler();
+
+  return 0;
+
+
 
   const TickType_t xTimerPeriod = mainTIMER_SEND_FREQUENCY_MS;
   _xQueue = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
