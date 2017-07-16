@@ -32,7 +32,7 @@ vpath %.c src
 vpath %.c src/drivers
 vpath %.a lib
 
-CFLAGS  = -std=gnu99 -g -O2 -Wall -Tstm32_flash.ld
+CFLAGS  = -std=gnu99 -g -O2 -Wall -Tlink.ld
 CFLAGS += -mlittle-endian -mthumb -mthumb-interwork -nostartfiles -mcpu=cortex-m4
 CFLAGS += -Ihdr -Ilib -Ilib/inc
 CFLAGS += -Ilib/inc/core
