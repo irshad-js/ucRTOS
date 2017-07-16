@@ -105,7 +105,7 @@ static void _prvQueueReceiveTask(void *pParameters) {
 
   for(;;) {
     xQueueReceive(_xQueue, &ulReceivedValue, portMAX_DELAY);
-    printf("Value: %u\n", ulReceivedValue);
+    printf("Value: %lu\n", ulReceivedValue);
   }
 }
 

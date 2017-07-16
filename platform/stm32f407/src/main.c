@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <math.h>
 #include "stm32f4xx_conf.h"
+#include "ucrtos.h"
+#include "main.h"
 
 int main(void) {
   init();
