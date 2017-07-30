@@ -13,7 +13,7 @@ int main(void) {
 }
 
 void init() {
-  GPIO_InitTypeDef  GPIO_InitStructure;
+  GPIO_InitTypeDef GPIO_InitStructure;
 
   // ---------- SysTick timer -------- //
   if (SysTick_Config(SystemCoreClock / 1000)) {
@@ -21,9 +21,10 @@ void init() {
 	while (1) {};
   }
 
+  // Init LEDs. The red and blue LEDs (Pin 14 / 15) are used by FSMC and cannot be used:
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13| GPIO_Pin_14| GPIO_Pin_15;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
@@ -35,4 +36,3 @@ void init() {
 void _init() {
 
 }
-
