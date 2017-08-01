@@ -3,10 +3,20 @@
 
 #include <stdint.h>
 
+// Timing
+void delayUs(uint32_t us);
+void delayMs(uint32_t ms);
 
-// Hardware HAL:
-
+// LEDs:
 void statusLedOn();
 void statusLedOff();
+void errorLedOn();
+void errorLedOff();
+
+// Display:
+void setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b);
+
+// Debug:
+void errorState();
 
 #endif // UCRTOS_H__
