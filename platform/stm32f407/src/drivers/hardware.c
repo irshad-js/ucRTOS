@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "stm32f4xx_conf.h"
 #include "ucrtos.h"
 
@@ -48,4 +49,17 @@ void displaySetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
 
 void displayClear(uint16_t Color) {
 
+}
+
+// Dummy function to avoid compiler error (Is called by libc_init_array()):
+
+void _init() {
+  // Just leave empty
+}
+
+// Debug Interface:
+
+void PrintCharUsr(char c) {
+  while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET); // Wait until transmit finishes
+  USART_SendData(USART1, (u8) c);
 }

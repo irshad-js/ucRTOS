@@ -7,4 +7,3 @@ void init();
 void _init();
 
 #endif /* MAIN_H_ */
-
