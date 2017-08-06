@@ -17,6 +17,7 @@ void errorLedOff();
 void setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b);
 
 // Debug:
+void PrintCharUsr(char c);
 void errorState();
 
 #endif // UCRTOS_H__

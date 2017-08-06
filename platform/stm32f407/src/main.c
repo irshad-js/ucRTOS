@@ -27,15 +27,21 @@ static void initDelayTimer() {
 
 static void initLeds() {
   // The red and blue LEDs (Pin 14 / 15) are used by FSMC and cannot be used
+  // However, all LEDs are turned off here:
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
   GPIO_InitTypeDef GPIO_InitStructure;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+  GPIO_ResetBits(GPIOD, GPIO_Pin_12);
+  GPIO_ResetBits(GPIOD, GPIO_Pin_13);
+  GPIO_ResetBits(GPIOD, GPIO_Pin_14);
+  GPIO_ResetBits(GPIOD, GPIO_Pin_15);
 }
 
 static void initDebugUart(uint32_t baudrate) {
@@ -83,7 +89,6 @@ void init() {
   // CHECKME: why is SystemCoreClock divided by 1000 here? It seems to be required for
   // FreeRTOS but USB OTG does not work when doing that:
 
-  if (SysTick_Config(SystemCoreClock / 1000)) {
-	errorState();
-  }
+  if (SysTick_Config(SystemCoreClock / 1000))
+    errorState();
 }

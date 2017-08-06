@@ -1,9 +1,11 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include "mystdio.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
 #include "semphr.h"
+#include "tm_stm32f4_fatfs.h"
 #include "ucrtos.h"
 
 #define mainREGION_1_SIZE	7001
@@ -39,10 +41,90 @@ static void _prvBlinkTask(void *pParameters) {
   }
 }
 
+static void _prvDebugTask(void* pParameters) {
+  for(int i = 1000;; i++) {
+    vTaskDelay(pdMS_TO_TICKS(10UL));
+    // myprintf("Tick: %i\n", i);
+  }
+}
+
+static bool hal_findNext(DIR* pDir, FILINFO* pFinfo) {
+  FRESULT error;
+
+  if (error = f_readdir(pDir, pFinfo))
+    return false;
+
+  bool foundFile = pFinfo->fname[0];
+
+  if(!foundFile)
+    return false;
+
+  return true;
+}
+
+static bool hal_findInit(DIR* pDir, const char* pPath, FILINFO* pFinfo) {
+  FRESULT error;
+
+  if(error = f_opendir(pDir, pPath))
+    return false;
+
+  bool foundFile = hal_findNext(pDir, pFinfo);
+
+  if(!foundFile)
+    return false;
+
+  return true;
+}
+
+void hal_findFree(DIR* pDir) {
+  return  f_closedir(pDir) != FR_OK;
+}
+
+static void _prvFileSystemTask(void* pParameters) {
+  DIR dir;
+  FILINFO finfo;
+  FATFS FatFs;
+  char pLfn[_MAX_LFN] = {0};
+  finfo.lfname = pLfn;
+  finfo.lfsize = _MAX_LFN;
+
+  uint32_t total = 0;
+  uint32_t free = 0;
+
+  while(1) {
+    f_mount(&FatFs, "0:", 1);
+
+    if (TM_FATFS_DriveSize(&total, &free) == FR_OK) {
+      myprintf("Total: %d Bytes\n", total);
+      myprintf("Free: %d Bytes\n", free);
+    }
+
+    bool endOfDirectory = !hal_findInit(&dir, "/", &finfo);
+    int curFileIndex = 0;
+
+    while (!endOfDirectory) {
+      const char* p = finfo.lfname[0] ? finfo.lfname : finfo.fname;
+
+      if (p[0] != '.' && p[1] != '.') {
+        myprintf("%s\n", p);
+        endOfDirectory = !hal_findNext(&dir, &finfo);
+      }
+    }
+
+    hal_findFree(&dir);
+    f_mount(0, "", 1); // unmount
+  }
+
+  while(1);
+}
+
 int coreMain(void) {
   prvInitialiseHeap();
   statusLedOff();
-  xTaskCreate(_prvBlinkTask, "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
+  xTaskCreate(_prvBlinkTask,      "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
+  xTaskCreate(_prvDebugTask,      "Debug Task", 512, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
+  xTaskCreate(_prvFileSystemTask, "File System Task", 1024, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
+
   vTaskStartScheduler();
 
   return 0;
@@ -105,7 +187,7 @@ static void _prvQueueReceiveTask(void *pParameters) {
 
   for(;;) {
     xQueueReceive(_xQueue, &ulReceivedValue, portMAX_DELAY);
-    printf("Value: %lu\n", ulReceivedValue);
+    myprintf("Value: %lu\n", ulReceivedValue);
   }
 }
 
