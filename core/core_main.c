@@ -6,6 +6,7 @@
 #include "timers.h"
 #include "semphr.h"
 #include "tm_stm32f4_fatfs.h"
+#include "nesgamepad.h"
 #include "ucrtos.h"
 
 #define mainREGION_1_SIZE	7001
@@ -45,6 +46,28 @@ static void _prvDebugTask(void* pParameters) {
   for(int i = 1000;; i++) {
     vTaskDelay(pdMS_TO_TICKS(10UL));
     // myprintf("Tick: %i\n", i);
+  }
+}
+
+static void _prvGamePadTask(void* pParams) {
+  setupNesGamePad();
+  union NesGamePadStates_t state;
+
+  while(1) {
+    state = getNesGamepadState();
+
+    myprintf("Gamepad state:\n");
+    myprintf("A:      %d\n", state.states.A);
+    myprintf("B:      %d\n", state.states.B);
+    myprintf("North:  %d\n", state.states.North);
+    myprintf("East:   %d\n", state.states.East);
+    myprintf("South:  %d\n", state.states.South);
+    myprintf("West:   %d\n", state.states.West);
+    myprintf("Start:  %d\n", state.states.Start);
+    myprintf("Select: %d\n", state.states.Select);
+    myprintf("\n", state.states.Select);
+
+    vTaskDelay(pdMS_TO_TICKS(250UL));
   }
 }
 
@@ -123,7 +146,8 @@ int coreMain(void) {
   statusLedOff();
   xTaskCreate(_prvBlinkTask,      "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
   xTaskCreate(_prvDebugTask,      "Debug Task", 512, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
-  xTaskCreate(_prvFileSystemTask, "File System Task", 1024, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
+  // xTaskCreate(_prvFileSystemTask, "File System Task", 1024, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
+  xTaskCreate(_prvGamePadTask,      "Game pad Task", 512, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
 
   vTaskStartScheduler();
 
