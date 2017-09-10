@@ -18,7 +18,7 @@
  * @param  pStr Storage string.
  * @param  c    Character to write.
  */
-void PrintChar(char c) {
+static void PrintChar(char c) {
   /* Send a char like:
      while(Transfer not completed);
      Transmit a char;
@@ -34,8 +34,8 @@ void PrintChar(char c) {
  * @param  c    Character to write.
  */
 
-signed int PutChar(char *pStr, char c) {
-  *pStr = c;
+static signed int PutChar(char *pStr, int c) {
+  *pStr = (char)c;
   return 1;
 }
 
@@ -47,7 +47,7 @@ signed int PutChar(char *pStr, char c) {
  * @return  The size of the written
  */
 
-signed int PutString(char *pStr, const char *pSource) {
+static signed int PutString(char *pStr, const char *pSource) {
   signed int num = 0;
 
   while (*pSource != 0) {
@@ -68,7 +68,7 @@ signed int PutString(char *pStr, const char *pSource) {
  * @param  value  Integer value.
  */
 
-signed int PutUnsignedInt(char *pStr, char fill, signed int width, unsigned int value) {
+static signed int PutUnsignedInt(char *pStr, char fill, signed int width, unsigned int value) {
   signed int num = 0;
   width--; // Take current digit into account when calculating width
 
@@ -102,7 +102,7 @@ signed int PutUnsignedInt(char *pStr, char fill, signed int width, unsigned int 
  * @param value  Signed integer value.
  */
 
-signed int PutSignedInt(char *pStr, char fill, signed int width, signed int value) {
+static signed int PutSignedInt(char *pStr, char fill, signed int width, signed int value) {
   signed int num = 0;
   unsigned int absolute;
 
@@ -162,7 +162,7 @@ signed int PutSignedInt(char *pStr, char fill, signed int width, signed int valu
  * @return  The number of char written
  */
 
-signed int PutHexa(char *pStr, char fill, signed int width, unsigned char maj, unsigned int value) {
+static signed int PutHexa(char *pStr, char fill, signed int width, unsigned char maj, unsigned int value) {
   signed int num = 0;
 
   // Decrement width
@@ -262,7 +262,7 @@ signed int myvsnprintf(char *pStr, size_t length, const char *pFormat, va_list a
         case 'x': num = PutHexa(       pStr, fill, width, 0, va_arg(ap, unsigned int)); break;
         case 'X': num = PutHexa(       pStr, fill, width, 1, va_arg(ap, unsigned int)); break;
         case 's': num = PutString(     pStr,                 va_arg(ap, char *));       break;
-        case 'c': num = PutChar(       pStr,                 va_arg(ap, unsigned int)); break;
+        case 'c': num = PutChar(       pStr,                 va_arg(ap, int)); break;
         default:
           return EOF;
       }
@@ -333,8 +333,10 @@ signed int myvsprintf(char *pString, const char *pFormat, va_list ap) {
  *        not stdout or stderr.
  */
 
-signed int myfputc(signed int c, FILE *pStream) {
-  PrintChar(c);
+signed int myfputc(signed int c, FILE* pStream) {
+  (FILE*)pStream;
+
+  PrintChar((char)c);
 
   return c;
 }
@@ -350,7 +352,7 @@ signed int myfputc(signed int c, FILE *pStream) {
 *          stream is not stdout or stderr.
 */
 
-signed int myfputs(const char *pStr, FILE *pStream) {
+signed int myfputs(const char *pStr, FILE* pStream) {
   signed int num = 0;
 
   while (*pStr != 0) {
@@ -373,7 +375,7 @@ signed int myfputs(const char *pStr, FILE *pStream) {
  * @param ap       Argument list.
  */
 
-signed int myvfprintf(FILE *pStream, const char *pFormat, va_list ap) {
+signed int myvfprintf(FILE* pStream, const char* pFormat, va_list ap) {
   char pStr[MAX_STRING_SIZE];
   static const char* pError = "stdio.c: increase MAX_STRING_SIZE\n\r";
 

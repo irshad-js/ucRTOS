@@ -43,6 +43,9 @@
     <Filter Include="platform\src\drivers">
       <UniqueIdentifier>{05a118be-6696-463e-aa30-ef0e8abd0420}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\mystdio">
+      <UniqueIdentifier>{b3a612ac-b509-408a-b178-6e1a669e3387}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\lib\FreeRTOS\Source\list.c">
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="src\drivers\hardware.c">
       <Filter>platform\src\drivers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\mystdio\myprintf.c">
+      <Filter>lib\mystdio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
       <Filter>platform\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\mystdio\mystdio.h">
+      <Filter>lib\mystdio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

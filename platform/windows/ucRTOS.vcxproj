@@ -65,6 +65,15 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>D:\c++\ucRtos\lib\mystdio;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>D:\c++\ucRtos\lib\mystdio;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">
+    <IncludePath>D:\c++\ucRtos\lib\mystdio;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <TypeLibraryName>.\Debug/ucRTOS.tlb</TypeLibraryName>
@@ -220,6 +229,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="..\..\lib\mystdio\myprintf.c" />
     <ClCompile Include="src\drivers\hardware.c" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
@@ -236,6 +246,7 @@
     <ClInclude Include="..\..\lib\FreeRTOS\Source\include\queue.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\Source\include\semphr.h" />
     <ClInclude Include="..\..\lib\FreeRTOS\Source\include\task.h" />
+    <ClInclude Include="..\..\lib\mystdio\mystdio.h" />
     <ClInclude Include="hdr\FreeRTOSConfig.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
