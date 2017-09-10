@@ -19,4 +19,3 @@ union NesGamePadStates_t {
 
 void setupNesGamePad();
 union NesGamePadStates_t getNesGamepadState();
-static void prvLatchShiftRegister();
