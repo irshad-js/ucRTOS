@@ -66,13 +66,13 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\c++\ucRtos\lib\mystdio;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\lib\mystdio;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\c++\ucRtos\lib\mystdio;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\lib\mystdio;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">
-    <IncludePath>D:\c++\ucRtos\lib\mystdio;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\lib\mystdio;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
