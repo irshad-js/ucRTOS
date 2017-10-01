@@ -81,7 +81,7 @@
     <ClCompile Include="src\drivers\hardware.c">
       <Filter>platform\src\drivers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\lib\mystdio\myprintf.c">
+    <ClCompile Include="..\..\..\lib\mystdio\myprintf.c">
       <Filter>lib\mystdio</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,7 +125,7 @@
     <ClInclude Include="hdr\FreeRTOSConfig.h">
       <Filter>platform\hdr</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\lib\mystdio\mystdio.h">
+    <ClInclude Include="..\..\..\lib\mystdio\mystdio.h">
       <Filter>lib\mystdio</Filter>
     </ClInclude>
   </ItemGroup>

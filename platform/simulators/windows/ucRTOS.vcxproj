@@ -66,7 +66,7 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\lib\mystdio;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\..\lib\mystdio;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\..\lib\mystdio;$(IncludePath)</IncludePath>
@@ -82,7 +82,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>hdr;..\..\lib\FreeRTOS\Source\include;..\..\lib\FreeRTOS\Source\portable\MSVC-MingW;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>hdr;..\..\..\lib\FreeRTOS\Source\include;..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WIN32_WINNT=0x0500;WINVER=0x400;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -124,7 +124,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>hdr;..\..\lib\FreeRTOS\Source\include;..\..\lib\FreeRTOS\Source\portable\MSVC-MingW;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>hdr;..\..\..\lib\FreeRTOS\Source\include;..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WIN32_WINNT=0x0500;WINVER=0x400;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -177,7 +177,7 @@
       <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalIncludeDirectories>hdr;..\..\lib\FreeRTOS\Source\include;..\..\lib\FreeRTOS\Source\portable\MSVC-MingW;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>hdr;..\..\..\lib\FreeRTOS\Source\include;..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -196,57 +196,57 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\core\core_main.c" />
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\croutine.c" />
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\event_groups.c" />
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\portable\MemMang\heap_5.c" />
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\timers.c" />
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\list.c">
+    <ClCompile Include="..\..\..\lib\mystdio\myprintf.c" />
+    <ClCompile Include="..\..\..\core\core_main.c" />
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\croutine.c" />
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\event_groups.c" />
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_5.c" />
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\timers.c" />
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\list.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\port.c">
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\port.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\queue.c">
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\queue.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\tasks.c">
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\tasks.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\lib\mystdio\myprintf.c" />
     <ClCompile Include="src\drivers\hardware.c" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\lib\mystdio\mystdio.h" />
     <ClInclude Include="..\..\core\ucrtos.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\event_groups.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\timers.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\croutine.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\FreeRTOS.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\list.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\portable.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\projdefs.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\queue.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\semphr.h" />
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\task.h" />
-    <ClInclude Include="..\..\lib\mystdio\mystdio.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\event_groups.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\timers.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\croutine.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\FreeRTOS.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\list.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\portable.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\projdefs.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\queue.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\semphr.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\task.h" />
     <ClInclude Include="hdr\FreeRTOSConfig.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
