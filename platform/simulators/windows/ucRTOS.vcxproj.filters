@@ -48,33 +48,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\list.c">
-      <Filter>lib\FreeRTOS\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\queue.c">
-      <Filter>lib\FreeRTOS\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\tasks.c">
-      <Filter>lib\FreeRTOS\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\port.c">
-      <Filter>lib\FreeRTOS\Source\Portable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\timers.c">
-      <Filter>lib\FreeRTOS\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\event_groups.c">
-      <Filter>lib\FreeRTOS\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\croutine.c">
-      <Filter>lib\FreeRTOS\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\lib\FreeRTOS\Source\portable\MemMang\heap_5.c">
-      <Filter>lib\FreeRTOS\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\core\core_main.c">
-      <Filter>core\src</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>platform\src</Filter>
     </ClCompile>
@@ -84,41 +57,35 @@
     <ClCompile Include="..\..\..\lib\mystdio\myprintf.c">
       <Filter>lib\mystdio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\core\core_main.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\croutine.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\event_groups.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_5.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\timers.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\list.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\port.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\queue.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\tasks.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\timers.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\croutine.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\event_groups.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\FreeRTOS.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\list.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\portable.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\projdefs.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\queue.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\semphr.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\include\task.h">
-      <Filter>lib\FreeRTOS\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h">
-      <Filter>lib\FreeRTOS\Source\Portable</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\core\ucrtos.h">
       <Filter>core\hdr</Filter>
     </ClInclude>
@@ -128,5 +95,16 @@
     <ClInclude Include="..\..\..\lib\mystdio\mystdio.h">
       <Filter>lib\mystdio</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\event_groups.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\timers.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\croutine.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\FreeRTOS.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\list.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\portable.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\projdefs.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\queue.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\semphr.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\task.h" />
   </ItemGroup>
 </Project>

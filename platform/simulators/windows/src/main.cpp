@@ -1,3 +1,5 @@
+#include <wx/wx.h>
+
 extern "C" {
   #include "FreeRTOS.h"
   #include "task.h"
