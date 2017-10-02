@@ -95,16 +95,38 @@
     <ClInclude Include="..\..\..\lib\mystdio\mystdio.h">
       <Filter>lib\mystdio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\event_groups.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\timers.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\croutine.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\FreeRTOS.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\list.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\portable.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\projdefs.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\queue.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\semphr.h" />
-    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\task.h" />
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\croutine.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\event_groups.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\FreeRTOS.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\list.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\portable.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\portmacro.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\projdefs.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\queue.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\semphr.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\task.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\timers.h">
+      <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

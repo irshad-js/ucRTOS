@@ -28,8 +28,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -83,7 +83,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>hdr;..\..\..\lib\FreeRTOS\Source\include;..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW;.;..\lib\wxWidgets\include;..\lib\wxWidgets\include\msvc;..\lib\wxWidgets\include\msvc\wx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\lib\wxWidgets\include;..\lib\wxWidgets\include\msvc;hdr;..\..\..\lib\FreeRTOS\Source\include;..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WIN32_WINNT=0x0500;WINVER=0x400;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
