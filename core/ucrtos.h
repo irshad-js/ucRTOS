@@ -14,7 +14,8 @@ void errorLedOn();
 void errorLedOff();
 
 // Display:
-void setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b);
+void displayInit();
+void displaySetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b);
 
 // Debug:
 void PrintCharUsr(char c);

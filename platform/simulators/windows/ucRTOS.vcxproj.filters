@@ -86,9 +86,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\core\ucrtos.h">
-      <Filter>core\hdr</Filter>
-    </ClInclude>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
       <Filter>platform\hdr</Filter>
     </ClInclude>
@@ -127,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\timers.h">
       <Filter>lib\FreeRTOS\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\ucrtos.h">
+      <Filter>core\hdr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

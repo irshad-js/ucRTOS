@@ -13,7 +13,7 @@
 #define mainREGION_2_SIZE	18105
 #define mainREGION_3_SIZE	2807
 
-#define mainQUEUE_DEFAULT_TASK_PRIORITY	(tskIDLE_PRIORITY + 1)
+#define mainDEFAULT_TASK_PRIORITY	(tskIDLE_PRIORITY + 1)
 #define blinkTASK_FREQUENY_MS     			pdMS_TO_TICKS(100UL)
 
 static void prvInitialiseHeap( void );
@@ -40,6 +40,18 @@ static void _prvDebugTask(void* pParameters) {
   for(int i = 1000;; i++) {
     vTaskDelay(pdMS_TO_TICKS(250UL));
     myprintf("Tick: %i\n", i);
+  }
+}
+
+static void _prvDisplayTask(void* pParameters) {
+  (void*)pParameters;
+
+  myprintf("Display task started\n");
+
+  displayInit();
+
+  while (1) {
+    taskYIELD();
   }
 }
 
@@ -144,8 +156,10 @@ static void _prvDebugTask(void* pParameters) {
 int coreMain(void) {
   prvInitialiseHeap();
   statusLedOff();
-  xTaskCreate(_prvBlinkTask,      "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainQUEUE_DEFAULT_TASK_PRIORITY, NULL);
-  xTaskCreate(_prvDebugTask,      "Debug Task", 512, NULL, mainQUEUE_DEFAULT_TASK_PRIORITY, NULL);
+  xTaskCreate(_prvDebugTask,   "Debug Task", 512, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
+  xTaskCreate(_prvBlinkTask,   "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
+  xTaskCreate(_prvDisplayTask, "Display Task", 1024, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
+
   // xTaskCreate(_prvFileSystemTask, "File System Task", 1024, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
   // xTaskCreate(_prvGamePadTask,      "Game pad Task", 512, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
 

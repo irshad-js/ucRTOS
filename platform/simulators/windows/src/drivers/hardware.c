@@ -21,3 +21,14 @@ void statusLedOff() {
 void PrintCharUsr(char c) {
   putchar(c);
 }
+
+// Display:
+void mainCreateWxLcdSimulator();
+
+void displayInit() {
+  mainCreateWxLcdSimulator();
+}
+
+void displaySetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
+  // TOOD: implement
+}
