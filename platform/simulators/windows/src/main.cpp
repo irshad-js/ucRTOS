@@ -72,16 +72,65 @@ extern "C" {
   }
 }
 
-
-
-
-
 // WX
 
-class WxApp : public wxApp {
+// CANVAS
+
+class BasicDrawPane : public wxPanel {
+
 public:
-  virtual bool OnInit();
+  BasicDrawPane(wxFrame* parent) : wxPanel(parent) {
+    for (int x = 0; x < 320; ++x)
+      for (int y = 0; y < 240; ++y)
+        pixel_[x][y] = MyColor(0, 0, 0);
+  }
+
+  void paintEvent(wxPaintEvent & evt) {
+    wxPaintDC dc(this);
+    render(dc);
+  }
+
+  void paintNow() {
+    wxClientDC dc(this); // Windows only?
+    render(dc);
+  }
+
+  void render(wxDC& dc) {
+    for (int x = 0; x < 320; ++x) {
+      for (int y = 0; y < 240; ++y) {
+        const MyColor& pixel = pixel_[x][y];
+
+        dc.SetPen(wxPen(wxColor(pixel.red, pixel.green, pixel.blue), 1));
+        dc.DrawPoint(x, y);
+      }
+    }
+  }
+
+  void setPixel(int x, int y, int r, int g, int b) {
+    pixel_[x][y] = MyColor(r, g, b);
+    paintNow();
+  }
+
+private:
+  struct MyColor {
+    MyColor() {}
+    MyColor(uint8_t red, uint8_t green, uint8_t blue) {
+      this->red   = red;
+      this->green = green;
+      this->blue  = blue;
+    }
+
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
+  };
+
+  MyColor pixel_[320][240];
+
+  DECLARE_EVENT_TABLE()
 };
+
+// END OF CANVAS
 
 class MainFrame : public wxFrame {
 public:
@@ -101,16 +150,37 @@ enum {
 wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 EVT_MENU(wxID_ABOUT, MainFrame::OnAbout)
 wxEND_EVENT_TABLE()
+
+class WxApp : public wxApp {
+public:
+  virtual bool OnInit();
+
+private:
+  MainFrame* pMainFrame_{nullptr};
+  BasicDrawPane* pDrawPane_{nullptr};
+};
+
 IMPLEMENT_APP_NO_MAIN(WxApp);
 IMPLEMENT_WX_THEME_SUPPORT;
 
 bool WxApp::OnInit() {
-  MainFrame *frame = new MainFrame("ucRTOS LCD Simulator", wxPoint(50, 50), wxSize(320, 240));
-  frame->Show(true);
+  pMainFrame_ = new MainFrame("ucRTOS LCD Simulator", wxPoint(50, 50), wxSize(640, 480));
+  pDrawPane_ = new BasicDrawPane(pMainFrame_);
+  pMainFrame_->Show(true);
+
+  pDrawPane_->setPixel(100, 100, 0, 255, 0);
+  pDrawPane_->setPixel(100, 101, 0, 255, 0);
+  pDrawPane_->setPixel(100, 102, 0, 255, 0);
+  pDrawPane_->setPixel(100, 103, 0, 255, 0);
+  pDrawPane_->setPixel(100, 104, 0, 255, 0);
 
   printf("ucRTOS LCD Simulator started.\n");
   return true;
 }
+
+BEGIN_EVENT_TABLE(BasicDrawPane, wxPanel)
+EVT_PAINT(BasicDrawPane::paintEvent) // catch paint events
+END_EVENT_TABLE()
 
 //--------------------------------------------------------------------------------------------------------------
 // MainFrame
@@ -138,7 +208,9 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 void MainFrame::OnAbout(wxCommandEvent& event) {
   wxMessageBox("Made by coon\n\n"
                "E-Mail: coon@mailbox.org\n"
-               "IRC: coon@freenode.org\n\n"
+               "IRC: coon@freenode.org\n"
+               "Twitter: @coon_42\n"
+               "\n"
                "https://www.reddit.com/user/coon42\nhttps://github.com/coon42\n",
                "About ucRTOS", wxOK | wxICON_INFORMATION);
 }
