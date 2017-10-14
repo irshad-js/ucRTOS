@@ -9,13 +9,13 @@ The ecosystem consists of:
 - Input device (An NES-Gamepad)
 - A real time Kernel (FreeRTOS)
 
-There are also simulators for faster development on a PC. The simulators do not have real time behaviour. This is because of either Windows nor Linux are real time operating systems. However, the deterministic task switching behaviour of the real time scheduler is simulated correctly. At this time only Windows with Visual Studio 2015 is supported but support for Eclipse is already under development. No windows will be needed at all then.
+There are also simulators for faster development on a PC. The simulators do not have real time behaviour. This is because of either Windows nor Linux are real time operating systems. However, the deterministic task switching behaviour of the real time scheduler is simulated correctly. At this time only Windows with Visual Studio 2017 is supported but support for Eclipse is already under development. No windows will be needed at all then.
 
 Supported embedded devices so far:
 - STM32F4Discovery (STM32F407VG)
 
 Supported simulators so far:
-- Windows with Visual Studio 2015
+- Windows with Visual Studio 2017
 - Linux with Eclipse (Not working yet, but under development)
 
 ## Building Instructions
@@ -24,7 +24,7 @@ Supported simulators so far:
 
 coming soon...
 
-### Windows Simulator with Visual Studio 2015
+### Windows Simulator with Visual Studio 2017
 
 The LCD simulation is based on the wxWidgets GUI Library which is included as a sub repository. Before you are able to build the simulator you need to clone and build wxWidgets first:
 
