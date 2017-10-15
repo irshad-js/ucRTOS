@@ -1,5 +1,7 @@
 #include <wx/wx.h>
+#include <wx/dcbuffer.h>
 #include <string>
+#include <memory>
 
 using namespace std;
 
@@ -79,13 +81,23 @@ extern "C" {
 class BasicDrawPane : public wxPanel {
 
 public:
-  BasicDrawPane(wxFrame* parent) : wxPanel(parent) {
+  BasicDrawPane(wxFrame* parent) : wxPanel(parent),
+      pBackBuffer_(new wxBitmap(320, 240)) {
+
+    clearBackBuffer();
+  }
+
+  void clearBackBuffer() {
     for (int x = 0; x < 320; ++x)
       for (int y = 0; y < 240; ++y)
         pixel_[x][y] = MyColor(0, 0, 0);
   }
 
   void paintEvent(wxPaintEvent & evt) {
+    // Always create the wxPaintDC object here, even if you don't use it!
+    // Creating this object will tell wxWidgets that the invalid regions in the window have been repainted so
+    // that the windowing system won't keep sending paint events ad infinitum:
+
     wxPaintDC dc(this);
     render(dc);
   }
@@ -95,20 +107,29 @@ public:
     render(dc);
   }
 
-  void render(wxDC& dc) {
+  void render(wxDC& clientDc) {
+    wxMemoryDC backBufferDc;
+    wxPen pen;
+
+    backBufferDc.SelectObject(*pBackBuffer_);
+
     for (int x = 0; x < 320; ++x) {
       for (int y = 0; y < 240; ++y) {
         const MyColor& pixel = pixel_[x][y];
 
-        dc.SetPen(wxPen(wxColor(pixel.red, pixel.green, pixel.blue), 1));
-        dc.DrawPoint(x, y);
+        pen.SetColour(pixel.red, pixel.green, pixel.blue);
+        backBufferDc.SetPen(pen);
+        backBufferDc.DrawPoint(x, y);
       }
     }
+
+    backBufferDc.SelectObject(wxNullBitmap);
+
+    clientDc.DrawBitmap(*pBackBuffer_, 0, 0);
   }
 
   void setPixel(int x, int y, int r, int g, int b) {
     pixel_[x][y] = MyColor(r, g, b);
-    paintNow();
   }
 
 private:
@@ -126,6 +147,7 @@ private:
   };
 
   MyColor pixel_[320][240];
+  std::auto_ptr<wxBitmap> pBackBuffer_{nullptr};
 
   DECLARE_EVENT_TABLE()
 };
@@ -154,6 +176,8 @@ wxEND_EVENT_TABLE()
 class WxApp : public wxApp {
 public:
   virtual bool OnInit();
+  static WxApp* instance() { return static_cast<WxApp*>(wxApp::GetInstance()); }
+  BasicDrawPane* drawPane() { return pDrawPane_; }
 
 private:
   MainFrame* pMainFrame_{nullptr};
@@ -167,12 +191,6 @@ bool WxApp::OnInit() {
   pMainFrame_ = new MainFrame("ucRTOS LCD Simulator", wxPoint(50, 50), wxSize(640, 480));
   pDrawPane_ = new BasicDrawPane(pMainFrame_);
   pMainFrame_->Show(true);
-
-  pDrawPane_->setPixel(100, 100, 0, 255, 0);
-  pDrawPane_->setPixel(100, 101, 0, 255, 0);
-  pDrawPane_->setPixel(100, 102, 0, 255, 0);
-  pDrawPane_->setPixel(100, 103, 0, 255, 0);
-  pDrawPane_->setPixel(100, 104, 0, 255, 0);
 
   printf("ucRTOS LCD Simulator started.\n");
   return true;
@@ -202,7 +220,7 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 
   SetMenuBar(menuBar);
   CreateStatusBar();
-  SetStatusText("LCD simulation is not implemented yet!");
+  SetStatusText("Ready.");
 }
 
 void MainFrame::OnAbout(wxCommandEvent& event) {
@@ -224,17 +242,41 @@ static DWORD WINAPI _rtosThread(void* data) {
 HANDLE _hCreateLcdSimulator = CreateEvent(NULL, FALSE, FALSE, NULL);
 
 int main(int argc, char *argv[]) {
-  if (HANDLE hThread = CreateThread(NULL, 0, _rtosThread, NULL, 0, NULL)) {
-    WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
+  wxEntryStart(argc, argv);
 
-    wxEntryStart(argc, argv);
-    wxTheApp->CallOnInit();
-    wxTheApp->OnRun();
-  }
+  HANDLE hThread = CreateThread(NULL, 0, _rtosThread, NULL, 0, NULL);
+
+  if(!hThread)
+    return 1;
+
+  WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
+  wxTheApp->CallOnInit();
+  SetEvent(_hCreateLcdSimulator);
+  wxTheApp->OnRun();
 
   return 0;
 }
 
 extern "C" void mainCreateWxLcdSimulator() {
   SetEvent(_hCreateLcdSimulator);
+  WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
+}
+
+extern "C" void mainLcdSetPixel(int x, int y, int red, int green, int blue) {
+  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
+
+  pDrawPane->setPixel(x, y, red, green, blue);
+}
+
+extern "C" void mainLcdDraw() {
+  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
+
+  pDrawPane->paintNow();
+}
+
+extern "C" void mainLcdClear() {
+  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
+
+  pDrawPane->clearBackBuffer();
+  mainLcdDraw();
 }

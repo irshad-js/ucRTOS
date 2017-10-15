@@ -50,6 +50,13 @@ static void _prvDisplayTask(void* pParameters) {
 
   displayInit();
 
+  for (int x = 0; x < 320; ++x) {
+    for (int y = 0; y < 240; ++y)
+      displaySetPixel(x, y, 0, 255, 0);
+
+    displayDraw();
+  }
+
   while (1) {
     taskYIELD();
   }

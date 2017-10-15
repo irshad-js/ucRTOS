@@ -24,11 +24,22 @@ void PrintCharUsr(char c) {
 
 // Display:
 void mainCreateWxLcdSimulator();
+void mainLcdSetPixel(int x, int y, int red, int green, int blue);
+void mainLcdDraw();
+void mainLcdClear();
 
 void displayInit() {
   mainCreateWxLcdSimulator();
 }
 
-void displaySetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
-  // TOOD: implement
+void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
+  mainLcdSetPixel(x, y, red, green, blue);
+}
+
+void displayDraw() {
+  mainLcdDraw();
+}
+
+void displayClear() {
+  mainLcdClear();
 }
