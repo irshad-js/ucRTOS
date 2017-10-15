@@ -61,27 +61,33 @@
       <Filter>core\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\croutine.c">
-      <Filter>core\src</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\event_groups.c">
-      <Filter>core\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_5.c">
-      <Filter>core\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\timers.c">
-      <Filter>core\src</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\list.c">
-      <Filter>core\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\port.c">
-      <Filter>core\src</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\queue.c">
-      <Filter>core\src</Filter>
+      <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\tasks.c">
+      <Filter>lib\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\timers.c">
+      <Filter>lib\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_5.c">
+      <Filter>lib\FreeRTOS\Source\Portable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\port.c">
+      <Filter>lib\FreeRTOS\Source\Portable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\display.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\images.c">
       <Filter>core\src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,6 +132,12 @@
       <Filter>lib\FreeRTOS\Include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\core\ucrtos.h">
+      <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\display.h">
+      <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\images.h">
       <Filter>core\hdr</Filter>
     </ClInclude>
   </ItemGroup>

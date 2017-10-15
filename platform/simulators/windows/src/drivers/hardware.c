@@ -28,18 +28,18 @@ void mainLcdSetPixel(int x, int y, int red, int green, int blue);
 void mainLcdDraw();
 void mainLcdClear();
 
-void displayInit() {
+void hardwareDisplayInit() {
   mainCreateWxLcdSimulator();
 }
 
-void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
+void hardwareDisplaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
   mainLcdSetPixel(x, y, red, green, blue);
 }
 
-void displayDraw() {
+void hardwareDisplayDraw() {
   mainLcdDraw();
 }
 
-void displayClear() {
+void hardwareDisplayClear() {
   mainLcdClear();
 }

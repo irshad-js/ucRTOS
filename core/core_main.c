@@ -52,10 +52,12 @@ static void _prvDisplayTask(void* pParameters) {
 
   for (int x = 0; x < 320; ++x) {
     for (int y = 0; y < 240; ++y)
-      displaySetPixel(x, y, 0, 255, 0);
-
-    displayDraw();
+      displaySetPixel(x, y, 0, 0, 0);
   }
+
+  displayDrawImage(100, 100, _pCursorImg);
+
+  displayDraw();
 
   while (1) {
     taskYIELD();
