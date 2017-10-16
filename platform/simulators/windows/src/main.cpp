@@ -85,6 +85,8 @@ public:
       pBackBuffer_(new wxBitmap(320, 240)) {
 
     clearBackBuffer();
+
+    SetBackgroundStyle(wxBG_STYLE_CUSTOM);
   }
 
   void clearBackBuffer() {
@@ -278,5 +280,4 @@ extern "C" void mainLcdClear() {
   BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
 
   pDrawPane->clearBackBuffer();
-  mainLcdDraw();
 }
