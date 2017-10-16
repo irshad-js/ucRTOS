@@ -60,6 +60,11 @@ void fsmInit(StackBasedFsm_t* pFsm) {
 bool fsmPush(StackBasedFsm_t* pFsm, TransitionFunc pStateFunc, void* pParams) {
   FsmState* pCurrentState = fsmGetCurrentState(pFsm);
 
+  if (!pStateFunc) {
+    hal_printfWarning("Next state is nullptr! Please set proper state object. Did not transit.");
+    return false;
+  }
+
   if (pFsm->stackSize_ < FSM_STACK_SIZE) {
     FsmState* pNextState = &pFsm->stack[pFsm->stackSize_];
     pFsm->stackSize_++;
@@ -119,8 +124,7 @@ FsmState* fsmGetCurrentState(StackBasedFsm_t* pFsm) {
 void fsmTick(StackBasedFsm_t* pFsm) {
   FsmState* pState = fsmGetCurrentState(pFsm);
 
-  // TODO: uncomment
-  // processInputDevice(pFsm);
+  processInputDevice(pFsm);
 
   if (pState)
     if (pState->onTick)

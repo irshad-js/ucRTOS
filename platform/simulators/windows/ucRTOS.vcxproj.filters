@@ -114,6 +114,9 @@
     <ClCompile Include="..\..\..\core\states\mainMenu.c">
       <Filter>core\src\states</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\core\InputDevice.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\core\states\mainMenu.h">
       <Filter>core\hdr\states</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\InputDevice.h">
+      <Filter>core\hdr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

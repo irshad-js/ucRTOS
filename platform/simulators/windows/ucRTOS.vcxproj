@@ -200,6 +200,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\core\display.c" />
     <ClCompile Include="..\..\..\core\images.c" />
+    <ClCompile Include="..\..\..\core\InputDevice.c" />
     <ClCompile Include="..\..\..\core\SlotBasedMenu.c" />
     <ClCompile Include="..\..\..\core\StackBasedFsm.c" />
     <ClCompile Include="..\..\..\core\states\mainMenu.c" />
@@ -245,6 +246,7 @@
     <ClInclude Include="..\..\..\core\config.h" />
     <ClInclude Include="..\..\..\core\display.h" />
     <ClInclude Include="..\..\..\core\images.h" />
+    <ClInclude Include="..\..\..\core\InputDevice.h" />
     <ClInclude Include="..\..\..\core\SlotBasedMenu.h" />
     <ClInclude Include="..\..\..\core\StackBasedFsm.h" />
     <ClInclude Include="..\..\..\core\states\mainMenu.h" />

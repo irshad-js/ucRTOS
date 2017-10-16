@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
+#include <time.h>
 #include "../../core/ucrtos.h"
 
 void statusLedOn() {
@@ -121,3 +122,41 @@ void hal_strcpy_s(char* dst, int maxSize, const char* src) {
 
 // Input device:
 
+#define KEY_ACTION  VK_RETURN
+#define KEY_BACK    VK_BACK
+#define KEY_NORTH   'W'
+#define KEY_WEST    'A'
+#define KEY_SOUTH   'S'
+#define KEY_EAST    'D'
+#define KEY_START   VK_SPACE
+#define KEY_SELECT 'X'
+#define KEY_SIMULATE_DISCONNECTED VK_TAB
+
+uint8_t getButtonStateEmu(int virtualKeyCode) {
+  return (GetAsyncKeyState(virtualKeyCode) & 32768) >> 15;
+
+  // if (GetForegroundWindow() == g_hEmuWnd)
+  //   return (GetAsyncKeyState(virtualKeyCode) & 32768) >> 15;
+  // else
+  //   return 0;
+}
+
+InputDeviceStates_t getInputDeviceState() {
+  InputDeviceStates_t states;
+
+  states.Connected = !getButtonStateEmu(KEY_SIMULATE_DISCONNECTED);
+  states.Action    = getButtonStateEmu(KEY_ACTION);
+  states.Back      = getButtonStateEmu(KEY_BACK);
+  states.North     = getButtonStateEmu(KEY_NORTH) || getButtonStateEmu(VK_UP);
+  states.West      = getButtonStateEmu(KEY_WEST)  || getButtonStateEmu(VK_LEFT);
+  states.South     = getButtonStateEmu(KEY_SOUTH) || getButtonStateEmu(VK_DOWN);
+  states.East      = getButtonStateEmu(KEY_EAST)  || getButtonStateEmu(VK_RIGHT);
+  states.Start     = getButtonStateEmu(KEY_START);
+  states.Select    = getButtonStateEmu(KEY_SELECT);
+
+  return states;
+}
+
+uint32_t hal_clock() {
+  return clock();
+}

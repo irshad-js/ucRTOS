@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 // Timing
+uint32_t hal_clock();
 void delayUs(uint32_t us);
 void delayMs(uint32_t ms);
 
@@ -20,6 +21,9 @@ void errorLedOff();
 // Display:
 #include "display.h"
 #include "images.h"
+
+// Input device:
+#include "InputDevice.h"
 
 // Debug:
 void PrintCharUsr(char c);
