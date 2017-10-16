@@ -46,6 +46,9 @@
     <Filter Include="lib\mystdio">
       <UniqueIdentifier>{b3a612ac-b509-408a-b178-6e1a669e3387}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\AsciiLib">
+      <UniqueIdentifier>{40da60e4-a95c-4b28-a919-9a1d6089d18e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\core\images.c">
       <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\AsciiLib\AsciiLib.c">
+      <Filter>lib\AsciiLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\core\images.h">
       <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\AsciiLib\AsciiLib.h">
+      <Filter>lib\AsciiLib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
