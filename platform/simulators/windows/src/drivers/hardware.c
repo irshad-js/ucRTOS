@@ -23,6 +23,7 @@ void PrintCharUsr(char c) {
 }
 
 // Display:
+
 void mainCreateWxLcdSimulator();
 void mainLcdSetPixel(int x, int y, int red, int green, int blue);
 void mainLcdDraw();
@@ -44,7 +45,7 @@ void hardwareDisplayClear() {
   mainLcdClear();
 }
 
-// color print:
+// Colored print:
 
 static void _printColored(const char* text, uint16_t colorAttributes) {
   HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -117,3 +118,6 @@ void hal_strcpy_s(char* dst, int maxSize, const char* src) {
       dst[i] = 0;
   }
 }
+
+// Input device:
+

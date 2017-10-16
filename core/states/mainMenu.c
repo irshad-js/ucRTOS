@@ -23,23 +23,26 @@
 static struct {
   SlotBasedMenu_t menu;
 
-} context;
+} _context;
 
 static void draw() {
   displayClear(0x00, 0x00, 0x00);
   displayDrawText(CENTER, 0 + 0, "Use the game pad to navigate", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 0 + 18, "Press A button to select", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
-  menuDraw(&context.menu);
+  menuDraw(&_context.menu);
   displayDraw();
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("example::onEnter()");
 
-  // This function is called, when the state is entered for the first time.
-  // It must be defined in every state and is used for initialization.
-  // This can also be used for passing a return value to the previous state.
+  userMenuInit(&_context.menu, pFsm, 3, 45);
+  menuAddSlot(&_context.menu, "Button Test", 0);
+  menuAddSlot(&_context.menu, "Play MIDI File", 0);
+  menuAddSlot(&_context.menu, "Live Mode", 0);
+  menuAddSlot(&_context.menu, "Settings", 0);
+  menuAddSlot(&_context.menu, "About", 0);
 
   draw();
 }
@@ -47,18 +50,13 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 static void onActionPress(StackBasedFsm_t* pFsm) {
   hal_printf("example::onActionPress()");
 
-  // This function is called, when the player presses the action button on the game pad.
-  // On the NES game pad this is the 'A' button.
+  userMenuTransitToSelectedSlot(&_context.menu, 0);
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {
   hal_printf("example::onBackPress()");
 
-  // This function is called, when the player presses the back button on the Gamepad.
-  // On the NES game pad this is the 'B' button.
-
-  // In most cases you want to go to the previous screen. This is done by calling the 'leaveState()' function:
-  leaveState(pFsm);
+  userMenuTransitBack(&_context.menu);
 }
 
 static void onStartPress(StackBasedFsm_t* pFsm) {
@@ -76,7 +74,13 @@ static void onSelectPress(StackBasedFsm_t* pFsm) {
 static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
   hal_printf("example::onDirectionPress()");
 
-  // This function is called, if the user presses one of the direction buttons on the game pad.
+  if (south)
+    menuMoveCursorDown(&_context.menu);
+
+  if (north)
+    menuMoveCursorUp(&_context.menu);
+
+  draw();
 }
 
 static void onActionRelease(StackBasedFsm_t* pFsm) {

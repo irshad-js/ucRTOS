@@ -188,7 +188,7 @@ IMPLEMENT_APP_NO_MAIN(WxApp);
 IMPLEMENT_WX_THEME_SUPPORT;
 
 bool WxApp::OnInit() {
-  pMainFrame_ = new MainFrame("ucRTOS LCD Simulator", wxPoint(50, 50), wxSize(640, 480));
+  pMainFrame_ = new MainFrame("ucRTOS LCD Simulator", wxPoint(50, 50), wxSize(350, 340));
   pDrawPane_ = new BasicDrawPane(pMainFrame_);
   pMainFrame_->Show(true);
 
