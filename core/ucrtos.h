@@ -13,6 +13,10 @@ void statusLedOff();
 void errorLedOn();
 void errorLedOff();
 
+// FSM
+#include "StackBasedFsm.h"
+#include "SlotBasedMenu.h"
+
 // Display:
 #include "display.h"
 #include "images.h"

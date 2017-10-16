@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <limits.h>
+#define CENTER USHRT_MAX
 
 void displayInit();
 void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue);

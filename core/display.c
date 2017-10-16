@@ -1,11 +1,8 @@
-#include <limits.h>
-
 #include "../lib/AsciiLib/AsciiLib.h"
 #include "display.h"
 
 #define DISPLAY_RESOLUTION_X 320
 #define DISPLAY_RESOLUTION_Y 240
-#define CENTER USHRT_MAX
 
 void displayInit() {
   hardwareDisplayInit();

@@ -7,6 +7,7 @@
 #include "semphr.h"
 // #include "tm_stm32f4_fatfs.h" // TODO: implement proper abstraction layer
 // #include "nesgamepad.h"       // TODO: implement proper abstraction layer
+#include "states/mainMenu.h"
 #include "ucrtos.h"
 
 #define mainREGION_1_SIZE	7001
@@ -50,18 +51,24 @@ static void _prvDisplayTask(void* pParameters) {
 
   displayInit();
 
-  for (int x = 0; x < 320; ++x) {
-    for (int y = 0; y < 240; ++y)
-      displaySetPixel(x, y, 0, 0, 0);
-  }
+  // for (int x = 0; x < 320; ++x) {
+  //   for (int y = 0; y < 240; ++y)
+  //     displaySetPixel(x, y, 0, 0, 0);
+  // }
+  //
+  // displayDrawImage(100, 100, _pCursorImg);
+  // displayDrawText(100, 200, "Test String", 255, 255, 255, 0, 0, 0);
+  //
+  // displayDraw();
 
-  displayDrawImage(100, 100, _pCursorImg);
-  displayDrawText(100, 200, "Test String", 255, 255, 255, 0, 0, 0);
 
-  displayDraw();
+  StackBasedFsm_t fsm;
+
+  fsmInit(&fsm);
+  fsmPush(&fsm, mainMenu, 0);
 
   while (1) {
-    taskYIELD();
+    fsmTick(&fsm);
   }
 }
 

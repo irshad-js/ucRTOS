@@ -49,6 +49,15 @@
     <Filter Include="lib\AsciiLib">
       <UniqueIdentifier>{40da60e4-a95c-4b28-a919-9a1d6089d18e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\colorprint">
+      <UniqueIdentifier>{c671dba8-8cd8-40ef-996e-bab89218e156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\src\states">
+      <UniqueIdentifier>{92e22cae-ec9e-4b1c-8499-8da5ef73e356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\hdr\states">
+      <UniqueIdentifier>{518cc4bf-36c3-4f29-9394-fa55c20c1334}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -95,6 +104,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\lib\AsciiLib\AsciiLib.c">
       <Filter>lib\AsciiLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\SlotBasedMenu.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\StackBasedFsm.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\states\mainMenu.c">
+      <Filter>core\src\states</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +166,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lib\AsciiLib\AsciiLib.h">
       <Filter>lib\AsciiLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\StackBasedFsm.h">
+      <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\SlotBasedMenu.h">
+      <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\config.h">
+      <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\colorprint\colorprint.h">
+      <Filter>lib\colorprint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\states\mainMenu.h">
+      <Filter>core\hdr\states</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
