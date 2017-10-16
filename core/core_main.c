@@ -56,6 +56,7 @@ static void _prvDisplayTask(void* pParameters) {
   }
 
   displayDrawImage(100, 100, _pCursorImg);
+  displayDrawText(100, 200, "Test String", 255, 255, 255, 0, 0, 0);
 
   displayDraw();
 
