@@ -119,7 +119,11 @@ public:
       for (int y = 0; y < 240; ++y) {
         const MyColor& pixel = pixel_[x][y];
 
-        pen.SetColour(pixel.red, pixel.green, pixel.blue);
+        uint16_t red   = (pixel.red   * 255) / 31;
+        uint16_t green = (pixel.green * 255) / 63;
+        uint16_t blue  = (pixel.blue  * 255) / 31;
+
+        pen.SetColour(red, green, blue);
         backBufferDc.SetPen(pen);
         backBufferDc.DrawPoint(x, y);
       }
@@ -135,17 +139,18 @@ public:
   }
 
 private:
-  struct MyColor {
+  union MyColor {
     MyColor() {}
     MyColor(uint8_t red, uint8_t green, uint8_t blue) {
-      this->red   = red;
-      this->green = green;
-      this->blue  = blue;
+      this->red   = red   * 31 / 255;
+      this->green = green * 63 / 255;
+      this->blue  = blue  * 31 / 255;
     }
 
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
+    uint16_t
+    red   : 5,
+    green : 6,
+    blue  : 5;
   };
 
   MyColor pixel_[320][240];
