@@ -50,7 +50,7 @@ void menuAddSlot(SlotBasedMenu_t* pSbm, const char* label, TransitionFunc pFunc)
     return;
 
   // TODO: replace by hal_strcpy_s
-  strcpy_s(pSbm->slot[pSbm->numSlots].pLabel, MAX_MENU_ITEM_CHARS, label);
+  hal_strcpy_s(pSbm->slot[pSbm->numSlots].pLabel, MAX_MENU_ITEM_CHARS, label);
   pSbm->slot[pSbm->numSlots].pNextStateTransitionFunc = pFunc;
   pSbm->numSlots++;
 }

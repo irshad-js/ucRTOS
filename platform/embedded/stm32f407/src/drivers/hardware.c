@@ -43,12 +43,21 @@ void errorState() {
 
 // Display
 
-void displaySetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
-
+void hardwareDisplayInit() {
+  // TODO: implement
 }
 
-void displayClear(uint16_t Color) {
+void hardwareDisplaySetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
 
+  // TODO: implement
+}
+
+void hardwareDisplayDraw() {
+  // TODO: implement
+}
+
+void hardwareDisplayClear() {
+  // TODO: implement
 }
 
 // Dummy function to avoid compiler error (Is called by libc_init_array()):
@@ -63,3 +72,33 @@ void PrintCharUsr(char c) {
   while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET); // Wait until transmit finishes
   USART_SendData(USART1, (u8) c);
 }
+
+uint32_t hal_clock() {
+  return 0; // TODO: implement
+}
+
+InputDeviceStates_t getInputDeviceState() {
+  InputDeviceStates_t states;
+
+  // TODO: implement
+
+  return states;
+}
+
+void hal_printf(char* format, ...) {
+  // TODO: implement
+}
+
+void hal_printfWarning(char* format, ...) {
+  // TODO: implement
+}
+
+void hal_printfError(char* format, ...) {
+  // TODO: implement
+}
+
+void hal_strcpy_s(char* dst, int maxSize, const char* src) {
+  // TODO: implement
+}
+
+
