@@ -22,7 +22,16 @@ Supported simulators so far:
 
 ### STM32F4
 
-coming soon...
+#### Compile the binary
+
+make
+
+#### Flash the microcontroller
+
+To flash the .bin file you need to install **st-link** first.
+After that you can just flash by typing:
+
+make flash
 
 ### Windows Simulator with Visual Studio 2017
 
