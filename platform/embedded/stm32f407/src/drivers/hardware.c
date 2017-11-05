@@ -54,6 +54,7 @@ void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax) {
   _yMax = yMax;
 
   SSD1289_Init();
+  SSD1289_Clear(Black);
 }
 
 void hardwareDisplayDraw() {

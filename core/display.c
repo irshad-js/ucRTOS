@@ -1,8 +1,8 @@
 #include "../lib/AsciiLib/AsciiLib.h"
 #include "display.h"
 
-#define DISPLAY_RESOLUTION_X 160
-#define DISPLAY_RESOLUTION_Y 120
+#define DISPLAY_RESOLUTION_X 320
+#define DISPLAY_RESOLUTION_Y 130
 
 static uint8_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
 
