@@ -1,8 +1,8 @@
 #include "../lib/AsciiLib/AsciiLib.h"
 #include "display.h"
 
-#define DISPLAY_RESOLUTION_X 320
-#define DISPLAY_RESOLUTION_Y 240
+#define DISPLAY_RESOLUTION_X 160
+#define DISPLAY_RESOLUTION_Y 120
 
 static uint8_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
 
@@ -11,6 +11,9 @@ void displayInit() {
 }
 
 void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
+  if(x >= DISPLAY_RESOLUTION_X || y >= DISPLAY_RESOLUTION_Y)
+    return;
+
   int index = y * DISPLAY_RESOLUTION_X + x;
 
   struct {
