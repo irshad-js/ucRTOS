@@ -81,16 +81,19 @@ extern "C" {
 class BasicDrawPane : public wxPanel {
 
 public:
-  BasicDrawPane(wxFrame* parent) : wxPanel(parent),
-      pBackBuffer_(new wxBitmap(320, 240)) {
-
+  BasicDrawPane(wxFrame* parent) : wxPanel(parent) {
     SetBackgroundStyle(wxBG_STYLE_CUSTOM);
+  }
+
+  ~BasicDrawPane() {
+    delete pBackBuffer_;
   }
 
   void init(uint8_t* pFrameBuffer, int xMax, int yMax) {
     pFrameBuffer_ = pFrameBuffer;
     xMax_ = xMax;
     yMax_ = yMax;
+    pBackBuffer_ = new wxBitmap(xMax_, yMax_);
   }
 
   void paintEvent(wxPaintEvent & evt) {
@@ -113,8 +116,8 @@ public:
 
     backBufferDc.SelectObject(*pBackBuffer_);
 
-    for (int y = 0; y < 240; ++y) {
-      for (int x = 0; x < 320; ++x) {
+    for (int y = 0; y < yMax_; ++y) {
+      for (int x = 0; x < xMax_; ++x) {
 
         int index = y * xMax_ + x;
         struct Bla {
@@ -146,7 +149,7 @@ private:
   int xMax_{0};
   int yMax_{0};
 
-  std::auto_ptr<wxBitmap> pBackBuffer_{nullptr};
+  wxBitmap* pBackBuffer_{nullptr};
 
   DECLARE_EVENT_TABLE()
 };
