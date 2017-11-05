@@ -84,19 +84,13 @@ public:
   BasicDrawPane(wxFrame* parent) : wxPanel(parent),
       pBackBuffer_(new wxBitmap(320, 240)) {
 
-    clearBackBuffer();
-
     SetBackgroundStyle(wxBG_STYLE_CUSTOM);
   }
 
-  void init(uint16_t* pFrameBuffer) {
+  void init(uint16_t* pFrameBuffer, int xMax, int yMax) {
     pFrameBuffer_ = pFrameBuffer;
-  }
-
-  void clearBackBuffer() {
-    for (int x = 0; x < 320; ++x)
-      for (int y = 0; y < 240; ++y)
-        pixelOld_[x][y] = MyColorOld(0, 0, 0);
+    xMax_ = xMax;
+    yMax_ = yMax;
   }
 
   void paintEvent(wxPaintEvent & evt) {
@@ -121,17 +115,8 @@ public:
 
     for (int y = 0; y < 240; ++y) {
       for (int x = 0; x < 320; ++x) {
-        // TODO: remove:
-        const MyColorOld& pixelOld = pixelOld_[x][y];
-        uint8_t redOld   = (pixelOld.red   * 255) / 31;
-        uint8_t greenOld = (pixelOld.green * 255) / 63;
-        uint8_t blueOld  = (pixelOld.blue  * 255) / 31;
-        pen.SetColour(redOld, greenOld, blueOld);
-        const int MAX_X = 320; // TODO: pass buffer dimensions to init function
-        const int MAX_Y = 240; // TODO: pass buffer dimensions to init function
-        // -
 
-        int index = y * MAX_X + x;
+        int index = y * xMax_ + x;
         struct Bla {
           uint16_t
           red   : 5,
@@ -156,30 +141,10 @@ public:
     clientDc.DrawBitmap(*pBackBuffer_, 0, 0);
   }
 
-  void setPixel(int x, int y, int r, int g, int b) {
-    pixelOld_[x][y] = MyColorOld(r, g, b);
-  }
-
 private:
-  union MyColorOld {
-    MyColorOld() {}
-    MyColorOld(uint8_t red, uint8_t green, uint8_t blue) {
-      this->red   = red   * 31 / 255;
-      this->green = green * 63 / 255;
-      this->blue  = blue  * 31 / 255;
-    }
-
-    uint16_t
-    red   : 5,
-    green : 6,
-    blue  : 5;
-  };
-
   uint16_t* pFrameBuffer_{nullptr};
-
-  // TODO: remove:
-  MyColorOld pixelOld_[320][240];
-  // -
+  int xMax_{0};
+  int yMax_{0};
 
   std::auto_ptr<wxBitmap> pBackBuffer_{nullptr};
 
@@ -291,28 +256,16 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-extern "C" void mainCreateWxLcdSimulator(uint16_t* pFrameBuffer) {
+extern "C" void mainCreateWxLcdSimulator(uint16_t* pFrameBuffer, int xMax, int yMax) {
   SetEvent(_hCreateLcdSimulator);
   WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
 
   BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
-  pDrawPane->init(pFrameBuffer);
-}
-
-extern "C" void mainLcdSetPixel(int x, int y, int red, int green, int blue) {
-  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
-
-  pDrawPane->setPixel(x, y, red, green, blue);
+  pDrawPane->init(pFrameBuffer, xMax, yMax);
 }
 
 extern "C" void mainLcdDraw() {
   BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
 
   pDrawPane->paintNow();
-}
-
-extern "C" void mainLcdClear() {
-  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
-
-  pDrawPane->clearBackBuffer();
 }

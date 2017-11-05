@@ -7,7 +7,7 @@
 static uint16_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
 
 void displayInit(uint16_t* pFrameBuffer) {
-  hardwareDisplayInit(_pDisplayFrameBuffer);
+  hardwareDisplayInit(_pDisplayFrameBuffer, DISPLAY_RESOLUTION_X, DISPLAY_RESOLUTION_Y);
 }
 
 void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
@@ -25,10 +25,6 @@ void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
   c.blue  = blue  * 31 / 255;
 
   _pDisplayFrameBuffer[index] = *(uint16_t*)&c;
-
-  // TODO: remove
-  hardwareDisplaySetPixel(x, y, red, green, blue);
-  // -
 }
 
 void displayDraw() {
@@ -42,10 +38,6 @@ void displayClear() {
 
       displaySetPixel(x, y, 0, 0, 0);
     }
-
-  // TODO: remove:
-  hardwareDisplayClear();
-  // -
 }
 
 void displayDrawImage(uint16_t xPos, uint16_t yPos, const uint8_t* pImg) {

@@ -25,25 +25,15 @@ void PrintCharUsr(char c) {
 
 // Display:
 
-void mainCreateWxLcdSimulator(uint16_t* pFrameBuffer);
-void mainLcdSetPixel(int x, int y, int red, int green, int blue);
+void mainCreateWxLcdSimulator(uint16_t* pFrameBuffer, int xMax, int yMax);
 void mainLcdDraw();
-void mainLcdClear();
 
-void hardwareDisplayInit(uint16_t* pFrameBuffer) {
-  mainCreateWxLcdSimulator(pFrameBuffer);
-}
-
-void hardwareDisplaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
-  mainLcdSetPixel(x, y, red, green, blue);
+void hardwareDisplayInit(uint16_t* pFrameBuffer, int xMax, int yMax) {
+  mainCreateWxLcdSimulator(pFrameBuffer, xMax, yMax);
 }
 
 void hardwareDisplayDraw() {
   mainLcdDraw();
-}
-
-void hardwareDisplayClear() {
-  mainLcdClear();
 }
 
 // Colored print:
