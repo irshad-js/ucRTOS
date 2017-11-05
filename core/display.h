@@ -13,7 +13,5 @@ void displayDrawText(uint16_t x, uint16_t y, const char* str, uint8_t txtRed, ui
     uint8_t bgRed, uint8_t bgGreen, uint8_t bgBlue);
 
 // Platform driver implementations:
-void hardwareDisplayInit();
-void hardwareDisplaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
+void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax);
 void hardwareDisplayDraw();
-void hardwareDisplayClear();

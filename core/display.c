@@ -6,7 +6,7 @@
 
 static uint8_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
 
-void displayInit(uint8_t* pFrameBuffer) {
+void displayInit() {
   hardwareDisplayInit(_pDisplayFrameBuffer, DISPLAY_RESOLUTION_X, DISPLAY_RESOLUTION_Y);
 }
 
