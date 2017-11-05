@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "stm32f4xx_conf.h"
+#include "ssd1289.h"
 #include "ucrtos.h"
 
 // Timing
@@ -43,14 +44,37 @@ void errorState() {
 
 // Display
 
-static _pFrameBuffer = 0;
+static uint8_t* _pFrameBuffer = 0;
+static int _xMax = 0;
+static int _yMax = 0;
 
 void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax) {
   _pFrameBuffer = pFrameBuffer;
+  _xMax = xMax;
+  _yMax = yMax;
+
+  SSD1289_Init();
 }
 
 void hardwareDisplayDraw() {
-  // TODO: implement
+  for(int y = 0; y < _yMax; ++y)
+    for(int x = 0; x < _xMax; ++x) {
+      typedef struct Bla {
+        uint8_t
+	red   : 2,
+	green : 3,
+	blue  : 2;
+      };
+
+      int index = y * _xMax + x;
+      struct Bla* p = (struct Bla*)&_pFrameBuffer[index];
+
+      uint8_t red   = (p->red   * 255) / 3;
+      uint8_t green = (p->green * 255) / 7;
+      uint8_t blue  = (p->blue  * 255) / 3;
+
+      SSD1289_SetPoint(x, y, RGB565CONVERT(red, green, blue));
+    }
 }
 
 // Dummy function to avoid compiler error (Is called by libc_init_array()):
