@@ -116,7 +116,6 @@ void hal_printfError(char* format, ...) {
 }
 
 void hal_strcpy_s(char* dst, int maxSize, const char* src) {
-  // TODO: implement
+  strcpy(dst, src);
 }
-
 
