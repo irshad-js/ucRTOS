@@ -43,20 +43,13 @@ void errorState() {
 
 // Display
 
-void hardwareDisplayInit() {
-  // TODO: implement
-}
+static _pFrameBuffer = 0;
 
-void hardwareDisplaySetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
-
-  // TODO: implement
+void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax) {
+  _pFrameBuffer = pFrameBuffer;
 }
 
 void hardwareDisplayDraw() {
-  // TODO: implement
-}
-
-void hardwareDisplayClear() {
   // TODO: implement
 }
 
