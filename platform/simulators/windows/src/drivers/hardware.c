@@ -25,10 +25,10 @@ void PrintCharUsr(char c) {
 
 // Display:
 
-void mainCreateWxLcdSimulator(uint16_t* pFrameBuffer, int xMax, int yMax);
+void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, int xMax, int yMax);
 void mainLcdDraw();
 
-void hardwareDisplayInit(uint16_t* pFrameBuffer, int xMax, int yMax) {
+void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax) {
   mainCreateWxLcdSimulator(pFrameBuffer, xMax, yMax);
 }
 

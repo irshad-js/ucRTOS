@@ -87,7 +87,7 @@ public:
     SetBackgroundStyle(wxBG_STYLE_CUSTOM);
   }
 
-  void init(uint16_t* pFrameBuffer, int xMax, int yMax) {
+  void init(uint8_t* pFrameBuffer, int xMax, int yMax) {
     pFrameBuffer_ = pFrameBuffer;
     xMax_ = xMax;
     yMax_ = yMax;
@@ -118,17 +118,17 @@ public:
 
         int index = y * xMax_ + x;
         struct Bla {
-          uint16_t
-          red   : 5,
-          green : 6,
-          blue  : 5;
+          uint8_t
+          red   : 2,
+          green : 3,
+          blue  : 2;
         };
 
         Bla* c = &reinterpret_cast<Bla*>(pFrameBuffer_)[index];
 
-        uint8_t red   = (c->red   * 255) / 31;
-        uint8_t green = (c->green * 255) / 63;
-        uint8_t blue  = (c->blue  * 255) / 31;
+        uint8_t red   = (c->red   * 255) / 3;
+        uint8_t green = (c->green * 255) / 7;
+        uint8_t blue  = (c->blue  * 255) / 3;
         pen.SetColour(red, green, blue);
 
         backBufferDc.SetPen(pen);
@@ -142,7 +142,7 @@ public:
   }
 
 private:
-  uint16_t* pFrameBuffer_{nullptr};
+  uint8_t* pFrameBuffer_{nullptr};
   int xMax_{0};
   int yMax_{0};
 
@@ -256,7 +256,7 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-extern "C" void mainCreateWxLcdSimulator(uint16_t* pFrameBuffer, int xMax, int yMax) {
+extern "C" void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, int xMax, int yMax) {
   SetEvent(_hCreateLcdSimulator);
   WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
 
