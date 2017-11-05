@@ -89,10 +89,14 @@ public:
     SetBackgroundStyle(wxBG_STYLE_CUSTOM);
   }
 
+  void init(uint16_t* pFrameBuffer) {
+    pFrameBuffer_ = pFrameBuffer;
+  }
+
   void clearBackBuffer() {
     for (int x = 0; x < 320; ++x)
       for (int y = 0; y < 240; ++y)
-        pixel_[x][y] = MyColor(0, 0, 0);
+        pixelOld_[x][y] = MyColorOld(0, 0, 0);
   }
 
   void paintEvent(wxPaintEvent & evt) {
@@ -115,15 +119,33 @@ public:
 
     backBufferDc.SelectObject(*pBackBuffer_);
 
-    for (int x = 0; x < 320; ++x) {
-      for (int y = 0; y < 240; ++y) {
-        const MyColor& pixel = pixel_[x][y];
+    for (int y = 0; y < 240; ++y) {
+      for (int x = 0; x < 320; ++x) {
+        // TODO: remove:
+        const MyColorOld& pixelOld = pixelOld_[x][y];
+        uint8_t redOld   = (pixelOld.red   * 255) / 31;
+        uint8_t greenOld = (pixelOld.green * 255) / 63;
+        uint8_t blueOld  = (pixelOld.blue  * 255) / 31;
+        pen.SetColour(redOld, greenOld, blueOld);
+        const int MAX_X = 320; // TODO: pass buffer dimensions to init function
+        const int MAX_Y = 240; // TODO: pass buffer dimensions to init function
+        // -
 
-        uint16_t red   = (pixel.red   * 255) / 31;
-        uint16_t green = (pixel.green * 255) / 63;
-        uint16_t blue  = (pixel.blue  * 255) / 31;
+        int index = y * MAX_X + x;
+        struct Bla {
+          uint16_t
+          red   : 5,
+          green : 6,
+          blue  : 5;
+        };
 
+        Bla* c = &reinterpret_cast<Bla*>(pFrameBuffer_)[index];
+
+        uint8_t red   = (c->red   * 255) / 31;
+        uint8_t green = (c->green * 255) / 63;
+        uint8_t blue  = (c->blue  * 255) / 31;
         pen.SetColour(red, green, blue);
+
         backBufferDc.SetPen(pen);
         backBufferDc.DrawPoint(x, y);
       }
@@ -135,13 +157,13 @@ public:
   }
 
   void setPixel(int x, int y, int r, int g, int b) {
-    pixel_[x][y] = MyColor(r, g, b);
+    pixelOld_[x][y] = MyColorOld(r, g, b);
   }
 
 private:
-  union MyColor {
-    MyColor() {}
-    MyColor(uint8_t red, uint8_t green, uint8_t blue) {
+  union MyColorOld {
+    MyColorOld() {}
+    MyColorOld(uint8_t red, uint8_t green, uint8_t blue) {
       this->red   = red   * 31 / 255;
       this->green = green * 63 / 255;
       this->blue  = blue  * 31 / 255;
@@ -153,7 +175,12 @@ private:
     blue  : 5;
   };
 
-  MyColor pixel_[320][240];
+  uint16_t* pFrameBuffer_{nullptr};
+
+  // TODO: remove:
+  MyColorOld pixelOld_[320][240];
+  // -
+
   std::auto_ptr<wxBitmap> pBackBuffer_{nullptr};
 
   DECLARE_EVENT_TABLE()
@@ -246,7 +273,7 @@ static DWORD WINAPI _rtosThread(void* data) {
   return coreMain();
 }
 
-HANDLE _hCreateLcdSimulator = CreateEvent(NULL, FALSE, FALSE, NULL);
+static HANDLE _hCreateLcdSimulator = CreateEvent(NULL, FALSE, FALSE, NULL);
 
 int main(int argc, char *argv[]) {
   wxEntryStart(argc, argv);
@@ -264,9 +291,12 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-extern "C" void mainCreateWxLcdSimulator() {
+extern "C" void mainCreateWxLcdSimulator(uint16_t* pFrameBuffer) {
   SetEvent(_hCreateLcdSimulator);
   WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
+
+  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
+  pDrawPane->init(pFrameBuffer);
 }
 
 extern "C" void mainLcdSetPixel(int x, int y, int red, int green, int blue) {

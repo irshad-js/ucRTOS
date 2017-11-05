@@ -4,12 +4,31 @@
 #define DISPLAY_RESOLUTION_X 320
 #define DISPLAY_RESOLUTION_Y 240
 
-void displayInit() {
-  hardwareDisplayInit();
+static uint16_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
+
+void displayInit(uint16_t* pFrameBuffer) {
+  hardwareDisplayInit(_pDisplayFrameBuffer);
 }
 
 void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
+  int index = y * DISPLAY_RESOLUTION_X + x;
+
+  struct {
+    uint16_t
+    red   : 5,
+    green : 6,
+    blue  : 5;
+  } c;
+
+  c.red   = red   * 31 / 255;
+  c.green = green * 63 / 255;
+  c.blue  = blue  * 31 / 255;
+
+  _pDisplayFrameBuffer[index] = *(uint16_t*)&c;
+
+  // TODO: remove
   hardwareDisplaySetPixel(x, y, red, green, blue);
+  // -
 }
 
 void displayDraw() {
@@ -17,7 +36,16 @@ void displayDraw() {
 }
 
 void displayClear() {
+  for (int y = 0; y < DISPLAY_RESOLUTION_Y; ++y)
+    for (int x = 0; x < DISPLAY_RESOLUTION_X; ++x) {
+      int index = y * DISPLAY_RESOLUTION_X + x;
+
+      displaySetPixel(x, y, 0, 0, 0);
+    }
+
+  // TODO: remove:
   hardwareDisplayClear();
+  // -
 }
 
 void displayDrawImage(uint16_t xPos, uint16_t yPos, const uint8_t* pImg) {
