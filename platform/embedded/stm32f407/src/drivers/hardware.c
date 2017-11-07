@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "stm32f4xx_conf.h"
 #include "ssd1289.h"
+#include "nesgamepad.h"
 #include "ucrtos.h"
 
 // Timing
@@ -55,6 +56,8 @@ void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax) {
 
   SSD1289_Init();
   SSD1289_Clear(Black);
+
+  setupNesGamePad(); // TODO: create hardwareInputInit function
 }
 
 void hardwareDisplayDraw() {
@@ -62,9 +65,9 @@ void hardwareDisplayDraw() {
     for(int x = 0; x < _xMax; ++x) {
       typedef struct Bla {
         uint8_t
-	red   : 2,
-	green : 3,
-	blue  : 2;
+        red   : 2,
+        green : 3,
+        blue  : 2;
       };
 
       int index = y * _xMax + x;
@@ -92,13 +95,23 @@ void PrintCharUsr(char c) {
 }
 
 uint32_t hal_clock() {
-  return 0; // TODO: implement
+  return TIM2->CNT / 1000; // TODO: replace by FreeRTOS functions
 }
 
 InputDeviceStates_t getInputDeviceState() {
   InputDeviceStates_t states;
+  union NesGamePadStates_t nesStates = getNesGamepadState();
 
-  // TODO: implement
+  states.Action = nesStates.states.A;
+  states.Back   = nesStates.states.B;
+  states.East   = nesStates.states.East;
+  states.West   = nesStates.states.West;
+  states.North  = nesStates.states.North;
+  states.South  = nesStates.states.South;
+  states.Start  = nesStates.states.Start;
+  states.Select = nesStates.states.Select;
+
+  states.Connected = nesStates.code != 0xFF;
 
   return states;
 }
