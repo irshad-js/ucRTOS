@@ -95,7 +95,7 @@ void PrintCharUsr(char c) {
 }
 
 uint32_t hal_clock() {
-  return TIM2->CNT / 1000; // TODO: replace by FreeRTOS functions
+  return TIM5->CNT / 1000; // TODO: replace by FreeRTOS functions
 }
 
 InputDeviceStates_t getInputDeviceState() {

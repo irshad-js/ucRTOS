@@ -205,11 +205,11 @@
     <ClCompile Include="..\..\..\core\StackBasedFsm.c" />
     <ClCompile Include="..\..\..\core\states\mainMenu.c" />
     <ClCompile Include="..\..\..\lib\AsciiLib\AsciiLib.c" />
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c" />
     <ClCompile Include="..\..\..\lib\mystdio\myprintf.c" />
     <ClCompile Include="..\..\..\core\core_main.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\croutine.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\event_groups.c" />
-    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_5.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\timers.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\list.c">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

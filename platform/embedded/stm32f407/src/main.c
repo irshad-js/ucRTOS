@@ -25,6 +25,19 @@ static void initDelayTimer() {
   TIM_Cmd(TIM2, ENABLE);
 }
 
+void initClockTimer() {
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
+
+  TIM_TimeBaseInitTypeDef timerInitStructure;
+  timerInitStructure.TIM_Prescaler = 84 - 1; // 1 Mhz
+  timerInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+  timerInitStructure.TIM_Period = -1; // no period, use maximum of uint32_t
+  timerInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+  timerInitStructure.TIM_RepetitionCounter = 0;
+  TIM_TimeBaseInit(TIM5, &timerInitStructure);
+  TIM_Cmd(TIM5, ENABLE);
+}
+
 static void initLeds() {
   // The red and blue LEDs (Pin 14 / 15) are used by FSMC and cannot be used
   // However, all LEDs are turned off here:
@@ -82,6 +95,7 @@ static void initDebugUart(uint32_t baudrate) {
 }
 
 void init() {
+  initClockTimer();
   initDelayTimer();
   initLeds();
   initDebugUart(9600);

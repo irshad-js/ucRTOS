@@ -90,9 +90,6 @@
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\timers.c">
       <Filter>lib\FreeRTOS\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_5.c">
-      <Filter>lib\FreeRTOS\Source\Portable</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MSVC-MingW\port.c">
       <Filter>lib\FreeRTOS\Source\Portable</Filter>
     </ClCompile>
@@ -116,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\core\InputDevice.c">
       <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c">
+      <Filter>lib\FreeRTOS\Source\Portable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

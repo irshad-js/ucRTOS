@@ -6,24 +6,18 @@
 #include "timers.h"
 #include "semphr.h"
 // #include "tm_stm32f4_fatfs.h" // TODO: implement proper abstraction layer
-// #include "nesgamepad.h"       // TODO: implement proper abstraction layer
+#include "InputDevice.h"
 #include "states/mainMenu.h"
 #include "ucrtos.h"
 
-#define mainREGION_1_SIZE	7001
-#define mainREGION_2_SIZE	18105
-#define mainREGION_3_SIZE	2807
-
 #define mainDEFAULT_TASK_PRIORITY	(tskIDLE_PRIORITY + 1)
-#define blinkTASK_FREQUENY_MS     			pdMS_TO_TICKS(100UL)
-
-static void prvInitialiseHeap( void );
+#define blinkTASK_FREQUENY_MS     pdMS_TO_TICKS(100UL)
 
 static void _prvBlinkTask(void *pParameters) {
   (void*)pParameters;
 
   while (1) {
-    myprintf("blink\n");
+    // myprintf("blink\n");
     statusLedOn();
     vTaskDelay(blinkTASK_FREQUENY_MS);
     statusLedOff();
@@ -40,7 +34,7 @@ static void _prvDebugTask(void* pParameters) {
 
   for(int i = 1000;; i++) {
     vTaskDelay(pdMS_TO_TICKS(250UL));
-    myprintf("Tick: %i\n", i);
+    myprintf("Tick: %i, hal_clock: %u ms\n", i, hal_clock());
   }
 }
 
@@ -48,22 +42,9 @@ static void _prvDisplayTask(void* pParameters) {
   (void*)pParameters;
 
   myprintf("Display task started\n");
-
   displayInit();
 
-  // for (int x = 0; x < 320; ++x) {
-  //   for (int y = 0; y < 240; ++y)
-  //     displaySetPixel(x, y, 0, 0, 0);
-  // }
-  //
-  // displayDrawImage(100, 100, _pCursorImg);
-  // displayDrawText(100, 200, "Test String", 255, 255, 255, 0, 0, 0);
-  //
-  // displayDraw();
-
-
   StackBasedFsm_t fsm;
-
   fsmInit(&fsm);
   fsmPush(&fsm, mainMenu, 0);
 
@@ -72,29 +53,24 @@ static void _prvDisplayTask(void* pParameters) {
   }
 }
 
-// TODO: implement proper HAL for game pad:
+static void _prvGamePadTask(void* pParams) {
+  while(1) {
+    InputDeviceStates_t state = getInputDeviceState();
 
-// static void _prvGamePadTask(void* pParams) {
-//   setupNesGamePad();
-//   union NesGamePadStates_t state;
-//
-//   while(1) {
-//     state = getNesGamepadState();
-//
-//     myprintf("Gamepad state:\n");
-//     myprintf("A:      %d\n", state.states.A);
-//     myprintf("B:      %d\n", state.states.B);
-//     myprintf("North:  %d\n", state.states.North);
-//     myprintf("East:   %d\n", state.states.East);
-//     myprintf("South:  %d\n", state.states.South);
-//     myprintf("West:   %d\n", state.states.West);
-//     myprintf("Start:  %d\n", state.states.Start);
-//     myprintf("Select: %d\n", state.states.Select);
-//     myprintf("\n", state.states.Select);
-//
-//     vTaskDelay(pdMS_TO_TICKS(250UL));
-//   }
-// }
+    myprintf("Gamepad state:\n");
+    myprintf("Action: %d\n", state.Action);
+    myprintf("Back:   %d\n", state.Back);
+    myprintf("North:  %d\n", state.North);
+    myprintf("East:   %d\n", state.East);
+    myprintf("South:  %d\n", state.South);
+    myprintf("West:   %d\n", state.West);
+    myprintf("Start:  %d\n", state.Start);
+    myprintf("Select: %d\n", state.Select);
+    myprintf("\n");
+
+    vTaskDelay(pdMS_TO_TICKS(250UL));
+  }
+}
 
 // -
 
@@ -171,33 +147,14 @@ static void _prvDisplayTask(void* pParameters) {
 // }
 
 int coreMain(void) {
-  prvInitialiseHeap();
   statusLedOff();
   xTaskCreate(_prvDebugTask,   "Debug Task", 512, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
   xTaskCreate(_prvBlinkTask,   "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
-  xTaskCreate(_prvDisplayTask, "Display Task", 1024, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
-
+  xTaskCreate(_prvDisplayTask, "Display Task", 2048, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
+  // xTaskCreate(_prvGamePadTask, "Game pad Task", 512, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
   // xTaskCreate(_prvFileSystemTask, "File System Task", 1024, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
-  // xTaskCreate(_prvGamePadTask,      "Game pad Task", 512, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
 
   vTaskStartScheduler();
 
   return 0;
-}
-
-static void prvInitialiseHeap(void) {
-  static uint8_t ucHeap[configTOTAL_HEAP_SIZE];
-  volatile uint32_t ulAdditionalOffset = 19;
-
-  const HeapRegion_t xHeapRegions[] = {
-    { ucHeap + 1,   mainREGION_1_SIZE },
-    { ucHeap + 15 + mainREGION_1_SIZE, mainREGION_2_SIZE },
-    { ucHeap + 19 + mainREGION_1_SIZE + mainREGION_2_SIZE, mainREGION_3_SIZE },
-    { NULL, 0 }
-  };
-
-  configASSERT((ulAdditionalOffset + mainREGION_1_SIZE + mainREGION_2_SIZE + mainREGION_3_SIZE ) < configTOTAL_HEAP_SIZE);
-
-  (void) ulAdditionalOffset;
-  vPortDefineHeapRegions(xHeapRegions);
 }
