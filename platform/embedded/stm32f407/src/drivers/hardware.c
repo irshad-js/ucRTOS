@@ -94,10 +94,6 @@ void PrintCharUsr(char c) {
   USART_SendData(USART1, (u8) c);
 }
 
-uint32_t hal_clock() {
-  return TIM5->CNT / 1000; // TODO: replace by FreeRTOS functions
-}
-
 InputDeviceStates_t getInputDeviceState() {
   InputDeviceStates_t states;
   union NesGamePadStates_t nesStates = getNesGamepadState();

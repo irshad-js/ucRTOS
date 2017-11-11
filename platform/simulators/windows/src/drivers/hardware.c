@@ -147,7 +147,3 @@ InputDeviceStates_t getInputDeviceState() {
 
   return states;
 }
-
-uint32_t hal_clock() {
-  return (1000 * xTaskGetTickCount()) / configTICK_RATE_HZ;
-}

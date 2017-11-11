@@ -146,6 +146,10 @@ static void _prvGamePadTask(void* pParams) {
 //   while(1);
 // }
 
+uint32_t hal_clock() {
+  return (1000 * xTaskGetTickCount()) / configTICK_RATE_HZ;
+}
+
 int coreMain(void) {
   statusLedOff();
   xTaskCreate(_prvDebugTask,   "Debug Task", 512, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
