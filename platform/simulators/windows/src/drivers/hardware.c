@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <time.h>
+#include "FreeRTOSConfig.h"
 #include "../../core/ucrtos.h"
 
 void statusLedOn() {
@@ -148,5 +149,5 @@ InputDeviceStates_t getInputDeviceState() {
 }
 
 uint32_t hal_clock() {
-  return clock();
+  return (1000 * xTaskGetTickCount()) / configTICK_RATE_HZ;
 }
