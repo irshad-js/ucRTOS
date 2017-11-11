@@ -63,7 +63,7 @@ endif
 
 OBJDIR=obj
 BINDIR=bin
-MAIN_SRCS = main.c core_main.c hardware.c ssd1289.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c \
+MAIN_SRCS = main.c core_main.c hardware.c nesgamepad.c ssd1289.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c \
 		port.c heap_5.c tasks.c list.c timers.c queue.c \
 		lib/cmsis_boot/startup_stm32f4xx.s # add startup file to build
 
