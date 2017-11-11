@@ -49,15 +49,17 @@ void menuAddSlot(SlotBasedMenu_t* pSbm, const char* label, TransitionFunc pFunc)
   if (pSbm->type != USER_MENU || pSbm->numSlots >= MENU_MAX_SLOTS)
     return;
 
-  // TODO: replace by hal_strcpy_s
   hal_strcpy_s(pSbm->slot[pSbm->numSlots].pLabel, MAX_MENU_ITEM_CHARS, label);
   pSbm->slot[pSbm->numSlots].pNextStateTransitionFunc = pFunc;
   pSbm->numSlots++;
 }
 
 void menuDraw(SlotBasedMenu_t* sbm) {
-  for (int i = 0; i < sbm->numSlots; i++)
-    displayDrawText(sbm->xPos + 28, sbm->yPos - 5 + 18 * i, sbm->slot[i].pLabel, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  for (int i = 0; i < sbm->numSlots; i++) {
+    uint16_t c = sbm->slot[i].pNextStateTransitionFunc ? 0xFF : 0xAA;
+
+    displayDrawText(sbm->xPos + 28, sbm->yPos - 5 + 18 * i, sbm->slot[i].pLabel, c, c, c, 0x00, 0x00, 0x00);
+  }
 
   menuDrawCursor(sbm);
 }
