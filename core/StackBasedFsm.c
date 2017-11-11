@@ -122,9 +122,10 @@ FsmState* fsmGetCurrentState(StackBasedFsm_t* pFsm) {
 }
 
 void fsmTick(StackBasedFsm_t* pFsm) {
-  FsmState* pState = fsmGetCurrentState(pFsm);
+  FsmState* pState;
 
   processInputDevice(pFsm);
+  pState = fsmGetCurrentState(pFsm);
 
   if (pState)
     if (pState->onTick)
