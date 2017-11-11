@@ -11,21 +11,22 @@
 #include "ucrtos.h"
 
 #define mainDEFAULT_TASK_PRIORITY	(tskIDLE_PRIORITY + 1)
-#define blinkTASK_FREQUENY_MS     pdMS_TO_TICKS(100UL)
 
 static void _prvBlinkTask(void *pParameters) {
   (void*)pParameters;
 
+  const int blinkFrequenyMs = 100000;
+
   while (1) {
     // myprintf("blink\n");
     statusLedOn();
-    vTaskDelay(blinkTASK_FREQUENY_MS);
+    delayUs(blinkFrequenyMs);
     statusLedOff();
-    vTaskDelay(blinkTASK_FREQUENY_MS);
+    delayUs(blinkFrequenyMs);
     statusLedOn();
-    vTaskDelay(blinkTASK_FREQUENY_MS);
+    delayUs(blinkFrequenyMs);
     statusLedOff();
-    vTaskDelay(10 * blinkTASK_FREQUENY_MS);
+    delayUs(10 * blinkFrequenyMs);
   }
 }
 
@@ -33,7 +34,7 @@ static void _prvDebugTask(void* pParameters) {
   (void*)pParameters;
 
   for(int i = 1000;; i++) {
-    vTaskDelay(pdMS_TO_TICKS(250UL));
+    delayMs(250);
     myprintf("Tick: %i, upTimeMs: %u ms\n", i, upTimeMs());
   }
 }
@@ -68,7 +69,7 @@ static void _prvGamePadTask(void* pParams) {
     myprintf("Select: %d\n", state.Select);
     myprintf("\n");
 
-    vTaskDelay(pdMS_TO_TICKS(250UL));
+    delayMs(250);
   }
 }
 
@@ -148,6 +149,14 @@ static void _prvGamePadTask(void* pParams) {
 
 uint32_t upTimeMs() {
   return (1000 * xTaskGetTickCount()) / configTICK_RATE_HZ;
+}
+
+void delayUs(uint32_t us) {
+  vTaskDelay(pdUS_TO_TICKS(us));
+}
+
+void delayMs(uint32_t ms) {
+  vTaskDelay(pdMS_TO_TICKS(ms));
 }
 
 int coreMain(void) {

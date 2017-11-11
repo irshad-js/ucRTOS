@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define pdUS_TO_TICKS(xTimeInUs) ((TickType_t)(((TickType_t)(xTimeInUs) * (TickType_t )configTICK_RATE_HZ) / (TickType_t)1000000))
+
 // Timing
 uint32_t upTimeMs();
 void delayUs(uint32_t us);
