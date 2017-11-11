@@ -2,8 +2,7 @@
 #define MAIN_H_
 
 int coreMain();
-int main();
-void init();
 void _init();
+int main();
 
 #endif /* MAIN_H_ */

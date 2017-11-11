@@ -6,12 +6,6 @@
 #include "ucrtos.h"
 #include "main.h"
 
-int main(void) {
-  init();
-
-  return coreMain();
-}
-
 static void initLeds() {
   // The red and blue LEDs (Pin 14 / 15) are used by FSMC and cannot be used
   // However, all LEDs are turned off here:
@@ -68,7 +62,7 @@ static void initDebugUart(uint32_t baudrate) {
   while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
 }
 
-void init() {
+static void init() {
   initLeds();
   initDebugUart(9600);
 
@@ -77,4 +71,10 @@ void init() {
 
   if (SysTick_Config(SystemCoreClock / 1000))
     errorState();
+}
+
+int main(void) {
+  init();
+
+  return coreMain();
 }
