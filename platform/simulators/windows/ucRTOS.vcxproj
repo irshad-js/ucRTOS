@@ -203,6 +203,7 @@
     <ClCompile Include="..\..\..\core\InputDevice.c" />
     <ClCompile Include="..\..\..\core\SlotBasedMenu.c" />
     <ClCompile Include="..\..\..\core\StackBasedFsm.c" />
+    <ClCompile Include="..\..\..\core\states\about.c" />
     <ClCompile Include="..\..\..\core\states\mainMenu.c" />
     <ClCompile Include="..\..\..\lib\AsciiLib\AsciiLib.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c" />
@@ -249,6 +250,7 @@
     <ClInclude Include="..\..\..\core\InputDevice.h" />
     <ClInclude Include="..\..\..\core\SlotBasedMenu.h" />
     <ClInclude Include="..\..\..\core\StackBasedFsm.h" />
+    <ClInclude Include="..\..\..\core\states\about.h" />
     <ClInclude Include="..\..\..\core\states\mainMenu.h" />
     <ClInclude Include="..\..\..\core\ucrtos.h" />
     <ClInclude Include="..\..\..\lib\AsciiLib\AsciiLib.h" />

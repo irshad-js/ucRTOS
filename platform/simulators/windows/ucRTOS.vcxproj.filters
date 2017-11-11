@@ -117,6 +117,9 @@
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c">
       <Filter>lib\FreeRTOS\Source\Portable</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\core\states\about.c">
+      <Filter>core\src\states</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
@@ -182,11 +185,14 @@
     <ClInclude Include="..\..\..\lib\colorprint\colorprint.h">
       <Filter>lib\colorprint</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\states\mainMenu.h">
-      <Filter>core\hdr\states</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\core\InputDevice.h">
       <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\states\about.h">
+      <Filter>core\hdr\states</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\states\mainMenu.h">
+      <Filter>core\hdr\states</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
