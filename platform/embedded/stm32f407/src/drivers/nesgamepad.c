@@ -1,4 +1,4 @@
-#include "NesGamePad.h"
+#include "nesgamepad.h"
 #include "stm32f4xx_conf.h"
 
 // TODO: implement HAL
