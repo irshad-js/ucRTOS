@@ -12,7 +12,7 @@ static void draw() {
   displayDrawText(CENTER, 0 + 0 * 18, "ucRTOS v0.1", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 0 + 1 * 18, "coon@c-base.org", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
-  uint32_t t = hal_clock();
+  uint32_t t = upTimeMs();
   uint32_t s = (t /  1000) % 60;
   uint32_t m = (t / (1000 * 60))      % 60;
   uint32_t h = (t / (1000 * 60 * 60)) % 24;

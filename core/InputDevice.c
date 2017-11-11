@@ -28,22 +28,22 @@ static void processCursorButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
   if (anyDirectionIsPressed(*pButtonStates)) {
     if (isLastDirectionEqual(*pButtonStates, *pLastButtonStates)) {
       if (isInRepetitionMode) {
-        if (hal_clock() > timeOnLastDirectionPress + CURSOR_DELAY_MS_BEFORE_REPEAT) {
-          if (hal_clock() > timeOnLastRepetition + 1000 / CURSOR_SPEED_ITEMS_PER_SECOND) {
+        if (upTimeMs() > timeOnLastDirectionPress + CURSOR_DELAY_MS_BEFORE_REPEAT) {
+          if (upTimeMs() > timeOnLastRepetition + 1000 / CURSOR_SPEED_ITEMS_PER_SECOND) {
             if (pState->onDirectionPress)
               pState->onDirectionPress(pFsm, pButtonStates->South, pButtonStates->North, pButtonStates->West,
                   pButtonStates->East);
 
             // hal_printf("timeOnLastRepetition: %d, repeat on: %d", timeOnLastRepetition, timeOnLastRepetition + 1000 / CURSOR_SPEED_ITEMS_PER_SECOND);
 
-            timeOnLastRepetition = hal_clock();
+            timeOnLastRepetition = upTimeMs();
           }
         }
       }
       else {
-        *pTimeOnLastButtonPress = hal_clock();
-        timeOnLastDirectionPress = hal_clock();
-        timeOnLastRepetition = hal_clock();
+        *pTimeOnLastButtonPress = upTimeMs();
+        timeOnLastDirectionPress = upTimeMs();
+        timeOnLastRepetition = upTimeMs();
         isInRepetitionMode = true;
 
         // hal_printf("In repetition mode");
@@ -69,14 +69,14 @@ static void processButton(StackBasedFsm_t* pFsm, uint16_t currentButtonState, ui
     if (onButtonPress)
       onButtonPress(pFsm);
 
-    *pTimeOnLastButtonPress = hal_clock();
+    *pTimeOnLastButtonPress = upTimeMs();
   }
 
   if (!currentButtonState && lastButtonState) {
     if (onButtonRelease)
       onButtonRelease(pFsm);
 
-    *pTimeOnLastButtonPress = hal_clock(); // CHECKME: Is this also needed on release for debouce?
+    *pTimeOnLastButtonPress = upTimeMs(); // CHECKME: Is this also needed on release for debouce?
   }
 }
 
@@ -91,7 +91,7 @@ static void processActionButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
 }
 
 static bool isDebouncing(uint32_t timeOnLastButtonPress) {
-  return hal_clock() > timeOnLastButtonPress + INPUT_DEVICE_DEBOUNCE_MS ? false : true;
+  return upTimeMs() > timeOnLastButtonPress + INPUT_DEVICE_DEBOUNCE_MS ? false : true;
 }
 
 void processInputDevice(StackBasedFsm_t* pFsm) {

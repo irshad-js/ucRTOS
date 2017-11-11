@@ -34,7 +34,7 @@ static void _prvDebugTask(void* pParameters) {
 
   for(int i = 1000;; i++) {
     vTaskDelay(pdMS_TO_TICKS(250UL));
-    myprintf("Tick: %i, hal_clock: %u ms\n", i, hal_clock());
+    myprintf("Tick: %i, upTimeMs: %u ms\n", i, upTimeMs());
   }
 }
 
@@ -146,7 +146,7 @@ static void _prvGamePadTask(void* pParams) {
 //   while(1);
 // }
 
-uint32_t hal_clock() {
+uint32_t upTimeMs() {
   return (1000 * xTaskGetTickCount()) / configTICK_RATE_HZ;
 }
 

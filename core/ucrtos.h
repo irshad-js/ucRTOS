@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 // Timing
-uint32_t hal_clock();
+uint32_t upTimeMs();
 void delayUs(uint32_t us);
 void delayMs(uint32_t ms);
 
