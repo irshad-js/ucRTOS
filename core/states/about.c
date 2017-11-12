@@ -50,7 +50,16 @@ static void draw() {
 
   strcat(pUptime, pSeconds);
 
-  displayDrawText(CENTER, 0 + 3 * 18, pUptime, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(CENTER, 0 + 4 * 18, pUptime, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+
+  char pBuildInfo[64];
+  strcpy(pBuildInfo, "Last build: ");
+  strcat(pBuildInfo, __DATE__);
+  strcat(pBuildInfo, ", ");
+  strcat(pBuildInfo, __TIME__);
+
+  displayDrawText(CENTER, 0 + 2 * 18, pBuildInfo, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+
   displayDraw();
 }
 
