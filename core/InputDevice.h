@@ -17,9 +17,10 @@ typedef struct {
     Connected : 1;
 } InputDeviceStates_t;
 
-void setupInputDevice();
+void inputDeviceInit();
 InputDeviceStates_t getInputDeviceState();
 void debugPrintInputDeviceState();
 void processInputDevice(StackBasedFsm_t* pFsm);
+void hardwareInputDeviceInit();
 
 #endif // _INPUTDEVICE_H

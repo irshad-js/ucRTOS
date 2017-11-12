@@ -44,6 +44,7 @@ static void _prvDisplayTask(void* pParameters) {
 
   myprintf("Display task started\n");
   displayInit();
+  inputDeviceInit();
 
   StackBasedFsm_t fsm;
   fsmInit(&fsm);

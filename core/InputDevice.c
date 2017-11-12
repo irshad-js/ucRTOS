@@ -108,3 +108,7 @@ void processInputDevice(StackBasedFsm_t* pFsm) {
     lastButtonStates = buttonStates;
   }
 }
+
+void inputDeviceInit() {
+  hardwareInputDeviceInit();
+}

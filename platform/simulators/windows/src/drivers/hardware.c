@@ -111,6 +111,10 @@ void hal_strcpy_s(char* dst, int maxSize, const char* src) {
   }
 }
 
+void hardwareInputDeviceInit() {
+
+}
+
 // Input device:
 
 #define KEY_ACTION  VK_RETURN

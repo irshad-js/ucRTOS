@@ -44,8 +44,6 @@ void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax) {
 
   SSD1289_Init();
   SSD1289_Clear(Black);
-
-  setupNesGamePad(); // TODO: create hardwareInputInit function
 }
 
 void hardwareDisplayDraw() {
@@ -67,6 +65,11 @@ void hardwareDisplayDraw() {
 
       SSD1289_SetPoint(x, y, RGB565CONVERT(red, green, blue));
     }
+}
+
+// Input Device
+void hardwareInputDeviceInit() {
+  setupNesGamePad();
 }
 
 // Dummy function to avoid compiler error (Is called by libc_init_array()):
