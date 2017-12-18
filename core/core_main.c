@@ -149,7 +149,7 @@ static void _prvGamePadTask(void* pParams) {
 // }
 
 uint32_t upTimeMs() {
-  return (1000 * xTaskGetTickCount()) / configTICK_RATE_HZ;
+  return xTaskGetTickCount() / (configTICK_RATE_HZ / 1000);
 }
 
 void delayUs(uint32_t us) {
