@@ -12,9 +12,20 @@ static void draw() {
   displayDrawText(CENTER, 0 + 0 * 18, "ucRTOS v0.1", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 0 + 1 * 18, "coon@c-base.org", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
+  // debug
+  int numTicks = xTaskGetTickCount();
+  char pTicks[64];
+  char pNumTicks[64];
+  itoa(numTicks, pNumTicks, 10);
+
+  strcpy(pTicks, "Num Ticks: ");
+  strcat(pTicks, pNumTicks);
+  displayDrawText(CENTER, 0 + 3 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  // -
+
   uint32_t t = upTimeMs();
-  uint32_t s = (t /  1000) % 60;
-  uint32_t m = (t / (1000 * 60))      % 60;
+  uint32_t s = (t / 1000) % 60;
+  uint32_t m = (t / (1000 * 60)) % 60;
   uint32_t h = (t / (1000 * 60 * 60)) % 24;
   uint32_t d = (t / (1000 * 60 * 60 * 24));
 
@@ -33,7 +44,7 @@ static void draw() {
   strcat(pUptime, pDays);
   strcat(pUptime, " days, ");
 
-  if(h < 10)
+  if (h < 10)
     strcat(pUptime, "0");
 
   strcat(pUptime, pHours);
