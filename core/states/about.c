@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "../../core/ucrtos.h"
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
 #include "../SlotBasedMenu.h"
@@ -12,16 +13,13 @@ static void draw() {
   displayDrawText(CENTER, 0 + 0 * 18, "ucRTOS v0.1", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 0 + 1 * 18, "coon@c-base.org", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
-  // debug
-  int numTicks = xTaskGetTickCount();
-  char pTicks[64];
-  char pNumTicks[64];
-  itoa(numTicks, pNumTicks, 10);
+  char pBuildInfo[64];
+  strcpy(pBuildInfo, "Last build: ");
+  strcat(pBuildInfo, __DATE__);
+  strcat(pBuildInfo, ", ");
+  strcat(pBuildInfo, __TIME__);
 
-  strcpy(pTicks, "Num Ticks: ");
-  strcat(pTicks, pNumTicks);
-  displayDrawText(CENTER, 0 + 3 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  // -
+  displayDrawText(CENTER, 0 + 2 * 18, pBuildInfo, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
   uint32_t t = upTimeMs();
   uint32_t s = (t / 1000) % 60;
@@ -61,15 +59,23 @@ static void draw() {
 
   strcat(pUptime, pSeconds);
 
-  displayDrawText(CENTER, 0 + 4 * 18, pUptime, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(CENTER, 0 + 3 * 18, pUptime, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
-  char pBuildInfo[64];
-  strcpy(pBuildInfo, "Last build: ");
-  strcat(pBuildInfo, __DATE__);
-  strcat(pBuildInfo, ", ");
-  strcat(pBuildInfo, __TIME__);
+  // debug
+  int numTicks = xTaskGetTickCount();
+  char pTicks[64];
+  char pNumTicks[64];
+  itoa(numTicks, pNumTicks, 10);
 
-  displayDrawText(CENTER, 0 + 2 * 18, pBuildInfo, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  strcpy(pTicks, "Num Ticks (xTaskGetTickCount): ");
+  strcat(pTicks, pNumTicks);
+  displayDrawText(CENTER, 0 + 4 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+
+  numTicks = clock();
+  strcpy(pTicks, "Num Ticks (clock):             ");
+  strcat(pTicks, pNumTicks);
+  displayDrawText(CENTER, 0 + 5 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  // -
 
   displayDraw();
 }
