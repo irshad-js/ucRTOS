@@ -72,7 +72,8 @@ static void draw() {
   displayDrawText(CENTER, 0 + 4 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
   numTicks = clock();
-  strcpy(pTicks, "Num Ticks (clock):             ");
+  itoa(numTicks, pNumTicks, 10);
+  strcpy(pTicks, "Num Ticks (GetTickCount):      ");
   strcat(pTicks, pNumTicks);
   displayDrawText(CENTER, 0 + 5 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   // -
