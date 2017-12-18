@@ -36,11 +36,8 @@ void displayDraw() {
 
 void displayClear() {
   for (int y = 0; y < DISPLAY_RESOLUTION_Y; ++y)
-    for (int x = 0; x < DISPLAY_RESOLUTION_X; ++x) {
-      int index = y * DISPLAY_RESOLUTION_X + x;
-
+    for (int x = 0; x < DISPLAY_RESOLUTION_X; ++x)
       displaySetPixel(x, y, 0, 0, 0);
-    }
 }
 
 void displayDrawImage(uint16_t xPos, uint16_t yPos, const uint8_t* pImg) {
