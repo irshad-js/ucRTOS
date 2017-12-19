@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -201,10 +201,11 @@
     <ClCompile Include="..\..\..\core\display.c" />
     <ClCompile Include="..\..\..\core\images.c" />
     <ClCompile Include="..\..\..\core\InputDevice.c" />
+    <ClCompile Include="..\..\..\core\screens\about.c" />
+    <ClCompile Include="..\..\..\core\screens\mainMenu.c" />
+    <ClCompile Include="..\..\..\core\screens\_example.c" />
     <ClCompile Include="..\..\..\core\SlotBasedMenu.c" />
     <ClCompile Include="..\..\..\core\StackBasedFsm.c" />
-    <ClCompile Include="..\..\..\core\states\about.c" />
-    <ClCompile Include="..\..\..\core\states\mainMenu.c" />
     <ClCompile Include="..\..\..\lib\AsciiLib\AsciiLib.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c" />
     <ClCompile Include="..\..\..\lib\mystdio\myprintf.c" />
@@ -248,10 +249,11 @@
     <ClInclude Include="..\..\..\core\display.h" />
     <ClInclude Include="..\..\..\core\images.h" />
     <ClInclude Include="..\..\..\core\InputDevice.h" />
+    <ClInclude Include="..\..\..\core\screens\about.h" />
+    <ClInclude Include="..\..\..\core\screens\mainMenu.h" />
+    <ClInclude Include="..\..\..\core\screens\_example.h" />
     <ClInclude Include="..\..\..\core\SlotBasedMenu.h" />
     <ClInclude Include="..\..\..\core\StackBasedFsm.h" />
-    <ClInclude Include="..\..\..\core\states\about.h" />
-    <ClInclude Include="..\..\..\core\states\mainMenu.h" />
     <ClInclude Include="..\..\..\core\ucrtos.h" />
     <ClInclude Include="..\..\..\lib\AsciiLib\AsciiLib.h" />
     <ClInclude Include="..\..\..\lib\colorprint\colorprint.h" />

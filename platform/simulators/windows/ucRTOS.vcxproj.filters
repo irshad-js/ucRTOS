@@ -52,10 +52,10 @@
     <Filter Include="lib\colorprint">
       <UniqueIdentifier>{c671dba8-8cd8-40ef-996e-bab89218e156}</UniqueIdentifier>
     </Filter>
-    <Filter Include="core\src\states">
+    <Filter Include="core\src\screens">
       <UniqueIdentifier>{92e22cae-ec9e-4b1c-8499-8da5ef73e356}</UniqueIdentifier>
     </Filter>
-    <Filter Include="core\hdr\states">
+    <Filter Include="core\hdr\screens">
       <UniqueIdentifier>{518cc4bf-36c3-4f29-9394-fa55c20c1334}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -108,17 +108,20 @@
     <ClCompile Include="..\..\..\core\StackBasedFsm.c">
       <Filter>core\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\core\states\mainMenu.c">
-      <Filter>core\src\states</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\core\InputDevice.c">
       <Filter>core\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c">
       <Filter>lib\FreeRTOS\Source\Portable</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\core\states\about.c">
-      <Filter>core\src\states</Filter>
+    <ClCompile Include="..\..\..\core\screens\_example.c">
+      <Filter>core\src\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\screens\about.c">
+      <Filter>core\src\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\screens\mainMenu.c">
+      <Filter>core\src\screens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,11 +191,14 @@
     <ClInclude Include="..\..\..\core\InputDevice.h">
       <Filter>core\hdr</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\states\about.h">
-      <Filter>core\hdr\states</Filter>
+    <ClInclude Include="..\..\..\core\screens\_example.h">
+      <Filter>core\hdr\screens</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\states\mainMenu.h">
-      <Filter>core\hdr\states</Filter>
+    <ClInclude Include="..\..\..\core\screens\about.h">
+      <Filter>core\hdr\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\screens\mainMenu.h">
+      <Filter>core\hdr\screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
