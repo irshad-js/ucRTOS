@@ -12,10 +12,12 @@
 //
 // - Each screen has its own .c file, which consists of a collection of callbacks.
 // - The onEnter() callback must be set. All other callbacks are optional.
-// - At the end of the file there is always an initialization function, which activates the state by setting
+// - At the end of the file there is always an initialization function, which activates the screen by setting
 //   its callbacks.
-// - The context struct can be used to store local variables. If this state gets called multiple times in a
-//   state chain, an array of contexts can be used, to get an own context for each state.
+// - The context struct can be used to store local variables.
+// - Note: A screen should not be called twice in a row
+//   (e.g. mainmenu -> exampleScreen -> otherScreen -> exampleScreen) since the second screen will have the same
+//   context as the first screen and will overwrite it.
 //--------------------------------------------------------------------------------------------------------------
 
 static struct {
