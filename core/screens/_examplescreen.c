@@ -2,7 +2,7 @@
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
 
-#include "_example.h"
+#include "_examplescreen.h"
 
 //--------------------------------------------------------------------------------------------------------------
 // Example screen implementation

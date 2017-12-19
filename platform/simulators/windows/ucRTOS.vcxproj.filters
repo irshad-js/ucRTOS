@@ -114,13 +114,13 @@
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c">
       <Filter>lib\FreeRTOS\Source\Portable</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\core\screens\_example.c">
+    <ClCompile Include="..\..\..\core\screens\aboutscreen.c">
       <Filter>core\src\screens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\core\screens\about.c">
+    <ClCompile Include="..\..\..\core\screens\_examplescreen.c">
       <Filter>core\src\screens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\core\screens\mainMenu.c">
+    <ClCompile Include="..\..\..\core\screens\mainmenuscreen.c">
       <Filter>core\src\screens</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,13 +191,13 @@
     <ClInclude Include="..\..\..\core\InputDevice.h">
       <Filter>core\hdr</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\screens\_example.h">
+    <ClInclude Include="..\..\..\core\screens\_examplescreen.h">
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\screens\about.h">
+    <ClInclude Include="..\..\..\core\screens\aboutscreen.h">
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\screens\mainMenu.h">
+    <ClInclude Include="..\..\..\core\screens\mainmenuscreen.h">
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
   </ItemGroup>

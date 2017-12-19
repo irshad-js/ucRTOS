@@ -201,9 +201,9 @@
     <ClCompile Include="..\..\..\core\display.c" />
     <ClCompile Include="..\..\..\core\images.c" />
     <ClCompile Include="..\..\..\core\InputDevice.c" />
-    <ClCompile Include="..\..\..\core\screens\about.c" />
-    <ClCompile Include="..\..\..\core\screens\mainMenu.c" />
-    <ClCompile Include="..\..\..\core\screens\_example.c" />
+    <ClCompile Include="..\..\..\core\screens\aboutscreen.c" />
+    <ClCompile Include="..\..\..\core\screens\mainmenuscreen.c" />
+    <ClCompile Include="..\..\..\core\screens\_examplescreen.c" />
     <ClCompile Include="..\..\..\core\SlotBasedMenu.c" />
     <ClCompile Include="..\..\..\core\StackBasedFsm.c" />
     <ClCompile Include="..\..\..\lib\AsciiLib\AsciiLib.c" />
@@ -249,9 +249,9 @@
     <ClInclude Include="..\..\..\core\display.h" />
     <ClInclude Include="..\..\..\core\images.h" />
     <ClInclude Include="..\..\..\core\InputDevice.h" />
-    <ClInclude Include="..\..\..\core\screens\about.h" />
-    <ClInclude Include="..\..\..\core\screens\mainMenu.h" />
-    <ClInclude Include="..\..\..\core\screens\_example.h" />
+    <ClInclude Include="..\..\..\core\screens\aboutscreen.h" />
+    <ClInclude Include="..\..\..\core\screens\mainmenuscreen.h" />
+    <ClInclude Include="..\..\..\core\screens\_examplescreen.h" />
     <ClInclude Include="..\..\..\core\SlotBasedMenu.h" />
     <ClInclude Include="..\..\..\core\StackBasedFsm.h" />
     <ClInclude Include="..\..\..\core\ucrtos.h" />

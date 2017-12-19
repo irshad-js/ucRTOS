@@ -2,9 +2,9 @@
 #include "../display.h"
 #include "../SlotBasedMenu.h"
 
-#include "about.h"
-#include "_example.h"
-#include "mainMenu.h"
+#include "aboutscreen.h"
+#include "_examplescreen.h"
+#include "mainmenuscreen.h"
 
 // TODO: Rename state to screen?
 

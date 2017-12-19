@@ -7,7 +7,7 @@
 #include "semphr.h"
 // #include "tm_stm32f4_fatfs.h" // TODO: implement proper abstraction layer
 #include "InputDevice.h"
-#include "screens/mainMenu.h"
+#include "screens/mainmenuscreen.h"
 #include "ucrtos.h"
 
 #define mainDEFAULT_TASK_PRIORITY	(tskIDLE_PRIORITY + 1)

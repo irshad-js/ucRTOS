@@ -6,7 +6,7 @@
 #include "../display.h"
 #include "../SlotBasedMenu.h"
 
-#include "about.h"
+#include "aboutscreen.h"
 
 static void draw() {
   displayClear(0x00, 0x00, 0x00);
