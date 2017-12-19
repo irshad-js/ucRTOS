@@ -4,24 +4,22 @@
 
 #include "_example.h"
 
-// TODO: Rename state to screen?
-
 //--------------------------------------------------------------------------------------------------------------
-// Example state implementation
+// Example screen implementation
 // ============================
 //
-// This example shows, how to implement a state.
+// This example shows, how to implement a screen.
 //
-// - A state has always its own file, which consists of a collection of callbacks.
+// - Each screen has its own .c file, which consists of a collection of callbacks.
 // - The onEnter() callback must be set. All other callbacks are optional.
 // - At the end of the file there is always an initialization function, which activates the state by setting
-//   the callbacks.
+//   its callbacks.
 // - The context struct can be used to store local variables. If this state gets called multiple times in a
 //   state chain, an array of contexts can be used, to get an own context for each state.
 //--------------------------------------------------------------------------------------------------------------
 
 static struct {
-  // put your local state data here!
+  // put your local variables here. This can also be used to return a value to the previous state:
 
   int someLocalVariable;
   int* pReturnValue;
@@ -44,7 +42,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   // It must be defined in every state and is used for initialization.
   // This can also be used for passing a return value to the previous state.
 
-  ExampleParams* pExampleParams = (ExampleParams*)pParams;
+  ExampleScreenParams* pExampleParams = (ExampleScreenParams*)pParams;
   if (!pExampleParams)
     hal_printfWarning("Param is nullptr");
   else {

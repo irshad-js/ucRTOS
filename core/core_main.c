@@ -7,7 +7,7 @@
 #include "semphr.h"
 // #include "tm_stm32f4_fatfs.h" // TODO: implement proper abstraction layer
 #include "InputDevice.h"
-#include "states/mainMenu.h"
+#include "screens/mainMenu.h"
 #include "ucrtos.h"
 
 #define mainDEFAULT_TASK_PRIORITY	(tskIDLE_PRIORITY + 1)
@@ -48,7 +48,7 @@ static void _prvDisplayTask(void* pParameters) {
 
   StackBasedFsm_t fsm;
   fsmInit(&fsm);
-  fsmPush(&fsm, mainMenu, 0);
+  fsmPush(&fsm, mainMenuScreen, 0);
 
   while (1) {
     fsmTick(&fsm);

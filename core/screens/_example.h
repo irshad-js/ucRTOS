@@ -4,7 +4,7 @@
 typedef struct {
   int someInt;
   int* pReturnValue;
-} ExampleParams;
+} ExampleScreenParams;
 
 void exampleScreen(StackBasedFsm_t* pFsm, FsmState* pState);
 
