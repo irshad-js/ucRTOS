@@ -1,10 +1,8 @@
+#include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
-#include "../SlotBasedMenu.h"
 
-#include "about.h"
 #include "_example.h"
-#include "mainMenu.h"
 
 // TODO: Rename state to screen?
 
@@ -23,107 +21,124 @@
 //--------------------------------------------------------------------------------------------------------------
 
 static struct {
-  SlotBasedMenu_t menu;
+  // put your local state data here!
 
-} _context;
+  int someLocalVariable;
+  int* pReturnValue;
+
+} context;
 
 static void draw() {
-  displayClear(0x00, 0x00, 0x00);
-  displayDrawText(CENTER, 0 + 0, "Welcome to ucRTOS", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(CENTER, 0 + 18, "This is a test screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayClear();
 
-  menuDraw(&_context.menu);
+  displayDrawText(CENTER, 0 + 0 * 18, "Example screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(CENTER, 0 + 1 * 18, "Press 'Back' button to exit", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+
   displayDraw();
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
-  hal_printf("mainMenu::onEnter()");
+  hal_printf("example::onEnter()");
 
-  userMenuInit(&_context.menu, pFsm, 3, 45);
-  menuAddSlot(&_context.menu, "Button Test", 0);
-  menuAddSlot(&_context.menu, "Example", exampleScreen);
-  menuAddSlot(&_context.menu, "About", aboutScreen);
+  // This function is called, when the state is entered for the first time.
+  // It must be defined in every state and is used for initialization.
+  // This can also be used for passing a return value to the previous state.
+
+  ExampleParams* pExampleParams = (ExampleParams*)pParams;
+  if (!pExampleParams)
+    hal_printfWarning("Param is nullptr");
+  else {
+    context.someLocalVariable = pExampleParams->someInt;
+    context.pReturnValue = pExampleParams->pReturnValue;
+  }
 
   draw();
 }
 
 static void onActionPress(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onActionPress()");
+  hal_printf("example::onActionPress()");
 
-  userMenuTransitToSelectedSlot(&_context.menu, 0);
+  // This function is called, when the player presses the action button on the game pad.
+  // On the NES game pad this is the 'A' button.
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onBackPress()");
+  hal_printf("example::onBackPress()");
 
-  userMenuTransitBack(&_context.menu);
+  // This function is called, when the player presses the back button on the Gamepad.
+  // On the NES game pad this is the 'B' button.
+
+  // In most cases you want to go to the previous screen. This is done by calling the 'leaveState()' function:
+  leaveState(pFsm);
 }
 
 static void onStartPress(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onStartPress()");
+  hal_printf("example::onStartPress()");
 
   // This function is called, when the player presses the Start button on the Gamepad.
 }
 
 static void onSelectPress(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onSelectPress()");
+  hal_printf("example::onSelectPress()");
 
   // This function is called, when the player presses the Select button on the Gamepad.
 }
 
 static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
-  hal_printf("mainMenu::onDirectionPress()");
+  hal_printf("example::onDirectionPress()");
 
-  if (south)
-    menuMoveCursorDown(&_context.menu);
-
-  if (north)
-    menuMoveCursorUp(&_context.menu);
-
-  draw();
+  // This function is called, if the user presses one of the direction buttons on the game pad.
 }
 
 static void onActionRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onActionRelease()");
+  hal_printf("example::onActionRelease()");
 
   // This function is called, when the player releases the action button on the game pad.
   // On the NES game pad this is the 'A' button.
 }
 
 static void onBackRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onBackRelease()");
+  hal_printf("example::onBackRelease()");
 
   // This function is called, when the player releases the back button on the Gamepad.
   // On the NES game pad this is the 'B' button.
 }
 
 static void onStartRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onStartRelease()");
+  hal_printf("example::onStartRelease()");
 
   // This function is called, when the player releases the Start button on the Gamepad.
 }
 
 static void onSelectRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onSelectRelease()");
+  hal_printf("example::onSelectRelease()");
 
   // This function is called, when the player releases the Select button on the Gamepad.
 }
 
 static void onReenter(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onReenter()");
+  hal_printf("example::onReenter()");
 
-  draw();
+  // This function is called, when the user pressed the back button on a higher state and lands back in this
+  // state again.
 }
 
 static void onLeaveState(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenu::onLeaveState()");
+  hal_printf("example::onLeaveState()");
 
   // This function is called, when the user leaves the current state. Either by going to a next state or by
   // going back to the previous state.
+
+  if (!context.pReturnValue) {
+    hal_printfWarning("Cannot return value. pReturnValue is null");
+    return;
+  }
+
+  *context.pReturnValue = 42;
 }
 
 static void onTick(StackBasedFsm_t* pFsm) {
-  // hal_printf("mainMenu::onTick()");
+  // hal_printf("example::onTick()");
 
   // This function is called frequently as fast as possible, as long as this state is active. This state can be
   // used for time critical applications like animations, audio playback or advanced user interaction.
@@ -131,7 +146,7 @@ static void onTick(StackBasedFsm_t* pFsm) {
 
 // Always implement this as last function of your state file:
 
-void mainMenu(StackBasedFsm_t* pFsm, FsmState* pState) {
+void exampleScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
   // This callback MUST be set:
   pState->onEnterState    = onEnter;
 

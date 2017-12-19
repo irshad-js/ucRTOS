@@ -1,8 +1,8 @@
-#ifndef __EXAMPLESTATE_H__
-#define __EXAMPLESTATE_H__
+#ifndef __ABOUTSCREEN_H__
+#define __ABOUTSCREEN_H__
 
 #include "../StackBasedFsm.h"
 
 void aboutScreen(StackBasedFsm_t* pFsm, FsmState* pState);
 
-#endif // __EXAMPLESTATE_H__
+#endif // __ABOUTSCREEN_H__

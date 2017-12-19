@@ -6,7 +6,7 @@
 typedef struct {
   int someInt;
   int* pReturnValue;
-} ExampleParams;
+} MainMenuParams;
 
 void mainMenu(StackBasedFsm_t* pFsm, FsmState* pState);
 
