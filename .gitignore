@@ -18,3 +18,5 @@
 platform/stm32f407/ide/coocox/ucRTOS
 /platform/simulators/windows/.vs/ucRTOS/v15/ipch/AutoPCH/72d250fbd7579081/*.ipch
 *.ipch
+/platform/simulators/windows/*.opensdf
+/platform/simulators/windows/*.sdf
