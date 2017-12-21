@@ -244,6 +244,7 @@
     </ClCompile>
     <ClCompile Include="src\drivers\hardware.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\platform_hooks.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\core\config.h" />
