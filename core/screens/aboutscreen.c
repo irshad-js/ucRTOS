@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "../../core/ucrtos.h"
 #include "../../lib/colorprint/colorprint.h"

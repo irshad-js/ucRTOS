@@ -3,6 +3,7 @@
 #include "config.h"
 #include "../lib/colorprint/colorprint.h"
 #include "StackBasedFsm.h"
+#include "InputDevice.h"
 
 // CHECKME: decouple state handling from fsm?
 

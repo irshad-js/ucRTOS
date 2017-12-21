@@ -4,6 +4,8 @@
 #include "images.h"
 #include "display.h"
 
+void hal_strcpy_s(char* dst, int maxSize, const char* src);
+
 static void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos) {
   pSbm->type = INVALID_MENU;
   pSbm->xPos = xPos;
