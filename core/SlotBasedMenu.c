@@ -56,9 +56,11 @@ void menuAddSlot(SlotBasedMenu_t* pSbm, const char* label, TransitionFunc pFunc)
 
 void menuDraw(SlotBasedMenu_t* sbm) {
   for (int i = 0; i < sbm->numSlots; i++) {
-    uint16_t c = sbm->slot[i].pNextStateTransitionFunc ? 0xFF : 0xAA;
+    uint16_t x = (uint16_t)(sbm->xPos + 28);
+    uint16_t y = (uint16_t)(sbm->yPos - 5 + 18 * i);
+    uint8_t c = sbm->slot[i].pNextStateTransitionFunc ? 0xFF : 0xAA;
 
-    displayDrawText(sbm->xPos + 28, sbm->yPos - 5 + 18 * i, sbm->slot[i].pLabel, c, c, c, 0x00, 0x00, 0x00);
+    displayDrawText(x, y, sbm->slot[i].pLabel, c, c, c, 0x00, 0x00, 0x00);
   }
 
   menuDrawCursor(sbm);

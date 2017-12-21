@@ -32,10 +32,10 @@ static void draw() {
   char pHours[16];
   char pDays[16];
   char pUptime[64];
-  itoa(s, pSeconds, 10);
-  itoa(m, pMinutes, 10);
-  itoa(h, pHours, 10);
-  itoa(d, pDays, 10);
+  _itoa(s, pSeconds, 10);
+  _itoa(m, pMinutes, 10);
+  _itoa(h, pHours, 10);
+  _itoa(d, pDays, 10);
 
   strcpy(pUptime, "Uptime: ");
 
@@ -65,20 +65,20 @@ static void draw() {
   int numTicks = xTaskGetTickCount();
   char pTicks[64];
   char pNumTicks[64];
-  itoa(numTicks, pNumTicks, 10);
+  _itoa(numTicks, pNumTicks, 10);
 
   strcpy(pTicks, "Num Ticks (xTaskGetTickCount): ");
   strcat(pTicks, pNumTicks);
   displayDrawText(CENTER, 0 + 4 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
   numTicks = clock();
-  itoa(numTicks, pNumTicks, 10);
+  _itoa(numTicks, pNumTicks, 10);
   strcpy(pTicks, "Num Ticks (clocl):      ");
   strcat(pTicks, pNumTicks);
   displayDrawText(CENTER, 0 + 5 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
   numTicks = upTimeMs();
-  itoa(numTicks, pNumTicks, 10);
+  _itoa(numTicks, pNumTicks, 10);
   strcpy(pTicks, "Num Ticks (uptimeMs):      ");
   strcat(pTicks, pNumTicks);
   displayDrawText(CENTER, 0 + 6 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
