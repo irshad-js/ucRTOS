@@ -20,3 +20,4 @@ platform/stm32f407/ide/coocox/ucRTOS
 *.ipch
 /platform/simulators/windows/*.opensdf
 /platform/simulators/windows/*.sdf
+/platform/embedded/stm32f407/ide/coocox/ucRTOS/Debug/bin
