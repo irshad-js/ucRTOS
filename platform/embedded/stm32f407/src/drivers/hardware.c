@@ -3,6 +3,7 @@
 #include "ssd1289.h"
 #include "nesgamepad.h"
 #include "ucrtos.h"
+#include "display.h"
 
 // LED
 
@@ -49,21 +50,17 @@ void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax) {
 void hardwareDisplayDraw() {
   for(int y = 0; y < _yMax; ++y)
     for(int x = 0; x < _xMax; ++x) {
-      typedef struct Bla {
-        uint8_t
-        red   : 2,
-        green : 3,
-        blue  : 2;
-      };
+      int idx = y * _xMax + x;
+      int subIdx = idx / 2;
+      int isHigh = idx % 2 == 0;
+      uint8_t ci = 0;
 
-      int index = y * _xMax + x;
-      struct Bla* p = (struct Bla*)&_pFrameBuffer[index];
+      if(!isHigh)
+        ci = _pFrameBuffer[subIdx] & 0x0F;
+      else
+        ci = (_pFrameBuffer[subIdx] & 0xF0) >> 4;
 
-      uint8_t red   = (p->red   * 255) / 3;
-      uint8_t green = (p->green * 255) / 7;
-      uint8_t blue  = (p->blue  * 255) / 3;
-
-      SSD1289_SetPoint(x, y, RGB565CONVERT(red, green, blue));
+      SSD1289_SetPoint(x, y, RGB565CONVERT(pPalette[ci].red, pPalette[ci].green, pPalette[ci].blue));
     }
 }
 

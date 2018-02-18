@@ -8,7 +8,7 @@
 static uint8_t _pDisplayFrameBuffer[(DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y) / 2];
 
 // Apple Macintosh 16 color default palette:
-extern Color pPalette[16] = {
+Color pPalette[16] = {
   { 255, 255, 255 }, // White
   { 255, 255,   0 }, // Yellow
   { 255, 102,   0 }, // Orange
