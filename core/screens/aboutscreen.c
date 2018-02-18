@@ -59,25 +59,7 @@ static void draw() {
     strcat(pUptime, "0");
 
   strcat(pUptime, pSeconds);
-
   displayDrawText(CENTER, 0 + 3 * 18, pUptime, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-
-  // debug
-  int numTicks = xTaskGetTickCount();
-  char pTicks[64];
-  char pNumTicks[64];
-  itoa(numTicks, pNumTicks, 10);
-
-  strcpy(pTicks, "Num Ticks (xTaskGetTickCount): ");
-  strcat(pTicks, pNumTicks);
-  displayDrawText(CENTER, 0 + 4 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-
-  numTicks = upTimeMs();
-  itoa(numTicks, pNumTicks, 10);
-  strcpy(pTicks, "Num Ticks (uptimeMs):      ");
-  strcat(pTicks, pNumTicks);
-  displayDrawText(CENTER, 0 + 6 * 18, pTicks, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  // -
 
   displayDraw();
 }
