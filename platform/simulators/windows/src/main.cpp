@@ -54,9 +54,15 @@ public:
 
     for (int y = 0; y < yMax_; ++y) {
       for (int x = 0; x < xMax_; ++x) {
+        int idx = y * xMax_ + x;
+        int subIdx = idx / 2;
+        int isHigh = idx % 2 == 0;
+        uint8_t ci = 0;
 
-        int index = y * xMax_ + x;
-        int ci = pFrameBuffer_[index];
+        if (!isHigh)
+          ci = pFrameBuffer_[subIdx] & 0x0F;
+        else
+          ci = (pFrameBuffer_[subIdx] & 0xF0) >> 4;
 
         pen.SetColour(pPalette[ci].red, pPalette[ci].green, pPalette[ci].blue);
 

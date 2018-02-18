@@ -3,9 +3,9 @@
 #include "display.h"
 
 #define DISPLAY_RESOLUTION_X 320
-#define DISPLAY_RESOLUTION_Y 240 // 130
+#define DISPLAY_RESOLUTION_Y 240
 
-static uint8_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y]; // TODO: divide by two
+static uint8_t _pDisplayFrameBuffer[(DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y) / 2];
 
 // Apple Macintosh 16 color default palette:
 extern Color pPalette[16] = {
@@ -50,7 +50,18 @@ void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
     }
   }
 
-  _pDisplayFrameBuffer[y * DISPLAY_RESOLUTION_X + x] = colorIndex;
+  int idx = y * DISPLAY_RESOLUTION_X + x;
+  int subIdx = idx / 2;
+  int isHigh = idx % 2 == 0;
+
+  if (!isHigh) {
+    _pDisplayFrameBuffer[subIdx] &= 0xF0;
+    _pDisplayFrameBuffer[subIdx] |= colorIndex;
+  }
+  else {
+    _pDisplayFrameBuffer[subIdx] &= 0x0F;
+    _pDisplayFrameBuffer[subIdx] |= (colorIndex << 4);
+  }
 }
 
 void displayDraw() {
