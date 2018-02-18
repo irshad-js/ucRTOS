@@ -6,7 +6,6 @@
 #define DISPLAY_RESOLUTION_Y 240 // 130
 
 static uint8_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y]; // TODO: divide by two
-static uint8_t _pDisplayFrameBufferOld[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
 
 // Apple Macintosh 16 color default palette:
 extern Color pPalette[16] = {
@@ -29,60 +28,29 @@ extern Color pPalette[16] = {
 };
 
 void displayInit() {
-  hardwareDisplayInit(_pDisplayFrameBuffer, _pDisplayFrameBufferOld, DISPLAY_RESOLUTION_X, DISPLAY_RESOLUTION_Y);
+  hardwareDisplayInit(_pDisplayFrameBuffer, DISPLAY_RESOLUTION_X, DISPLAY_RESOLUTION_Y);
 }
 
 void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
   if (x >= DISPLAY_RESOLUTION_X || y >= DISPLAY_RESOLUTION_Y)
     return;
 
-  // TODO: remove
-  {
-    int index = y * DISPLAY_RESOLUTION_X + x;
+  uint8_t colorIndex = 0;
+  int totalDiff = 0;
 
-    struct {
-      uint8_t
-      red : 2,
-      green : 3,
-      blue : 2;
-    } c;
+  for (uint8_t i = 0; i < sizeof(pPalette) / sizeof(Color); ++i) {
+    int rd = abs(red   - pPalette[i].red);
+    int gd = abs(green - pPalette[i].green);
+    int bd = abs(blue  - pPalette[i].blue);
+    int diff = rd + gd + bd;
 
-    c.red = red * 3 / 255;
-    c.green = green * 7 / 255;
-    c.blue = blue * 3 / 255;
-
-    _pDisplayFrameBufferOld[index] = *(uint8_t*)&c;
-  }
-  //--
-
-  {
-    int index = y * DISPLAY_RESOLUTION_X + x;
-
-    // find color in palette which is nearest to requested one:
-
-    uint8_t colorIndex = 0;
-    int totalScore = 0;
-
-    if (red == 0xAA)
-      totalScore = totalScore;
-
-    for (uint8_t i = 0; i < sizeof(pPalette) / sizeof(Color); ++i) {
-      int curTotalScore = 0;
-
-      int rs = abs(red   - pPalette[i].red);
-      int gs = abs(green - pPalette[i].green);
-      int bs = abs(blue  - pPalette[i].blue);
-
-      curTotalScore = rs + gs + bs;
-
-      if (i == 0 || curTotalScore < totalScore) {
-        totalScore = curTotalScore;
-        colorIndex = i;
-      }
+    if (i == 0 || diff < totalDiff) {
+      totalDiff = diff;
+      colorIndex = i;
     }
-
-    _pDisplayFrameBuffer[index] = colorIndex;
   }
+
+  _pDisplayFrameBuffer[y * DISPLAY_RESOLUTION_X + x] = colorIndex;
 }
 
 void displayDraw() {

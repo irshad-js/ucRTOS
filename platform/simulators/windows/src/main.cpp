@@ -22,16 +22,13 @@ public:
   }
 
   ~BasicDrawPane() {
-    delete pBackBufferOld_;
     delete pBackBuffer_;
   }
 
-  void init(uint8_t* pFrameBuffer, uint8_t* pFrameBufferOld, int xMax, int yMax) {
+  void init(uint8_t* pFrameBuffer, int xMax, int yMax) {
     pFrameBuffer_ = pFrameBuffer;
-    pFrameBufferOld_ = pFrameBufferOld;
     xMax_ = xMax;
     yMax_ = yMax;
-    pBackBufferOld_ = new wxBitmap(xMax_, yMax_);
     pBackBuffer_ = new wxBitmap(xMax_, yMax_);
   }
 
@@ -50,40 +47,6 @@ public:
   }
 
   void render(wxDC& clientDc) {
-
-//    // TODO: remove
-//    wxMemoryDC backBufferDcOld;
-//    wxPen penOld;
-//
-//    backBufferDcOld.SelectObject(*pBackBufferOld_);
-//
-//    for (int y = 0; y < yMax_; ++y) {
-//      for (int x = 0; x < xMax_; ++x) {
-//
-//        int index = y * xMax_ + x;
-//        struct Bla {
-//          uint8_t
-//          red   : 2,
-//          green : 3,
-//          blue  : 2;
-//        };
-//
-//        Bla* c = &reinterpret_cast<Bla*>(pFrameBufferOld_)[index];
-//
-//        uint8_t red   = (c->red   * 255) / 3;
-//        uint8_t green = (c->green * 255) / 7;
-//        uint8_t blue  = (c->blue  * 255) / 3;
-//        penOld.SetColour(red, green, blue);
-//
-//        backBufferDcOld.SetPen(penOld);
-//        backBufferDcOld.DrawPoint(x, y);
-//      }
-//    }
-//
-//    backBufferDcOld.SelectObject(wxNullBitmap);
-//    clientDc.DrawBitmap(*pBackBufferOld_, 0, 0);
-//    // --
-
     wxMemoryDC backBufferDc;
     wxPen pen;
 
@@ -112,9 +75,6 @@ private:
 
   uint8_t* pFrameBuffer_{ nullptr };
   wxBitmap* pBackBuffer_{ nullptr };
-
-  uint8_t* pFrameBufferOld_{ nullptr };
-  wxBitmap* pBackBufferOld_{nullptr};
 
   DECLARE_EVENT_TABLE()
 };
@@ -224,12 +184,12 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-extern "C" void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, uint8_t* pFrameBufferOld, int xMax, int yMax) {
+extern "C" void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, int xMax, int yMax) {
   SetEvent(_hCreateLcdSimulator);
   WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
 
   BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
-  pDrawPane->init(pFrameBuffer, pFrameBufferOld, xMax, yMax);
+  pDrawPane->init(pFrameBuffer, xMax, yMax);
 }
 
 extern "C" void mainLcdDraw() {
