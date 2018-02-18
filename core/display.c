@@ -1696,28 +1696,8 @@ void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
   if (x >= DISPLAY_RESOLUTION_X || y >= DISPLAY_RESOLUTION_Y)
     return;
 
-  uint8_t colorIndex = 0;
-
-  // int totalDiff = 0;
-  //
-  // for (uint8_t i = 0; i < sizeof(pPalette) / sizeof(Color); ++i) {
-  //   int rd = abs(red   - pPalette[i].red);
-  //   int gd = abs(green - pPalette[i].green);
-  //   int bd = abs(blue  - pPalette[i].blue);
-  //   int diff = rd + gd + bd;
-  //
-  //   if (i == 0 || diff < totalDiff) {
-  //     totalDiff = diff;
-  //     colorIndex = i;
-  //   }
-  // }
-
-  //
-
   uint16_t clutIndex = RGB565CONVERT(red, green, blue);
-  colorIndex = pClut565[clutIndex];
-
-  // --
+  uint8_t colorIndex = pClut565[clutIndex];
 
   int idx = y * DISPLAY_RESOLUTION_X + x;
   int subIdx = idx / 2;
