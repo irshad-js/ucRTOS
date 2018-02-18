@@ -1,15 +1,14 @@
 #include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
+#include "../images.h"
 
 #include "imgtestscreen.h"
 
 static void draw() {
   displayClear();
 
-  displayDrawText(CENTER, 0 + 0 * 18, "Img test screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(CENTER, 0 + 1 * 18, "Press 'Back' button to exit", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-
+  displayDrawImage(30, 50, _pNesGamepadImg);
   displayDraw();
 }
 
