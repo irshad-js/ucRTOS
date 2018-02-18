@@ -25,7 +25,7 @@ vpath %.c .
 vpath %.c lib/cmsis_boot
 vpath %.c lib/stdperiph/src
 vpath %.c ../../../core
-vpath %.c ../../../core/states
+vpath %.c ../../../core/screens
 vpath %.c ../../../lib/mystdio
 vpath %.c ../../../lib/AsciiLib
 vpath %.c ../../../lib/FreeRTOS/Source
@@ -43,7 +43,7 @@ CFLAGS += -Ilib/cmsis/Include
 CFLAGS += -Ilib/cmsis_boot
 CFLAGS += -Ilib/stdperiph/inc
 CFLAGS += -I../../../core
-CFLAGS += -I../../../core/states
+CFLAGS += -I../../../core/screens
 CFLAGS += -I../../../lib/mystdio
 CFLAGS += -I../../../lib/AsciiLib
 CFLAGS += -I../../../lib/FreeRTOS/Source/include
@@ -64,7 +64,7 @@ endif
 OBJDIR=obj
 BINDIR=bin
 MAIN_SRCS = main.c core_main.c hardware.c nesgamepad.c ssd1289.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c \
-		port.c heap_5.c tasks.c list.c timers.c queue.c \
+		port.c heap_1.c tasks.c list.c timers.c queue.c \
 		lib/cmsis_boot/startup_stm32f4xx.s # add startup file to build
 
 LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
@@ -79,7 +79,7 @@ LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
 	stm32f4xx_dcmi.c stm32f4xx_pwr.c \
 
 UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c \
-		  SlotBasedMenu.c AsciiLib.c mainMenu.c images.c
+		  SlotBasedMenu.c AsciiLib.c mainmenuscreen.c aboutscreen.c _examplescreen.c images.c
 
 PROJ_NAME=ucrtos
 OUTPATH=bin
