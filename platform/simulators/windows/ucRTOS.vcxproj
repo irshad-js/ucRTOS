@@ -203,6 +203,7 @@
     <ClCompile Include="..\..\..\core\images.c" />
     <ClCompile Include="..\..\..\core\InputDevice.c" />
     <ClCompile Include="..\..\..\core\screens\aboutscreen.c" />
+    <ClCompile Include="..\..\..\core\screens\imgtestscreen.c" />
     <ClCompile Include="..\..\..\core\screens\mainmenuscreen.c" />
     <ClCompile Include="..\..\..\core\screens\_examplescreen.c" />
     <ClCompile Include="..\..\..\core\SlotBasedMenu.c" />
@@ -252,6 +253,7 @@
     <ClInclude Include="..\..\..\core\images.h" />
     <ClInclude Include="..\..\..\core\InputDevice.h" />
     <ClInclude Include="..\..\..\core\screens\aboutscreen.h" />
+    <ClInclude Include="..\..\..\core\screens\imgtestscreen.h" />
     <ClInclude Include="..\..\..\core\screens\mainmenuscreen.h" />
     <ClInclude Include="..\..\..\core\screens\_examplescreen.h" />
     <ClInclude Include="..\..\..\core\SlotBasedMenu.h" />

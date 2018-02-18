@@ -126,6 +126,9 @@
     <ClCompile Include="src\platform_hooks.c">
       <Filter>platform\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\core\screens\imgtestscreen.c">
+      <Filter>core\src\screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
@@ -201,6 +204,9 @@
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\core\screens\mainmenuscreen.h">
+      <Filter>core\hdr\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\screens\imgtestscreen.h">
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
   </ItemGroup>
