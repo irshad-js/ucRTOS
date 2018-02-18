@@ -162,7 +162,7 @@ void delayMs(uint32_t ms) {
 
 int coreMain(void) {
   statusLedOff();
-  xTaskCreate(_prvDebugTask,   "Debug Task", 512, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
+  // xTaskCreate(_prvDebugTask,   "Debug Task", 512, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
   xTaskCreate(_prvBlinkTask,   "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
   xTaskCreate(_prvDisplayTask, "Display Task", 2048, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
   // xTaskCreate(_prvGamePadTask, "Game pad Task", 512, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
