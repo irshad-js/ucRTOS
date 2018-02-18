@@ -21,3 +21,6 @@ platform/stm32f407/ide/coocox/ucRTOS
 /platform/simulators/windows/*.opensdf
 /platform/simulators/windows/*.sdf
 /platform/embedded/stm32f407/ide/coocox/ucRTOS/Debug/bin
+/platform/embedded/stm32f407/ide/coocox/*.comemgui
+/platform/embedded/stm32f407/ide/coocox/ucRTOS/Debug/obj
+/platform/embedded/stm32f407/ide/coocox/ucRTOS/ucRTOS.elf.xcodeproj/*.pbxproj
