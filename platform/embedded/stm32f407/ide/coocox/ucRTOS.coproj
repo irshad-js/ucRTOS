@@ -105,15 +105,15 @@
     <File name="lib/FreeRTOS/Source/include/event_groups.h" path="../../../../../lib/FreeRTOS/Source/include/event_groups.h" type="1"/>
     <File name="platform/lib/cmsis/Include/core_cm4_simd.h" path="../../lib/cmsis/Include/core_cm4_simd.h" type="1"/>
     <File name="core/core_main.c" path="../../../../../core/core_main.c" type="1"/>
-    <File name="lib/FreeRTOS/tasks.c" path="../../../../../lib/FreeRTOS/Source/tasks.c" type="1"/>
     <File name="core/StackBasedFsm.c" path="../../../../../core/StackBasedFsm.c" type="1"/>
     <File name="platform/lib/stdperiph/inc/stm32f4xx_adc.h" path="../../lib/stdperiph/inc/stm32f4xx_adc.h" type="1"/>
+    <File name="lib/FreeRTOS/tasks.c" path="../../../../../lib/FreeRTOS/Source/tasks.c" type="1"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp" path="" type="2"/>
     <File name="platform/lib/stdperiph/src/stm32f4xx_rcc.c" path="../../lib/stdperiph/src/stm32f4xx_rcc.c" type="1"/>
-    <File name="lib/FreeRTOS/Source/include/portable.h" path="../../../../../lib/FreeRTOS/Source/include/portable.h" type="1"/>
-    <File name="lib" path="" type="2"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_dcd.h" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_dcd.h" type="1"/>
     <File name="lib/FreeRTOS/Source/include/deprecated_definitions.h" path="../../../../../lib/FreeRTOS/Source/include/deprecated_definitions.h" type="1"/>
+    <File name="lib" path="" type="2"/>
+    <File name="lib/FreeRTOS/Source/include/portable.h" path="../../../../../lib/FreeRTOS/Source/include/portable.h" type="1"/>
     <File name="platform/src/drivers" path="" type="2"/>
     <File name="core/InputDevice.c" path="../../../../../core/InputDevice.c" type="1"/>
     <File name="platform/lib/stdperiph/src/stm32f4xx_hash_md5.c" path="../../lib/stdperiph/src/stm32f4xx_hash_md5.c" type="1"/>
@@ -149,11 +149,11 @@
     <File name="platform/lib" path="" type="2"/>
     <File name="lib/AsciiLib" path="" type="2"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_ioreq.h" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_ioreq.h" type="1"/>
-    <File name="lib/FreeRTOS/Source/portable/port.c" path="../../../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c" type="1"/>
-    <File name="lib/FreeRTOS/croutine.c" path="../../../../../lib/FreeRTOS/Source/croutine.c" type="1"/>
-    <File name="platform/src/drivers/ssd1289.c" path="../../src/drivers/ssd1289.c" type="1"/>
     <File name="platform/lib/stdperiph/src/stm32f4xx_cryp_des.c" path="../../lib/stdperiph/src/stm32f4xx_cryp_des.c" type="1"/>
+    <File name="lib/FreeRTOS/Source/portable/port.c" path="../../../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c" type="1"/>
     <File name="platform/lib/stdperiph/src/stm32f4xx_syscfg.c" path="../../lib/stdperiph/src/stm32f4xx_syscfg.c" type="1"/>
+    <File name="platform/src/drivers/ssd1289.c" path="../../src/drivers/ssd1289.c" type="1"/>
+    <File name="lib/FreeRTOS/croutine.c" path="../../../../../lib/FreeRTOS/Source/croutine.c" type="1"/>
     <File name="platform/lib/stdperiph/src/stm32f4xx_i2c.c" path="../../lib/stdperiph/src/stm32f4xx_i2c.c" type="1"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_regs.h" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_regs.h" type="1"/>
     <File name="core/screens/mainmenuscreen.h" path="../../../../../core/screens/mainmenuscreen.h" type="1"/>
@@ -162,8 +162,8 @@
     <File name="core/InputDevice.h" path="../../../../../core/InputDevice.h" type="1"/>
     <File name="core/images.h" path="../../../../../core/images.h" type="1"/>
     <File name="platform/lib/stdperiph/src" path="" type="2"/>
-    <File name="platform/lib/stdperiph/inc/stm32f4xx_rng.h" path="../../lib/stdperiph/inc/stm32f4xx_rng.h" type="1"/>
     <File name="platform/lib/stdperiph" path="" type="2"/>
+    <File name="platform/lib/stdperiph/inc/stm32f4xx_rng.h" path="../../lib/stdperiph/inc/stm32f4xx_rng.h" type="1"/>
     <File name="platform/lib/stdperiph/inc/stm32f4xx_wwdg.h" path="../../lib/stdperiph/inc/stm32f4xx_wwdg.h" type="1"/>
     <File name="lib/FreeRTOS/Source/include/projdefs.h" path="../../../../../lib/FreeRTOS/Source/include/projdefs.h" type="1"/>
     <File name="platform/lib/stdperiph/src/stm32f4xx_tim.c" path="../../lib/stdperiph/src/stm32f4xx_tim.c" type="1"/>
@@ -171,9 +171,9 @@
     <File name="core/screens/aboutscreen.h" path="../../../../../core/screens/aboutscreen.h" type="1"/>
     <File name="platform/lib/cmsis/Include/core_cm0.h" path="../../lib/cmsis/Include/core_cm0.h" type="1"/>
     <File name="platform/lib/stdperiph/src/stm32f4xx_flash.c" path="../../lib/stdperiph/src/stm32f4xx_flash.c" type="1"/>
-    <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_cdc_core.h" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_cdc_core.h" type="1"/>
     <File name="platform/lib/stdperiph/inc/stm32f4xx_gpio.h" path="../../lib/stdperiph/inc/stm32f4xx_gpio.h" type="1"/>
     <File name="platform/lib/stdperiph/inc/stm32f4xx_dcmi.h" path="../../lib/stdperiph/inc/stm32f4xx_dcmi.h" type="1"/>
+    <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_cdc_core.h" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_cdc_core.h" type="1"/>
     <File name="platform/lib/cmsis/Include/core_cm4.h" path="../../lib/cmsis/Include/core_cm4.h" type="1"/>
     <File name="core/display.h" path="../../../../../core/display.h" type="1"/>
     <File name="lib/FreeRTOS/Source/include/StackMacros.h" path="../../../../../lib/FreeRTOS/Source/include/StackMacros.h" type="1"/>
@@ -243,9 +243,9 @@
     <File name="lib/FreeRTOS/Source" path="" type="2"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_desc.c" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_desc.c" type="1"/>
     <File name="lib/AsciiLib/AsciiLib.c" path="../../../../../lib/AsciiLib/AsciiLib.c" type="1"/>
-    <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_core.c" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_core.c" type="1"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_cdc_core.c" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_cdc_core.c" type="1"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_def.h" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_def.h" type="1"/>
+    <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_core.c" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_core.c" type="1"/>
     <File name="lib/FreeRTOS/Source/portable/MemMang/heap_1.c" path="../../../../../lib/FreeRTOS/Source/portable/MemMang/heap_1.c" type="1"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_core.h" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usbd_core.h" type="1"/>
     <File name="platform/lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_bsp.h" path="../../lib/tm/tm_stm32f4_usb_vcp/usb_cdc_device/usb_bsp.h" type="1"/>
