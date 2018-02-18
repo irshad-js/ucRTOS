@@ -6,6 +6,7 @@
 using namespace std;
 
 extern "C" {
+  #include "../../../../core/display.h"
   int coreMain(void);
 }
 
@@ -83,7 +84,6 @@ public:
 //    clientDc.DrawBitmap(*pBackBufferOld_, 0, 0);
 //    // --
 
-
     wxMemoryDC backBufferDc;
     wxPen pen;
 
@@ -93,19 +93,9 @@ public:
       for (int x = 0; x < xMax_; ++x) {
 
         int index = y * xMax_ + x;
-        struct Bla {
-          uint8_t
-            red : 2,
-            green : 3,
-            blue : 2;
-        };
+        int ci = pFrameBuffer_[index];
 
-        Bla* c = &reinterpret_cast<Bla*>(pFrameBuffer_)[index];
-
-        uint8_t red = (c->red * 255) / 3;
-        uint8_t green = (c->green * 255) / 7;
-        uint8_t blue = (c->blue * 255) / 3;
-        pen.SetColour(red, green, blue);
+        pen.SetColour(pPalette[ci].red, pPalette[ci].green, pPalette[ci].blue);
 
         backBufferDc.SetPen(pen);
         backBufferDc.DrawPoint(x, y);

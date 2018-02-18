@@ -4,6 +4,14 @@
 #include <limits.h>
 #define CENTER USHRT_MAX
 
+typedef struct Color {
+  uint8_t red;
+  uint8_t green;
+  uint8_t blue;
+} Color;
+
+extern Color pPalette[16];
+
 void displayInit();
 void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue);
 void displayDraw();
