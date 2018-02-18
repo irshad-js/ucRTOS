@@ -56,10 +56,10 @@ public:
       for (int x = 0; x < xMax_; ++x) {
         int idx = y * xMax_ + x;
         int subIdx = idx / 2;
-        int isHigh = idx % 2 == 0;
+        int useMsb = idx % 2 == 0;
         uint8_t ci = 0;
 
-        if (!isHigh)
+        if (!useMsb)
           ci = pFrameBuffer_[subIdx] & 0x0F;
         else
           ci = (pFrameBuffer_[subIdx] & 0xF0) >> 4;
