@@ -79,7 +79,7 @@ LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
 	stm32f4xx_dcmi.c stm32f4xx_pwr.c \
 
 UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c \
-		  SlotBasedMenu.c AsciiLib.c mainmenuscreen.c aboutscreen.c _examplescreen.c images.c
+		  SlotBasedMenu.c AsciiLib.c _examplescreen.c mainmenuscreen.c aboutscreen.c imgtestscreen.c images.c
 
 PROJ_NAME=ucrtos
 OUTPATH=bin
