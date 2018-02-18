@@ -4,30 +4,52 @@
 #define DISPLAY_RESOLUTION_X 320
 #define DISPLAY_RESOLUTION_Y 130
 
-static uint8_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
+static uint8_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y]; // TODO: divide by two
+static uint8_t _pDisplayFrameBufferOld[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
 
 void displayInit() {
-  hardwareDisplayInit(_pDisplayFrameBuffer, DISPLAY_RESOLUTION_X, DISPLAY_RESOLUTION_Y);
+  hardwareDisplayInit(_pDisplayFrameBuffer, _pDisplayFrameBufferOld, DISPLAY_RESOLUTION_X, DISPLAY_RESOLUTION_Y);
 }
 
 void displaySetPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue) {
-  if(x >= DISPLAY_RESOLUTION_X || y >= DISPLAY_RESOLUTION_Y)
+  if (x >= DISPLAY_RESOLUTION_X || y >= DISPLAY_RESOLUTION_Y)
     return;
 
-  int index = y * DISPLAY_RESOLUTION_X + x;
+  // TODO: remove
+  {
+    int index = y * DISPLAY_RESOLUTION_X + x;
 
-  struct {
-    uint8_t
-    red   : 2,
-    green : 3,
-    blue  : 2;
-  } c;
+    struct {
+      uint8_t
+        red : 2,
+        green : 3,
+        blue : 2;
+    } c;
 
-  c.red   = red   * 3 / 255;
-  c.green = green * 7 / 255;
-  c.blue  = blue  * 3 / 255;
+    c.red = red * 3 / 255;
+    c.green = green * 7 / 255;
+    c.blue = blue * 3 / 255;
 
-  _pDisplayFrameBuffer[index] = *(uint8_t*)&c;
+    _pDisplayFrameBufferOld[index] = *(uint8_t*)&c;
+  }
+  //--
+
+  {
+    int index = y * DISPLAY_RESOLUTION_X + x;
+
+    struct {
+      uint8_t
+      red : 2,
+      green : 3,
+      blue : 2;
+    } c;
+
+    c.red = red * 3 / 255;
+    c.green = green * 7 / 255;
+    c.blue = blue * 3 / 255;
+
+    _pDisplayFrameBuffer[index] = *(uint8_t*)&c;
+  }
 }
 
 void displayDraw() {
