@@ -7,34 +7,29 @@
 #include "imgtestscreen.h"
 #include "mainmenuscreen.h"
 
-// TODO: Rename state to screen?
-
-//--------------------------------------------------------------------------------------------------------------
-// Example state implementation
-// ============================
-//
-// This example shows, how to implement a state.
-//
-// - A state has always its own file, which consists of a collection of callbacks.
-// - The onEnter() callback must be set. All other callbacks are optional.
-// - At the end of the file there is always an initialization function, which activates the state by setting
-//   the callbacks.
-// - The context struct can be used to store local variables. If this state gets called multiple times in a
-//   state chain, an array of contexts can be used, to get an own context for each state.
-//--------------------------------------------------------------------------------------------------------------
-
 static struct {
   SlotBasedMenu_t menu;
 
 } _context;
 
 static void draw() {
+  uint32_t start = upTimeMs();
+
   displayClear(0x00, 0x00, 0x00);
+  myprintf("displayClear: %d ms\n", upTimeMs() - start);
+
   displayDrawText(CENTER, 0 + 0, "Welcome to ucRTOS", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(CENTER, 0 + 18, "This is a test screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  myprintf("text 1: %d ms\n", upTimeMs() - start);
+
+  displayDrawText(CENTER, 0 + 18, "This is the main menu", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  myprintf("text 2: %d ms\n", upTimeMs() - start);
 
   menuDraw(&_context.menu);
+  myprintf("menuDraw: %d ms\n", upTimeMs() - start);
+
   displayDraw();
+  myprintf("displayDraw: %d ms\n", upTimeMs() - start);
+  myprintf("==================\n");
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
