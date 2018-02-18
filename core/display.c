@@ -2,10 +2,36 @@
 #include "display.h"
 
 #define DISPLAY_RESOLUTION_X 320
-#define DISPLAY_RESOLUTION_Y 130
+#define DISPLAY_RESOLUTION_Y 240 // 130
 
 static uint8_t _pDisplayFrameBuffer[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y]; // TODO: divide by two
 static uint8_t _pDisplayFrameBufferOld[DISPLAY_RESOLUTION_X * DISPLAY_RESOLUTION_Y];
+
+typedef struct Color {
+  uint8_t red;
+  uint8_t green;
+  uint8_t blue;
+} Color;
+
+// Apple Macintosh 16 color default palette:
+Color pPalette[16] = {
+  { 255, 255, 255 }, // White
+  { 255, 255,   0 }, // Yellow
+  { 255, 102,   0 }, // Orange
+  { 221,   0,   0 }, // Dark Red
+  { 255,   0, 153 }, // Pink
+  {  51,   0, 153 }, // Purple
+  {   0,   0, 204 }, // Dark Blue
+  {   0, 153, 255 }, // Light Blue
+  {   0, 170,   0 }, // Green
+  {   0, 102,   0 }, // Dark Green
+  { 102,  51,   0 }, // Brown
+  { 153, 102,  51 }, // Light Brown
+  { 187, 187, 187 }, // Light Gray
+  { 136, 136, 136 }, // Gray
+  {  68,  68,  68 }, // Dark Gray
+  {  0,    0,   0 }, // Black
+};
 
 void displayInit() {
   hardwareDisplayInit(_pDisplayFrameBuffer, _pDisplayFrameBufferOld, DISPLAY_RESOLUTION_X, DISPLAY_RESOLUTION_Y);
