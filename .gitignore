@@ -13,6 +13,7 @@
 *.bin
 *.elf
 *.hex
+*.swp
 *.cogui
 *.comarker
 platform/stm32f407/ide/coocox/ucRTOS
