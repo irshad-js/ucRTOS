@@ -6,7 +6,7 @@
 using namespace std;
 
 extern "C" {
-  #include "../../../../core/display.h"
+  #include "../../../../core/lut.h"
   int coreMain(void);
 }
 
@@ -64,7 +64,7 @@ public:
         else
           ci = (pFrameBuffer_[subIdx] & 0xF0) >> 4;
 
-        pen.SetColour(pPalette[ci].red, pPalette[ci].green, pPalette[ci].blue);
+        pen.SetColour(pMasterPalette[ci].red, pMasterPalette[ci].green, pMasterPalette[ci].blue);
 
         backBufferDc.SetPen(pen);
         backBufferDc.DrawPoint(x, y);
