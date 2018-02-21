@@ -58,6 +58,9 @@
     <Filter Include="core\hdr\screens">
       <UniqueIdentifier>{518cc4bf-36c3-4f29-9394-fa55c20c1334}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\eMIDI">
+      <UniqueIdentifier>{e4f9d61a-814c-46de-833b-42c3c3cd14f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -127,6 +130,18 @@
       <Filter>platform\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\core\screens\imgtestscreen.c">
+      <Filter>core\src\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\lut.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\eMIDI\src\helpers.c">
+      <Filter>lib\eMIDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\eMIDI\src\midifile.c">
+      <Filter>lib\eMIDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\screens\playermenuscreen.c">
       <Filter>core\src\screens</Filter>
     </ClCompile>
   </ItemGroup>
@@ -207,6 +222,18 @@
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\core\screens\imgtestscreen.h">
+      <Filter>core\hdr\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\lut.h">
+      <Filter>core\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\eMIDI\src\helpers.h">
+      <Filter>lib\eMIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\eMIDI\src\midifile.h">
+      <Filter>lib\eMIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\screens\playermenucreen.h">
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,13 @@
 #include "../../lib/colorprint/colorprint.h"
+#include "../../lib/mystdio/mystdio.h"
+#include "../../core/ucrtos.h"
 #include "../display.h"
 #include "../SlotBasedMenu.h"
 
 #include "_examplescreen.h"
 #include "aboutscreen.h"
 #include "imgtestscreen.h"
+#include "playermenucreen.h"
 #include "mainmenuscreen.h"
 
 static struct {
@@ -36,7 +39,8 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("mainMenuScreen::onEnter()");
 
   userMenuInit(&_context.menu, pFsm, 3, 45);
-  menuAddSlot(&_context.menu, "Button Test", 0);
+  menuAddSlot(&_context.menu, "MIDI Player", playerMenuScreen);
+  menuAddSlot(&_context.menu, "Button Test", NULL);
   menuAddSlot(&_context.menu, "Example", exampleScreen);
   menuAddSlot(&_context.menu, "Image Test", imgTestScreen);
   menuAddSlot(&_context.menu, "About", aboutScreen);
