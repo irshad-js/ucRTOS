@@ -61,6 +61,12 @@
     <Filter Include="lib\eMIDI">
       <UniqueIdentifier>{e4f9d61a-814c-46de-833b-42c3c3cd14f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core\hdr\screens\player">
+      <UniqueIdentifier>{30b62b30-6e06-40e6-a49d-0f8d30f63e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\src\screens\player">
+      <UniqueIdentifier>{6645e7f4-6be9-418f-afab-8341dc8216af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -142,7 +148,10 @@
       <Filter>lib\eMIDI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\core\screens\playermenuscreen.c">
-      <Filter>core\src\screens</Filter>
+      <Filter>core\src\screens\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\screens\playercreen.c">
+      <Filter>core\src\screens\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,7 +243,10 @@
       <Filter>lib\eMIDI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\core\screens\playermenucreen.h">
-      <Filter>core\hdr\screens</Filter>
+      <Filter>core\hdr\screens\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\screens\playercreen.h">
+      <Filter>core\hdr\screens\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

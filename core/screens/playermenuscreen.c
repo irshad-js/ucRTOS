@@ -3,6 +3,7 @@
 #include "../display.h"
 
 #include "playermenucreen.h"
+#include "playerscreen.h"
 
 static void draw() {
   displayClear();
@@ -24,7 +25,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 static void onActionPress(StackBasedFsm_t* pFsm) {
   hal_printf("playerMenuScreen::onActionPress()");
 
-  // TODO: play MIDI
+  fsmPush(pFsm, playerScreen, NULL); // TODO: provide song to play as argument
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {
