@@ -1,8 +1,10 @@
 #include <windows.h>
 #include <stdio.h>
 #include <time.h>
+#include <mmsystem.h>
 #include "FreeRTOSConfig.h"
 #include "../../core/ucrtos.h"
+#include "../../../eMIDI/src/midifile.h"
 
 void statusLedOn() {
   if (GetKeyState(VK_SCROLL) == 1)
@@ -108,6 +110,43 @@ void hal_strcpy_s(char* dst, int maxSize, const char* src) {
 
     if (i == maxSize - 1)
       dst[i] = 0;
+  }
+}
+
+// MIDI device:
+
+static HMIDIOUT _hMidiOut;
+
+void hardwareInitMidiDevice() {
+  uint32_t result = midiOutOpen(&_hMidiOut, MIDI_MAPPER, 0, 0, 0);
+
+  if (result != MMSYSERR_NOERROR)
+    hal_printfError("MIDI device does not work!");
+}
+
+void hardwareFreeMidiDevice() {
+  uint32_t result = midiOutClose(_hMidiOut);
+
+  if (result != MMSYSERR_NOERROR)
+    hal_printfError("Error on freeing MIDI device!");
+}
+
+void hardwareSendMidiMsg(const MidiEvent* pEvent) {
+  if (pEvent->eventId == MIDI_EVENT_META)
+    return;
+
+  union {
+    uint32_t word;
+    uint8_t data[3];
+  } message = { 0 };
+
+  message.data[0] = pEvent->eventId;
+  message.data[1] = pEvent->params.pRaw[0];
+  message.data[2] = pEvent->params.pRaw[1];
+
+  MMRESULT flag = midiOutShortMsg(_hMidiOut, message.word);
+  if (flag != MMSYSERR_NOERROR) {
+    hal_printfWarning("Warning: MIDI Output is not open.\n");
   }
 }
 
