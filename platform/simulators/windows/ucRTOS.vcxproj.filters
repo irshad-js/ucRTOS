@@ -150,7 +150,7 @@
     <ClCompile Include="..\..\..\core\screens\playermenuscreen.c">
       <Filter>core\src\screens\player</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\core\screens\playercreen.c">
+    <ClCompile Include="..\..\..\core\screens\playerscreen.c">
       <Filter>core\src\screens\player</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,10 +242,10 @@
     <ClInclude Include="..\..\..\lib\eMIDI\src\midifile.h">
       <Filter>lib\eMIDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\screens\playermenucreen.h">
+    <ClInclude Include="..\..\..\core\screens\playercreen.h">
       <Filter>core\hdr\screens\player</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\screens\playercreen.h">
+    <ClInclude Include="..\..\..\core\screens\playermenuscreen.h">
       <Filter>core\hdr\screens\player</Filter>
     </ClInclude>
   </ItemGroup>

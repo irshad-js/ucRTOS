@@ -7,7 +7,7 @@
 #include "_examplescreen.h"
 #include "aboutscreen.h"
 #include "imgtestscreen.h"
-#include "playermenucreen.h"
+#include "playermenuscreen.h"
 #include "mainmenuscreen.h"
 
 static struct {

@@ -2,7 +2,7 @@
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
 
-#include "playermenucreen.h"
+#include "playermenuscreen.h"
 #include "playerscreen.h"
 
 static void draw() {
@@ -49,6 +49,7 @@ static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool
 static void onReenter(StackBasedFsm_t* pFsm) {
   hal_printf("playerMenuScreen::onReenter()");
 
+  draw();
 }
 
 // Always implement this as last function of your state file:

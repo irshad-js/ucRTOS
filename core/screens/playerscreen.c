@@ -19,12 +19,15 @@ static void draw() {
 
   displayDrawText(CENTER, 0 + 0 * 18, "Player screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 0 + 1 * 18, "Press 'Back' button to exit", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(CENTER, 0 + 3 * 18, "Now playing...", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
   displayDraw();
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("player::onEnter()");
+
+  hardwareInitMidiDevice();
 
   PlayerScreenParams* pPlayerParams = (PlayerScreenParams*)pParams;
   if (!pPlayerParams)
@@ -35,11 +38,15 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   }
 
   Error error;
-  error = eMidi_open(&context.midi, "C:\\Users\\Stephan\\Music\\cdefgabc_0.mid");
+  error = eMidi_open(&context.midi, "C:\\Users\\Stephan\\Music\\bridge0.mid");
+  // error = eMidi_open(&context.midi, "C:\\Users\\Stephan\\Music\\cdefgabc_0.mid");
 
   if (error) {
     printf("Error on opening midi file!\n");
+    eMidi_printError(error);
+
     leaveState(pFsm);
+    return;
   }
 
   printf("Midi file opened!\n");
@@ -61,7 +68,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 
     if (e.eventId == MIDI_EVENT_META) {
       if (e.metaEventId == MIDI_SET_TEMPO)
-        uspqn = e.params.meta.setTempo.usPerQuarterNote;
+        uspqn = e.params.msg.meta.setTempo.usPerQuarterNote;
     }
 
     uint32_t TQPN = context.midi.header.division.tqpn.TQPN;
@@ -70,7 +77,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
     delayUs(usToWait);
 
     eMidi_printMidiEvent(&e);
-    // sendMidiMsg(fd, devnum, e);
+    hardwareSendMidiMsg(&e);
 
   } while (!(e.eventId == MIDI_EVENT_META && e.metaEventId == MIDI_END_OF_TRACK));
 
@@ -81,6 +88,7 @@ static void onLeaveState(StackBasedFsm_t* pFsm) {
   hal_printf("player::onLeaveState()");
 
   eMidi_close(&context.midi);
+  hardwareFreeMidiDevice();
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {

@@ -206,7 +206,7 @@
     <ClCompile Include="..\..\..\core\screens\aboutscreen.c" />
     <ClCompile Include="..\..\..\core\screens\imgtestscreen.c" />
     <ClCompile Include="..\..\..\core\screens\mainmenuscreen.c" />
-    <ClCompile Include="..\..\..\core\screens\playercreen.c" />
+    <ClCompile Include="..\..\..\core\screens\playerscreen.c" />
     <ClCompile Include="..\..\..\core\screens\playermenuscreen.c" />
     <ClCompile Include="..\..\..\core\screens\_examplescreen.c" />
     <ClCompile Include="..\..\..\core\SlotBasedMenu.c" />
@@ -262,7 +262,7 @@
     <ClInclude Include="..\..\..\core\screens\imgtestscreen.h" />
     <ClInclude Include="..\..\..\core\screens\mainmenuscreen.h" />
     <ClInclude Include="..\..\..\core\screens\playercreen.h" />
-    <ClInclude Include="..\..\..\core\screens\playermenucreen.h" />
+    <ClInclude Include="..\..\..\core\screens\playermenuscreen.h" />
     <ClInclude Include="..\..\..\core\screens\_examplescreen.h" />
     <ClInclude Include="..\..\..\core\SlotBasedMenu.h" />
     <ClInclude Include="..\..\..\core\StackBasedFsm.h" />
