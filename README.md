@@ -1,22 +1,22 @@
 # ucRTOS
-A real time operating system for microcontroller projects with windows and linux software emulation
+A real time operating system for microcontroller projects with Windows and Linux software emulation.
 
 The goal of this project is a simple ecosystem for fast and easy development of microcontroller projects. The platform is based on the FreeRTOS real-time kernel.
 
 The ecosystem consists of:
 * Display (320x240 LCD)
-* Filesystem (SD-Card)
-* Input device (An NES-Gamepad)
-* A real time Kernel (FreeRTOS)
-* A simple menu system
+* File system (SD-Card)
+* Input device (NES-Gamepad)
+* Real time kernel (FreeRTOS)
+* Simple menu system
 
-There are also simulators for faster development on a PC. The simulators do not have real time behaviour. This is because of either Windows nor Linux are real time operating systems. However, the deterministic task switching behaviour of the real time scheduler is simulated correctly. At this time only Windows with Visual Studio 2017 is supported but support for Eclipse is already under development. No windows will be needed at all then.
+For faster development there are simulators which run under Windows and Linux. This allows quick protoyping on e.g. menus or images without the need of flashing the microcontroller after each change. The simulators do not have real time behaviour. This is because of either Windows nor Linux are real time operating systems. However, the deterministic task switching behaviour of the real time scheduler is simulated correctly. At this time only Windows 7 with Visual Studio 2017 is supported. Support for Eclipse is under development.
 
 Supported embedded devices so far:
 * STM32F4Discovery (STM32F407VG)
 
 Supported simulators so far:
-* Windows with Visual Studio 2017
+* Windows 7 with Visual Studio 2017
 * Linux with Eclipse (Not working yet, but under development)
 
 ## Building Instructions
