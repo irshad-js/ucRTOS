@@ -39,7 +39,7 @@ make flash
 
 ### Windows Simulator with Visual Studio 2017
 
-** Note: The Simulator does not work properly on Windows 10. It can be compiled and run but the timings are incorrect. Therefore it is suggested using Windows 7 **
+**Note: The Simulator does not work properly on Windows 10. It can be compiled and run but the timings are incorrect. Therefore it is suggested using Windows 7**
 
 The LCD simulation is based on the wxWidgets GUI Library which is included as a sub repository. Before you are able to build the simulator you need to clone and build wxWidgets first:
 
