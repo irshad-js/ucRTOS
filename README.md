@@ -53,7 +53,10 @@ This meight take a few minutes to complete.
 
 #### Build wxWidgets
 
-Browse to platform\simulators\lib\wxWidgets\build\msw and open wx_vc15.sln. Select Win32 as target platform and hit Build Solution from Build menu.
+1. Browse to platform\simulators\lib\wxWidgets\build\msw and open wx_vc15.sln. 
+2. Migrate the Project for Visual Studio 2017 by selecting **Solution 'wx_vc15'** in Solution explorer and then select **Project > Retarget Solution**, check all vcxproj files, select the latest Windows SDK Version and click **ok**.
+3. Select Win32 as target platform and hit Build Solution from Build menu.
+4. After the build is finished, the Simulator can be build.
 
 #### Build the simulator
 
