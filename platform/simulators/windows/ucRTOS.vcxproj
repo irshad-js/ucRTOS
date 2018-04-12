@@ -214,6 +214,7 @@
     <ClCompile Include="..\..\..\lib\AsciiLib\AsciiLib.c" />
     <ClCompile Include="..\..\..\lib\eMIDI\src\helpers.c" />
     <ClCompile Include="..\..\..\lib\eMIDI\src\midifile.c" />
+    <ClCompile Include="..\..\..\lib\eMIDI\src\midiplayer.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c" />
     <ClCompile Include="..\..\..\lib\mystdio\myprintf.c" />
     <ClCompile Include="..\..\..\core\core_main.c" />
@@ -269,8 +270,11 @@
     <ClInclude Include="..\..\..\core\ucrtos.h" />
     <ClInclude Include="..\..\..\lib\AsciiLib\AsciiLib.h" />
     <ClInclude Include="..\..\..\lib\colorprint\colorprint.h" />
+    <ClInclude Include="..\..\..\lib\eMIDI\src\emiditypes.h" />
     <ClInclude Include="..\..\..\lib\eMIDI\src\helpers.h" />
     <ClInclude Include="..\..\..\lib\eMIDI\src\midifile.h" />
+    <ClInclude Include="..\..\..\lib\eMIDI\src\midiplayer.h" />
+    <ClInclude Include="..\..\..\lib\eMIDI\src\mybyteswap.h" />
     <ClInclude Include="..\..\..\lib\mystdio\mystdio.h" />
     <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\event_groups.h" />
     <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\timers.h" />

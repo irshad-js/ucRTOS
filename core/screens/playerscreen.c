@@ -1,15 +1,14 @@
 #include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
-#include "../../lib/eMIDI/src/midifile.h"
+#include "../../lib/eMIDI/src/midiplayer.h"
 #include "../../lib/eMIDI/src/helpers.h"
 #include "../../core/ucrtos.h"
 #include "../display.h"
 
 #include "playerscreen.h"
 
-
 static struct {
-  MidiFile midi;
+  MidiPlayer player;
   int someLocalVariable;
   int* pReturnValue;
 } context;
@@ -24,6 +23,27 @@ static void draw() {
   displayDraw();
 }
 
+static void userEventCallback(const MidiEvent* pEvent, void* pContext) {	
+  eMidi_printMidiEvent(pEvent);
+
+	int numParamBytes = 0;
+	
+	switch (pEvent->eventId & 0xF0) {
+	case MIDI_EVENT_NOTE_OFF:          numParamBytes = 2; break;
+	case MIDI_EVENT_NOTE_ON:           numParamBytes = 2; break;
+		//    case MIDI_EVENT_POLY_KEY_PRESSURE: numParamBytes = 2; break;
+	case MIDI_EVENT_CONTROL_CHANGE:    numParamBytes = 2; break;
+	case MIDI_EVENT_PROGRAM_CHANGE:    numParamBytes = 1; break;
+		//    case MIDI_EVENT_CHANNEL_PRESSURE:  numParamBytes = 1; break;
+	case MIDI_EVENT_PITCH_BEND:        numParamBytes = 2; break;
+	
+	default:
+		return;
+	}
+	
+  hardwareSendMidiMsg(pEvent);		
+}
+
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("player::onEnter()");
 
@@ -36,11 +56,11 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
     context.someLocalVariable = pPlayerParams->someInt;
     context.pReturnValue = pPlayerParams->pReturnValue;
   }
-
-  Error error;
-  error = eMidi_open(&context.midi, "C:\\Users\\Stephan\\Music\\bridge0.mid");
-  // error = eMidi_open(&context.midi, "C:\\Users\\Stephan\\Music\\cdefgabc_0.mid");
-
+      
+  Error error;  
+  // error = eMidi_openPlayer(&context.player, "..\\..\\..\\lib\\eMIDI\\tests\\midis\\cdefgabc_0.mid", userEventCallback, NULL);
+  error = eMidi_openPlayer(&context.player, "..\\..\\..\\lib\\eMIDI\\tests\\midis\\fish_fry0.mid", userEventCallback, NULL);
+    
   if (error) {
     printf("Error on opening midi file!\n");
     eMidi_printError(error);
@@ -51,43 +71,13 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 
   printf("Midi file opened!\n");
 
-  draw();
-
-  MidiEvent e;
-
-  static const uint32_t c = 60000000;
-  uint32_t bpm = 120;
-  uint32_t uspqn = c / bpm;
-
-  do {
-    error = eMidi_readEvent(&context.midi, &e);
-    if (error) {
-      printf("Error on reading event: [0x%02X] (Error %d: %s)\n", e.eventId, error, eMidi_errorToStr(error));
-      return;
-    }
-
-    if (e.eventId == MIDI_EVENT_META) {
-      if (e.metaEventId == MIDI_SET_TEMPO)
-        uspqn = e.params.msg.meta.setTempo.usPerQuarterNote;
-    }
-
-    uint32_t TQPN = context.midi.header.division.tqpn.TQPN;
-    uint32_t usToWait = (e.deltaTime * uspqn) / TQPN;
-
-    delayUs(usToWait);
-
-    eMidi_printMidiEvent(&e);
-    hardwareSendMidiMsg(&e);
-
-  } while (!(e.eventId == MIDI_EVENT_META && e.metaEventId == MIDI_END_OF_TRACK));
-
-  leaveState(pFsm);
+  draw();  
 }
 
 static void onLeaveState(StackBasedFsm_t* pFsm) {
   hal_printf("player::onLeaveState()");
 
-  eMidi_close(&context.midi);
+  eMidi_closePlayer(&context.player);
   hardwareFreeMidiDevice();
 }
 
@@ -100,6 +90,8 @@ static void onBackPress(StackBasedFsm_t* pFsm) {
 static void onTick(StackBasedFsm_t* pFsm) {
   // hal_printf("player::onTick()");
 
+  if (eMidi_playerTick(&context.player) != EMIDI_OK)
+    leaveState(pFsm);
 }
 
 // Always implement this as last function of your state file:

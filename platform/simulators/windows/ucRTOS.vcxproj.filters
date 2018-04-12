@@ -153,6 +153,9 @@
     <ClCompile Include="..\..\..\core\screens\playerscreen.c">
       <Filter>core\src\screens\player</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\lib\eMIDI\src\midiplayer.c">
+      <Filter>lib\eMIDI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
@@ -247,6 +250,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\core\screens\playermenuscreen.h">
       <Filter>core\hdr\screens\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\eMIDI\src\emiditypes.h">
+      <Filter>lib\eMIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\eMIDI\src\midiplayer.h">
+      <Filter>lib\eMIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lib\eMIDI\src\mybyteswap.h">
+      <Filter>lib\eMIDI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

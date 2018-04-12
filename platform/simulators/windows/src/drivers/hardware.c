@@ -26,6 +26,10 @@ void PrintCharUsr(char c) {
   putchar(c);
 }
 
+int eMidi_halTimeUs() {
+  return upTimeMs() * 1000;
+}
+
 // Display:
 
 void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, int xMax, int yMax);
