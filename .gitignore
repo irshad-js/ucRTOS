@@ -4,6 +4,7 @@
 *.tlog
 *.pdb
 *.obj
+*.map
 *.log
 *.idb
 *.db
