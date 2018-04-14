@@ -23,11 +23,11 @@ static void draw() {
   displayDraw();
 }
 
-static void userEventCallback(const MidiEvent* pEvent, void* pContext) {	
+static void userEventCallback(const MidiEvent* pEvent, void* pContext) {
   eMidi_printMidiEvent(pEvent);
 
 	int numParamBytes = 0;
-	
+
 	switch (pEvent->eventId & 0xF0) {
 	case MIDI_EVENT_NOTE_OFF:          numParamBytes = 2; break;
 	case MIDI_EVENT_NOTE_ON:           numParamBytes = 2; break;
@@ -36,12 +36,12 @@ static void userEventCallback(const MidiEvent* pEvent, void* pContext) {
 	case MIDI_EVENT_PROGRAM_CHANGE:    numParamBytes = 1; break;
 		//    case MIDI_EVENT_CHANNEL_PRESSURE:  numParamBytes = 1; break;
 	case MIDI_EVENT_PITCH_BEND:        numParamBytes = 2; break;
-	
+
 	default:
 		return;
 	}
-	
-  hardwareSendMidiMsg(pEvent);		
+
+  hardwareSendMidiMsg(pEvent);
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
@@ -56,11 +56,11 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
     context.someLocalVariable = pPlayerParams->someInt;
     context.pReturnValue = pPlayerParams->pReturnValue;
   }
-      
-  Error error;  
+
+  Error error;
   // error = eMidi_openPlayer(&context.player, "..\\..\\..\\lib\\eMIDI\\tests\\midis\\cdefgabc_0.mid", userEventCallback, NULL);
   error = eMidi_openPlayer(&context.player, "..\\..\\..\\lib\\eMIDI\\tests\\midis\\fish_fry0.mid", userEventCallback, NULL);
-    
+
   if (error) {
     printf("Error on opening midi file!\n");
     eMidi_printError(error);
@@ -71,7 +71,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 
   printf("Midi file opened!\n");
 
-  draw();  
+  draw();
 }
 
 static void onLeaveState(StackBasedFsm_t* pFsm) {
@@ -102,3 +102,4 @@ void playerScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
   pState->onBackPress  = onBackPress;
   pState->onTick       = onTick;
 }
+

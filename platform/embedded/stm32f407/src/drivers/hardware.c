@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <lut.h>
 #include "stm32f4xx_conf.h"
 #include "ssd1289.h"
 #include "nesgamepad.h"
 #include "ucrtos.h"
 #include "display.h"
+#include "../../core/ucrtos.h"
+#include "../../../eMIDI/src/midifile.h"
 
 // LED
 
@@ -60,8 +63,22 @@ void hardwareDisplayDraw() {
       else
         ci = (_pFrameBuffer[subIdx] & 0xF0) >> 4;
 
-      SSD1289_SetPoint(x, y, RGB565CONVERT(pPalette[ci].red, pPalette[ci].green, pPalette[ci].blue));
+      SSD1289_SetPoint(x, y, RGB565CONVERT(pMasterPalette[ci].red, pMasterPalette[ci].green, pMasterPalette[ci].blue));
     }
+}
+
+// MIDI device:
+
+void hardwareInitMidiDevice() {
+  // TODO: implement
+}
+
+void hardwareFreeMidiDevice() {
+  // TODO: implement
+}
+
+void hardwareSendMidiMsg(const MidiEvent* pEvent) {
+  // TODO: implement
 }
 
 // Input Device
