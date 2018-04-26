@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdarg.h>
 #include <lut.h>
 #include "stm32f4xx_conf.h"
 #include "ssd1289.h"
@@ -117,16 +118,25 @@ InputDeviceStates_t getInputDeviceState() {
   return states;
 }
 
-void hal_printf(char* format, ...) {
-  // TODO: implement
+void hal_printf(char* pFormat, ...) {
+  va_list args;
+  va_start(args, pFormat);
+  myvprintf(pFormat, args);
+  va_end(args);
 }
 
-void hal_printfWarning(char* format, ...) {
-  // TODO: implement
+void hal_printfWarning(char* pFormat, ...) {
+  va_list args;
+  va_start(args, pFormat);
+  myvprintf(pFormat, args);
+  va_end(args);
 }
 
-void hal_printfError(char* format, ...) {
-  // TODO: implement
+void hal_printfError(char* pFormat, ...) {
+  va_list args;
+  va_start(args, pFormat);
+  myvprintf(pFormat, args);
+  va_end(args);
 }
 
 void hal_strcpy_s(char* dst, int maxSize, const char* src) {
