@@ -45,13 +45,13 @@ static void userEventCallback(const MidiEvent* pEvent, void* pContext) {
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
-  hal_printf("player::onEnter()");
+  hal_printf("player::onEnter\n");
 
   hardwareInitMidiDevice();
 
   PlayerScreenParams* pPlayerParams = (PlayerScreenParams*)pParams;
   if (!pPlayerParams)
-    hal_printfWarning("Param is nullptr");
+    hal_printfWarning("Param is nullptr\n");
   else {
     context.someLocalVariable = pPlayerParams->someInt;
     context.pReturnValue = pPlayerParams->pReturnValue;
@@ -62,27 +62,27 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   error = eMidi_openPlayer(&context.player, "..\\..\\..\\lib\\eMIDI\\tests\\midis\\fish_fry0.mid", userEventCallback, NULL);
 
   if (error) {
-    printf("Error on opening midi file!\n");
+    hal_printfError("Error on opening midi file!\n");
     eMidi_printError(error);
 
     leaveState(pFsm);
     return;
   }
 
-  printf("Midi file opened!\n");
+  hal_printf("Midi file opened!\n");
 
   draw();
 }
 
 static void onLeaveState(StackBasedFsm_t* pFsm) {
-  hal_printf("player::onLeaveState()");
+  hal_printf("player::onLeaveState\n");
 
   eMidi_closePlayer(&context.player);
   hardwareFreeMidiDevice();
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {
-  hal_printf("player::onBackPress()");
+  hal_printf("player::onBackPress\n");
 
   leaveState(pFsm);
 }
