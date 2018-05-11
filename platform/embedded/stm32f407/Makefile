@@ -35,7 +35,10 @@ vpath %.c ../../../lib/FreeRTOS/Source/portable/MemMang
 vpath %.c ../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
 vpath %.c src
 vpath %.c src/drivers
+vpath %.c ../lib/NRF24L01P/src
+vpath %.c ../lib/NRF24L01P/hal/stm32f4
 vpath %.a lib
+
 
 CFLAGS  = -std=gnu99 -g -O2 -Wall -Tlink.ld -Xlinker -Map=obj/ucrtos.map
 CFLAGS += -mlittle-endian -mthumb -mthumb-interwork -nostartfiles -mcpu=cortex-m4
@@ -51,6 +54,7 @@ CFLAGS += -I../../../lib/AsciiLib
 CFLAGS += -I../../../lib/FreeRTOS/Source/include
 CFLAGS += -I../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
 CFLAGS += -I../lib/NRF24L01P/src
+CFLAGS += -I../lib/NRF24L01P/hal
 
 CFLAGS += -ffreestanding # -nostdlib # nostdlib parameter should be set!?
 
@@ -68,7 +72,7 @@ OBJDIR=obj
 BINDIR=bin
 MAIN_SRCS = main.c core_main.c hardware.c nesgamepad.c ssd1289.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c \
 		port.c heap_1.c tasks.c list.c timers.c queue.c \
-		lib/cmsis_boot/startup_stm32f4xx.s # add startup file to build
+		lib/cmsis_boot/startup_stm32f4xx.s hal_stm32f4.c # add startup file to build
 
 LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
 	stm32f4xx_exti.c stm32f4xx_rng.c stm32f4xx_can.c stm32f4xx_flash.c \
@@ -82,7 +86,7 @@ LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
 	stm32f4xx_dcmi.c stm32f4xx_pwr.c \
 
 UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c \
-		  SlotBasedMenu.c AsciiLib.c _examplescreen.c mainmenuscreen.c aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c skateboardscreen.c images.c helpers.c midifile.c midiplayer.c lut.c emidi_stm32f4.c
+		  SlotBasedMenu.c AsciiLib.c _examplescreen.c mainmenuscreen.c aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c skateboardscreen.c images.c helpers.c midifile.c midiplayer.c lut.c emidi_stm32f4.c nrf24l01p.c
 
 PROJ_NAME=ucrtos
 OUTPATH=bin
