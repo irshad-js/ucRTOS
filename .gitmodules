@@ -4,6 +4,6 @@
 [submodule "lib/eMIDI"]
 	path = lib/eMIDI
 	url = https://github.com/coon42/eMIDI.git
-[submodule "platform/embedded/NRF24L01P"]
+[submodule "platform/embedded/lib/NRF24L01P"]
 	path = platform/embedded/lib/NRF24L01P
 	url = https://github.com/coon42/NRF24L01P.git
