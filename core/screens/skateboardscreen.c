@@ -1,6 +1,7 @@
 #include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
+#include "nrf24l01p.h"
 
 #include "skateboardscreen.h"
 
@@ -14,9 +15,9 @@ static void draw() {
   displayClear();
 
   displayDrawText(CENTER, 0 + 0 * 18, "Skateboard screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(CENTER, 0 + 1 * 18, "Press 'A' button to accelerate", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(CENTER, 0 + 2 * 18, "Press 'B' button to brake", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(CENTER, 0 + 4 * 18, "Press 'Select' button to exit", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(30, 0 + 2 * 18, "Press 'A' button to accelerate", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(30, 0 + 3 * 18, "Press 'B' button to brake", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(30, 0 + 4 * 18, "Press 'Select' button to exit", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
   displayDraw();
 }
