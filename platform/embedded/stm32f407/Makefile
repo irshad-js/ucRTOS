@@ -50,6 +50,7 @@ CFLAGS += -I../../../lib/mystdio
 CFLAGS += -I../../../lib/AsciiLib
 CFLAGS += -I../../../lib/FreeRTOS/Source/include
 CFLAGS += -I../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
+CFLAGS += -I../lib/NRF24L01P/src
 
 CFLAGS += -ffreestanding # -nostdlib # nostdlib parameter should be set!?
 
