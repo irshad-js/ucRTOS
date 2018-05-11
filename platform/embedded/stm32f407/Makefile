@@ -81,7 +81,7 @@ LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
 	stm32f4xx_dcmi.c stm32f4xx_pwr.c \
 
 UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c \
-		  SlotBasedMenu.c AsciiLib.c _examplescreen.c mainmenuscreen.c aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c images.c helpers.c midifile.c midiplayer.c lut.c emidi_stm32f4.c
+		  SlotBasedMenu.c AsciiLib.c _examplescreen.c mainmenuscreen.c aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c skateboardscreen.c images.c helpers.c midifile.c midiplayer.c lut.c emidi_stm32f4.c
 
 PROJ_NAME=ucrtos
 OUTPATH=bin
