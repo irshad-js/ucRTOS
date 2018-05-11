@@ -23,20 +23,6 @@ static void draw() {
   displayDraw();
 }
 
-static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
-  hal_printf("skateboard::onEnter()");
-
-  SkateboardScreenParams* pSkateboardScreenParams = (SkateboardScreenParams*)pParams;
-  if (!pParams)
-    hal_printfWarning("Param is nullptr");
-  else {
-    context.someLocalVariable = pSkateboardScreenParams->someInt;
-    context.pReturnValue = pSkateboardScreenParams->pReturnValue;
-  }
-
-  draw();
-}
-
 static void onActionPress(StackBasedFsm_t* pFsm) {
   hal_printf("skateboard::onActionPress()");
 }
@@ -90,18 +76,30 @@ static void onLeaveState(StackBasedFsm_t* pFsm) {
   *context.pReturnValue = 42;
 }
 
-static void onTick(StackBasedFsm_t* pFsm) {
-}
-
-
 // -----------------------------------------
 
 // Private variables
 volatile uint32_t time_var1;
 
-// Private function prototypes
-void Delay(volatile uint32_t nCount);
-void init();
+// Called from systick handler
+void timing_handler() {
+  if (time_var1)
+    time_var1--;
+}
+
+// Delay a number of systick cycles (1ms)
+static void Delay(volatile uint32_t nCount) {
+  time_var1 = nCount;
+
+  while(time_var1);
+}
+
+static void blink() {
+  GPIO_SetBits(GPIOD, GPIO_Pin_12);
+  Delay(50);
+  GPIO_ResetBits(GPIOD, GPIO_Pin_12);
+  Delay(50);
+}
 
 int sendUartChar(char ch) {
   while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
@@ -222,7 +220,52 @@ void setup_nrf24() {
   printFullConfig();
 }
 
+static void init() {
+  nrf24_init();
+  setup_nrf24();
+}
+
 // -----------------------------------------
+
+static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
+  hal_printf("skateboard::onEnter()");
+
+  SkateboardScreenParams* pSkateboardScreenParams = (SkateboardScreenParams*)pParams;
+  if (!pParams)
+    hal_printfWarning("Param is nullptr");
+  else {
+    context.someLocalVariable = pSkateboardScreenParams->someInt;
+    context.pReturnValue = pSkateboardScreenParams->pReturnValue;
+  }
+
+  init();
+  draw();
+}
+
+static void onTick(StackBasedFsm_t* pFsm) {
+  int32_t recvByteCount;
+  char recvBuffer[NRF_MAX_PAYLOAD_SIZE + 1];
+
+  while(TRUE) {
+    recvByteCount = nrf24_recvPacket(recvBuffer);
+    recvBuffer[recvByteCount] = '\0';
+
+    if(recvByteCount != NRF_NO_DATA_AVAILABLE) {
+      blink();
+
+      debugPrint("Received [");
+      debugPrintDec(recvByteCount);
+      debugPrint("]: ");
+
+      for(int i = 0; i < recvByteCount; ++i) {
+        debugPrintHex(recvBuffer[i]);
+        debugPrint(" ");
+      }
+
+      debugPrintln("");
+    }
+  }
+}
 
 // Always implement this as last function of your state file:
 
