@@ -246,24 +246,22 @@ static void onTick(StackBasedFsm_t* pFsm) {
   int32_t recvByteCount;
   char recvBuffer[NRF_MAX_PAYLOAD_SIZE + 1];
 
-  while(TRUE) {
-    recvByteCount = nrf24_recvPacket(recvBuffer);
-    recvBuffer[recvByteCount] = '\0';
+  recvByteCount = nrf24_recvPacket(recvBuffer);
+  recvBuffer[recvByteCount] = '\0';
 
-    if(recvByteCount != NRF_NO_DATA_AVAILABLE) {
-      blink();
+  if(recvByteCount != NRF_NO_DATA_AVAILABLE) {
+    // blink();
 
-      debugPrint("Received [");
-      debugPrintDec(recvByteCount);
-      debugPrint("]: ");
+    debugPrint("Received [");
+    debugPrintDec(recvByteCount);
+    debugPrint("]: ");
 
-      for(int i = 0; i < recvByteCount; ++i) {
-        debugPrintHex(recvBuffer[i]);
-        debugPrint(" ");
-      }
-
-      debugPrintln("");
+    for(int i = 0; i < recvByteCount; ++i) {
+      debugPrintHex(recvBuffer[i]);
+      debugPrint(" ");
     }
+
+    debugPrintln("");
   }
 }
 
