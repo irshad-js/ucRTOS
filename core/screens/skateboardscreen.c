@@ -25,6 +25,24 @@ static void draw() {
 
 static void onActionPress(StackBasedFsm_t* pFsm) {
   hal_printf("skateboard::onActionPress()");
+
+  uint8_t pData[] = {
+    0xC0, 0xFE, 0xFE, 0x00, 0x42, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  };
+
+  nrf24_sendPacket(pData, 16, false);
+}
+
+static void onActionRelease(StackBasedFsm_t* pFsm) {
+  hal_printf("skateboard::onActionRelease()");
+
+  uint8_t pData[] = {
+    0xC0, 0xFE, 0xFE, 0x00, 0x23, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  };
+
+  nrf24_sendPacket(pData, 16, false);
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {
@@ -43,10 +61,6 @@ static void onSelectPress(StackBasedFsm_t* pFsm) {
 
 static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
   hal_printf("skateboard::onDirectionPress()");
-}
-
-static void onActionRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onActionRelease()");
 }
 
 static void onBackRelease(StackBasedFsm_t* pFsm) {
