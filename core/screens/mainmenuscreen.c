@@ -40,7 +40,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("mainMenuScreen::onEnter()\n");
 
   userMenuInit(&_context.menu, pFsm, 3, 45);
-  menuAddSlot(&_context.menu, "Skateboard", skateboardScreen);
+  menuAddSlot(&_context.menu, "Skateboard", NULL);
   menuAddSlot(&_context.menu, "MIDI Player", playerMenuScreen);
   menuAddSlot(&_context.menu, "Button Test", NULL);
   menuAddSlot(&_context.menu, "Example", exampleScreen);
