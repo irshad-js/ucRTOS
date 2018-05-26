@@ -156,6 +156,12 @@
     <ClCompile Include="..\..\..\lib\eMIDI\src\midiplayer.c">
       <Filter>lib\eMIDI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\core\screens\skateboardscreen.c">
+      <Filter>core\src\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lib\eMIDI\src\hal\emidi_windows.c">
+      <Filter>lib\eMIDI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
@@ -251,14 +257,14 @@
     <ClInclude Include="..\..\..\core\screens\playermenuscreen.h">
       <Filter>core\hdr\screens\player</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lib\eMIDI\src\emiditypes.h">
-      <Filter>lib\eMIDI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lib\eMIDI\src\midiplayer.h">
       <Filter>lib\eMIDI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lib\eMIDI\src\mybyteswap.h">
       <Filter>lib\eMIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\screens\skateboardscreen.h">
+      <Filter>core\hdr\screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
