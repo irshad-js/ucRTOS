@@ -15,18 +15,18 @@
 static void _prvBlinkTask(void *pParameters) {
   (void*)pParameters;
 
-  const int blinkFrequenyMs = 100000;
+  const int blinkFrequenyUs = 100000;
 
   while (1) {
     // myprintf("blink\n");
     statusLedOn();
-    delayUs(blinkFrequenyMs);
+    delayUs(blinkFrequenyUs);
     statusLedOff();
-    delayUs(blinkFrequenyMs);
+    delayUs(blinkFrequenyUs);
     statusLedOn();
-    delayUs(blinkFrequenyMs);
+    delayUs(blinkFrequenyUs);
     statusLedOff();
-    delayUs(10 * blinkFrequenyMs);
+    delayUs(10 * blinkFrequenyUs);
   }
 }
 
