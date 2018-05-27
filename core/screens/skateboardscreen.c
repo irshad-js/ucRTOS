@@ -7,7 +7,7 @@
 #include "skateboardscreen.h"
 
 static struct {
-  int someLocalVariable;
+  bool buttonIsPressed;
   int* pReturnValue;
 
 } context;
@@ -26,23 +26,13 @@ static void draw() {
 static void onActionPress(StackBasedFsm_t* pFsm) {
   hal_printf("skateboard::onActionPress()");
 
-  uint8_t pData[] = {
-    0xC0, 0xFE, 0xFE, 0x00, 0x42, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-  };
-
-  nrf24_sendPacket(pData, 16, false);
+  context.buttonIsPressed = true;
 }
 
 static void onActionRelease(StackBasedFsm_t* pFsm) {
   hal_printf("skateboard::onActionRelease()");
 
-  uint8_t pData[] = {
-    0xC0, 0xFE, 0xFE, 0x00, 0x23, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-  };
-
-  nrf24_sendPacket(pData, 16, false);
+  context.buttonIsPressed = false;
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {
@@ -246,18 +236,17 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 
   SkateboardScreenParams* pSkateboardScreenParams = (SkateboardScreenParams*)pParams;
   if (!pParams)
-    hal_printfWarning("Param is nullptr");
-  else {
-    context.someLocalVariable = pSkateboardScreenParams->someInt;
-    context.pReturnValue = pSkateboardScreenParams->pReturnValue;
-  }
+    hal_printfWarning("skateboard::onEnter; Param is nullptr");
+
+  context.buttonIsPressed = false;
 
   init();
   draw();
 }
 
 static void onTick(StackBasedFsm_t* pFsm) {
-  int32_t recvByteCount;
+/*
+  int32_t recvByteCount = NRF_NO_DATA_AVAILABLE;
   char recvBuffer[NRF_MAX_PAYLOAD_SIZE + 1];
 
   recvByteCount = nrf24_recvPacket(recvBuffer);
@@ -277,6 +266,19 @@ static void onTick(StackBasedFsm_t* pFsm) {
 
     debugPrintln("");
   }
+*/
+
+  uint8_t pData[] = {
+    0xC0, 0xFE, 0xFE, 0x00, 0x42, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  };
+
+  if(context.buttonIsPressed)
+    pData[4] = 0x42;
+  else
+    pData[4] = 0x23;
+
+  nrf24_sendPacket(pData, 16, false);
 }
 
 // Always implement this as last function of your state file:
