@@ -168,6 +168,9 @@
     <ClCompile Include="..\..\..\core\screens\floppyorgelscreen.c">
       <Filter>core\src\screens\FloppyOrgel</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\core\screens\livemodescreen.c">
+      <Filter>core\src\screens\FloppyOrgel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
@@ -273,6 +276,9 @@
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\core\screens\floppyorgelscreen.h">
+      <Filter>core\src\screens\FloppyOrgel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\screens\livemodescreen.h">
       <Filter>core\src\screens\FloppyOrgel</Filter>
     </ClInclude>
   </ItemGroup>

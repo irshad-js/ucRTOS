@@ -3,6 +3,7 @@
 #include "../display.h"
 #include "../SlotBasedMenu.h"
 
+#include "livemodescreen.h"
 #include "playermenuscreen.h"
 #include "floppyorgelscreen.h"
 
@@ -22,7 +23,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("FloppyOrgelScreen::onEnter()");
 
   userMenuInit(&context.menu, pFsm, 3, 85);
-  menuAddSlot(&context.menu, "Live Mode", NULL);
+  menuAddSlot(&context.menu, "Live Mode", liveModeScreen);
   menuAddSlot(&context.menu, "MIDI Player", playerMenuScreen);
       
   draw();

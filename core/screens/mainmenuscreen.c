@@ -45,12 +45,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   menuAddSlot(&_context.menu, "Button Test", NULL);
   menuAddSlot(&_context.menu, "Example", exampleScreen);
   menuAddSlot(&_context.menu, "Image Test", imgTestScreen);
-  menuAddSlot(&_context.menu, "Dummy", NULL);
-  menuAddSlot(&_context.menu, "Dummy", NULL);
-  menuAddSlot(&_context.menu, "Dummy", NULL);
-  menuAddSlot(&_context.menu, "Dummy", NULL);
-  menuAddSlot(&_context.menu, "Dummy", NULL);
-  menuAddSlot(&_context.menu, "Dummy1", NULL);
+  menuAddSlot(&_context.menu, "About", aboutScreen);
 
   draw();
 }
