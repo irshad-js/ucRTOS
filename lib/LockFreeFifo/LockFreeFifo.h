@@ -5,13 +5,13 @@
 #include "../../core/config.h"
 
 typedef struct {
-  char ringBuffer[RING_BUFFER_SIZE];
+  char pRingBuffer[RING_BUFFER_SIZE];
   int wptr;
   int rptr;
 } LockFreeFIFO_t;
 
-bool ringBufferDataAvailable(LockFreeFIFO_t* lff);
-void writeToRingBuffer(LockFreeFIFO_t* lff, char b);
-char readFromRingBuffer(LockFreeFIFO_t* lff);
+bool ringBufferDataAvailable(LockFreeFIFO_t* pLff);
+void writeToRingBuffer(LockFreeFIFO_t* pLff, char b);
+char readFromRingBuffer(LockFreeFIFO_t* pLff);
 
 #endif // __LOCK_FREE_FIFO_H
