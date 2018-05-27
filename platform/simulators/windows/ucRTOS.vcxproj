@@ -204,6 +204,7 @@
     <ClCompile Include="..\..\..\core\InputDevice.c" />
     <ClCompile Include="..\..\..\core\lut.c" />
     <ClCompile Include="..\..\..\core\screens\aboutscreen.c" />
+    <ClCompile Include="..\..\..\core\screens\floppyorgelscreen.c" />
     <ClCompile Include="..\..\..\core\screens\imgtestscreen.c" />
     <ClCompile Include="..\..\..\core\screens\mainmenuscreen.c" />
     <ClCompile Include="..\..\..\core\screens\playerscreen.c" />
@@ -264,6 +265,7 @@
     <ClInclude Include="..\..\..\core\InputDevice.h" />
     <ClInclude Include="..\..\..\core\lut.h" />
     <ClInclude Include="..\..\..\core\screens\aboutscreen.h" />
+    <ClInclude Include="..\..\..\core\screens\floppyorgelscreen.h" />
     <ClInclude Include="..\..\..\core\screens\imgtestscreen.h" />
     <ClInclude Include="..\..\..\core\screens\mainmenuscreen.h" />
     <ClInclude Include="..\..\..\core\screens\playercreen.h" />

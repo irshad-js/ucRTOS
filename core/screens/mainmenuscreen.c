@@ -7,8 +7,8 @@
 #include "_examplescreen.h"
 #include "aboutscreen.h"
 #include "imgtestscreen.h"
-#include "playermenuscreen.h"
 #include "skateboardscreen.h"
+#include "floppyorgelscreen.h"
 #include "mainmenuscreen.h"
 
 static struct {
@@ -22,10 +22,10 @@ static void draw() {
   displayClear(0x00, 0x00, 0x00);
   hal_printf("displayClear: %d ms\n", upTimeMs() - start);
 
-  displayDrawText(CENTER, 0 + 0, "Welcome to ucRTOS", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(CENTER, 0 + 0 * 18, "Welcome to ucRTOS", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   hal_printf("text 1: %d ms\n", upTimeMs() - start);
 
-  displayDrawText(CENTER, 0 + 18, "This is the main menu", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(CENTER, 0 + 1 * 18, "This is the main menu", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   hal_printf("text 2: %d ms\n", upTimeMs() - start);
 
   menuDraw(&_context.menu);
@@ -40,12 +40,17 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("mainMenuScreen::onEnter()\n");
 
   userMenuInit(&_context.menu, pFsm, 3, 45);
-  menuAddSlot(&_context.menu, "Skateboard", NULL);
-  menuAddSlot(&_context.menu, "MIDI Player", playerMenuScreen);
+  menuAddSlot(&_context.menu, "Floppy Orgel", floppyOrgelScreen);
+  menuAddSlot(&_context.menu, "Skateboard", NULL);  
   menuAddSlot(&_context.menu, "Button Test", NULL);
   menuAddSlot(&_context.menu, "Example", exampleScreen);
   menuAddSlot(&_context.menu, "Image Test", imgTestScreen);
-  menuAddSlot(&_context.menu, "About", aboutScreen);
+  menuAddSlot(&_context.menu, "Dummy", NULL);
+  menuAddSlot(&_context.menu, "Dummy", NULL);
+  menuAddSlot(&_context.menu, "Dummy", NULL);
+  menuAddSlot(&_context.menu, "Dummy", NULL);
+  menuAddSlot(&_context.menu, "Dummy", NULL);
+  menuAddSlot(&_context.menu, "Dummy1", NULL);
 
   draw();
 }
