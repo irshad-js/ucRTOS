@@ -202,6 +202,7 @@
     <ClCompile Include="..\..\..\core\display.c" />
     <ClCompile Include="..\..\..\core\images.c" />
     <ClCompile Include="..\..\..\core\InputDevice.c" />
+    <ClCompile Include="..\..\..\core\LockFreeFifo.c" />
     <ClCompile Include="..\..\..\core\lut.c" />
     <ClCompile Include="..\..\..\core\screens\aboutscreen.c" />
     <ClCompile Include="..\..\..\core\screens\floppyorgelscreen.c" />
@@ -264,6 +265,7 @@
     <ClInclude Include="..\..\..\core\display.h" />
     <ClInclude Include="..\..\..\core\images.h" />
     <ClInclude Include="..\..\..\core\InputDevice.h" />
+    <ClInclude Include="..\..\..\core\LockFreeFifo.h" />
     <ClInclude Include="..\..\..\core\lut.h" />
     <ClInclude Include="..\..\..\core\screens\aboutscreen.h" />
     <ClInclude Include="..\..\..\core\screens\floppyorgelscreen.h" />

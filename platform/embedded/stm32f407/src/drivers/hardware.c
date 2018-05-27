@@ -8,6 +8,7 @@
 #include "display.h"
 #include "../../core/ucrtos.h"
 #include "../../../eMIDI/src/midifile.h"
+#include "../../../../../lib/LockFreeFifo/LockFreeFifo.h"
 
 // LED
 
@@ -143,3 +144,21 @@ void hal_strcpy_s(char* dst, int maxSize, const char* src) {
   strcpy(dst, src);
 }
 
+// RS485:
+
+static LockFreeFIFO_t* _pFifoDebugPort = 0;
+
+void hal_rs485init(LockFreeFIFO_t* pFifo) {
+  _pFifoDebugPort = pFifo;
+}
+
+void hal_rs485Send(char dataByte) {
+  while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+  USART_SendData(USART6, dataByte);
+}
+
+void USART1_IRQHandler() {
+  // check if the USART1 receive interrupt flag was set
+  if(USART_GetITStatus(USART1, USART_IT_RXNE))
+    writeToRingBuffer(_pFifoDebugPort, USART1->DR); // The Interrupt gets released just by reading USART1->DR
+}

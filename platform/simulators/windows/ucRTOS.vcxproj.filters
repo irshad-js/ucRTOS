@@ -171,6 +171,9 @@
     <ClCompile Include="..\..\..\core\screens\livemodescreen.c">
       <Filter>core\src\screens\FloppyOrgel</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\core\LockFreeFifo.c">
+      <Filter>core\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\core\screens\livemodescreen.h">
       <Filter>core\src\screens\FloppyOrgel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\LockFreeFifo.h">
+      <Filter>core\hdr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
