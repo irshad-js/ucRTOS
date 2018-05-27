@@ -2,7 +2,7 @@
 #define __LOCK_FREE_FIFO_H
 
 #include <stdbool.h>
-#include "config.h"
+#include "../../core/config.h"
 
 typedef struct {
   char ringBuffer[RING_BUFFER_SIZE];

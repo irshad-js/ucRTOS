@@ -5,6 +5,7 @@
 #include "FreeRTOSConfig.h"
 #include "../../core/ucrtos.h"
 #include "../../../eMIDI/src/midifile.h"
+#include "../../../../lib/LockFreeFifo/LockFreeFifo.h"
 
 void statusLedOn() {
   if (GetKeyState(VK_SCROLL) == 1)
@@ -193,4 +194,14 @@ InputDeviceStates_t getInputDeviceState() {
   states.Select    = getButtonStateEmu(KEY_SELECT);
 
   return states;
+}
+
+// RS485:
+void hal_rs485Send(char dataByte) {
+  // Not used on win32 yet:
+  hal_printf("hal_rs485Send\n");  
+}
+
+void hal_rs485init(LockFreeFIFO_t* pFifo) {
+
 }

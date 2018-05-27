@@ -1,4 +1,4 @@
-#include "../lib/colorprint/colorprint.h" // TODO: remove after debug!
+#include "../../lib/colorprint/colorprint.h" // TODO: remove after debug!
 #include "LockFreeFifo.h"
 
 static int getRingBufferDistance(LockFreeFIFO_t* lff) {

@@ -1,4 +1,5 @@
 #include "../../lib/colorprint/colorprint.h"
+#include "../../lib/LockFreeFifo/LockFreeFifo.h"
 #include "../../lib/mystdio/mystdio.h"
 #include "../../core/ucrtos.h"
 #include "../display.h"
@@ -12,6 +13,7 @@
 #include "mainmenuscreen.h"
 
 static struct {
+  LockFreeFIFO_t fifoDebugPort;
   SlotBasedMenu_t menu;
 
 } _context;
@@ -19,7 +21,7 @@ static struct {
 static void draw() {
   uint32_t start = upTimeMs();
 
-  displayClear(0x00, 0x00, 0x00);
+  displayClear();
   hal_printf("displayClear: %d ms\n", upTimeMs() - start);
 
   displayDrawText(CENTER, 0 + 0 * 18, "Welcome to ucRTOS", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
@@ -39,6 +41,7 @@ static void draw() {
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("mainMenuScreen::onEnter()\n");
 
+  hal_rs485init(&_context.fifoDebugPort); // TODO: move to live mode state?
   userMenuInit(&_context.menu, pFsm, 3, 45);
   menuAddSlot(&_context.menu, "Floppy Orgel", floppyOrgelScreen);
   menuAddSlot(&_context.menu, "Skateboard", NULL);  
@@ -53,7 +56,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 static void onActionPress(StackBasedFsm_t* pFsm) {
   hal_printf("mainMenuScreen::onActionPress\n");
 
-  userMenuTransitToSelectedSlot(&_context.menu, 0);
+  userMenuTransitToSelectedSlot(&_context.menu, &_context.fifoDebugPort);
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {

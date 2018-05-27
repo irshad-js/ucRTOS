@@ -202,7 +202,6 @@
     <ClCompile Include="..\..\..\core\display.c" />
     <ClCompile Include="..\..\..\core\images.c" />
     <ClCompile Include="..\..\..\core\InputDevice.c" />
-    <ClCompile Include="..\..\..\core\LockFreeFifo.c" />
     <ClCompile Include="..\..\..\core\lut.c" />
     <ClCompile Include="..\..\..\core\screens\aboutscreen.c" />
     <ClCompile Include="..\..\..\core\screens\floppyorgelscreen.c" />
@@ -223,6 +222,7 @@
     <ClCompile Include="..\..\..\lib\eMIDI\src\midifile.c" />
     <ClCompile Include="..\..\..\lib\eMIDI\src\midiplayer.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\portable\MemMang\heap_1.c" />
+    <ClCompile Include="..\..\..\lib\LockFreeFifo\LockFreeFifo.c" />
     <ClCompile Include="..\..\..\lib\mystdio\myprintf.c" />
     <ClCompile Include="..\..\..\core\core_main.c" />
     <ClCompile Include="..\..\..\lib\FreeRTOS\Source\croutine.c" />
@@ -265,7 +265,6 @@
     <ClInclude Include="..\..\..\core\display.h" />
     <ClInclude Include="..\..\..\core\images.h" />
     <ClInclude Include="..\..\..\core\InputDevice.h" />
-    <ClInclude Include="..\..\..\core\LockFreeFifo.h" />
     <ClInclude Include="..\..\..\core\lut.h" />
     <ClInclude Include="..\..\..\core\screens\aboutscreen.h" />
     <ClInclude Include="..\..\..\core\screens\floppyorgelscreen.h" />
@@ -285,6 +284,7 @@
     <ClInclude Include="..\..\..\lib\eMIDI\src\midifile.h" />
     <ClInclude Include="..\..\..\lib\eMIDI\src\midiplayer.h" />
     <ClInclude Include="..\..\..\lib\eMIDI\src\mybyteswap.h" />
+    <ClInclude Include="..\..\..\lib\LockFreeFifo\LockFreeFifo.h" />
     <ClInclude Include="..\..\..\lib\mystdio\mystdio.h" />
     <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\event_groups.h" />
     <ClInclude Include="..\..\..\lib\FreeRTOS\Source\include\timers.h" />

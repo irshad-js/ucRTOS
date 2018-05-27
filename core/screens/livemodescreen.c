@@ -1,11 +1,13 @@
 #include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
+#include "../../lib/LockFreeFifo/LockFreeFifo.h"
 #include "../display.h"
 
 #include "livemodescreen.h"
 
 static struct {
-  int dummy;
+  LockFreeFIFO_t* pFifoDebugPort;
+
 } context;
 
 static void draw() {
@@ -18,83 +20,41 @@ static void draw() {
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
-  hal_printf("example::onEnter()");
+  hal_printf("LiveModeScreen::onEnter()");
     
+  context.pFifoDebugPort = (LockFreeFIFO_t*)pParams;
+
+  displayClear();  
+  displayDrawText(CENTER, 0, "--- Live mode ---", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(CENTER, 18, "Now receiving MIDI-Data on debug port...", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  
   draw();
 }
 
-static void onActionPress(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onActionPress()");
-}
-
 static void onBackPress(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onBackPress()");
+  hal_printf("LiveModeScreen::onBackPress()");
 
   leaveState(pFsm);
 }
 
-static void onStartPress(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onStartPress()");  
-}
-
-static void onSelectPress(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onSelectPress()");
-}
-
-static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
-  hal_printf("example::onDirectionPress()");  
-}
-
-static void onActionRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onActionRelease()"); 
-}
-
-static void onBackRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onBackRelease()");  
-}
-
-static void onStartRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onStartRelease()");  
-}
-
-static void onSelectRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onSelectRelease()");  
-}
-
-static void onReenter(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onReenter()");  
-}
-
 static void onLeaveState(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onLeaveState()");
+  hal_printf("LiveModeScreen::onLeaveState()");
+
+  // TODO: stop all floppies
 }
 
 static void onTick(StackBasedFsm_t* pFsm) {
+  // while (getRingBufferDistance(context.pFifoDebugPort) < RING_BUFFER_SIZE)
+
+  while (ringBufferDataAvailable(context.pFifoDebugPort))
+    hal_rs485Send(readFromRingBuffer(context.pFifoDebugPort));
 }
 
 // Always implement this as last function of your state file:
 
 void liveModeScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
-  // This callback MUST be set:
-  pState->onEnterState    = onEnter;
-
-  // The following callbacks are all optional:
-
-  // Button press callbacks:
-  pState->onActionPress    = onActionPress;
-  pState->onBackPress      = onBackPress;
-  pState->onStartPress     = onStartPress;
-  pState->onSelectPress    = onSelectPress;
-  pState->onDirectionPress = onDirectionPress;
-
-  // Button release callbacks
-  pState->onActionRelease = onActionRelease;
-  pState->onBackRelease   = onBackRelease;
-  pState->onStartRelease  = onStartRelease;
-  pState->onSelectRelease = onSelectRelease;
-
-  // State callbacks:
-  pState->onReenterState  = onReenter;
-  pState->onLeaveState    = onLeaveState;
-  pState->onTick          = onTick;
+  pState->onEnterState = onEnter;
+  pState->onBackPress  = onBackPress;    
+  pState->onLeaveState = onLeaveState;
+  pState->onTick       = onTick;
 }

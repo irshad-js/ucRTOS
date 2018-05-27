@@ -1,5 +1,6 @@
 #include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
+#include "../../lib/LockFreeFifo/LockFreeFifo.h"
 #include "../display.h"
 #include "../SlotBasedMenu.h"
 
@@ -8,8 +9,9 @@
 #include "floppyorgelscreen.h"
 
 static struct {
+  LockFreeFIFO_t* pFifoDebugPort;
   SlotBasedMenu_t menu;
-
+  
 } context;
 
 static void draw() {
@@ -22,6 +24,8 @@ static void draw() {
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("FloppyOrgelScreen::onEnter()");
 
+  context.pFifoDebugPort = (LockFreeFIFO_t*)pParams;
+
   userMenuInit(&context.menu, pFsm, 3, 85);
   menuAddSlot(&context.menu, "Live Mode", liveModeScreen);
   menuAddSlot(&context.menu, "MIDI Player", playerMenuScreen);
@@ -32,7 +36,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 static void onActionPress(StackBasedFsm_t* pFsm) {
   hal_printf("FloppyOrgelScreen::onActionPress()");
 
-  userMenuTransitToSelectedSlot(&context.menu, 0);
+  userMenuTransitToSelectedSlot(&context.menu, context.pFifoDebugPort);
 }
 
 static void onBackPress(StackBasedFsm_t* pFsm) {

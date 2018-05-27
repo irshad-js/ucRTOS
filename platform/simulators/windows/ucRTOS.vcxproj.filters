@@ -70,6 +70,9 @@
     <Filter Include="core\src\screens\FloppyOrgel\player">
       <UniqueIdentifier>{6645e7f4-6be9-418f-afab-8341dc8216af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\LockFreeFifo">
+      <UniqueIdentifier>{4f7c62d2-5eff-4322-a41a-45413cd96eed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -171,8 +174,8 @@
     <ClCompile Include="..\..\..\core\screens\livemodescreen.c">
       <Filter>core\src\screens\FloppyOrgel</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\core\LockFreeFifo.c">
-      <Filter>core\src</Filter>
+    <ClCompile Include="..\..\..\lib\LockFreeFifo\LockFreeFifo.c">
+      <Filter>lib\LockFreeFifo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,8 +287,8 @@
     <ClInclude Include="..\..\..\core\screens\livemodescreen.h">
       <Filter>core\src\screens\FloppyOrgel</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\core\LockFreeFifo.h">
-      <Filter>core\hdr</Filter>
+    <ClInclude Include="..\..\..\lib\LockFreeFifo\LockFreeFifo.h">
+      <Filter>lib\LockFreeFifo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

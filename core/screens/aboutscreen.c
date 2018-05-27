@@ -10,7 +10,7 @@
 #include "aboutscreen.h"
 
 static void draw() {
-  displayClear(0x00, 0x00, 0x00);
+  displayClear();
   displayDrawText(CENTER, 0 + 0 * 18, "ucRTOS v0.1", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 0 + 1 * 18, "coon@c-base.org", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
