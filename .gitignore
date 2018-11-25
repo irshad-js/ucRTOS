@@ -17,6 +17,7 @@
 *.swp
 *.cogui
 *.comarker
+*.d
 platform/stm32f407/ide/coocox/ucRTOS
 /platform/simulators/windows/.vs/ucRTOS/v15/ipch/AutoPCH/72d250fbd7579081/*.ipch
 *.ipch
@@ -26,3 +27,5 @@ platform/stm32f407/ide/coocox/ucRTOS
 /platform/embedded/stm32f407/ide/coocox/*.comemgui
 /platform/embedded/stm32f407/ide/coocox/ucRTOS/Debug/obj
 /platform/embedded/stm32f407/ide/coocox/ucRTOS/ucRTOS.elf.xcodeproj/*.pbxproj
+/platform/simulators/linux/Debug/FreeRTOS_Posix
+
