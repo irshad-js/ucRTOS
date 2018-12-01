@@ -98,7 +98,6 @@
 #include "task.h"
 #include "queue.h"
 #include "croutine.h"
-#include "partest.h"
 
 /* Demo file headers. */
 #include "BlockQ.h"
@@ -181,15 +180,13 @@ static unsigned long uxQueueSendPassedCount = 0;
 static int iSerialReceive = 0;
 /*-----------------------------------------------------------*/
 
-int main( void )
-{
-xTaskHandle hUDPTask, hMQTask, hSerialTask;
-xQueueHandle xUDPReceiveQueue = NULL, xIPCQueue = NULL, xSerialRxQueue = NULL;
-int iSocketReceive = 0;
-struct sockaddr_in xReceiveAddress;
+int main(void) {
+	xTaskHandle hUDPTask, hMQTask, hSerialTask;
+	xQueueHandle xUDPReceiveQueue = NULL, xIPCQueue = NULL, xSerialRxQueue = NULL;
+	int iSocketReceive = 0;
+	struct sockaddr_in xReceiveAddress;
 
 	/* Initialise hardware and utilities. */
-	vParTestInitialise();
 	vPrintInitialise();
 
 	/* Initialise Receives sockets. */
@@ -209,8 +206,7 @@ struct sockaddr_in xReceiveAddress;
 	vPosixIPCEmpty( xMessageQueuePipeHandle );
 
 	/* Set-up the Serial Console Echo task */
-	if ( pdTRUE == lAsyncIOSerialOpen( "/dev/ttyS0", &iSerialReceive ) )
-	{
+	if ( pdTRUE == lAsyncIOSerialOpen( "/dev/ttyS0", &iSerialReceive ) ) {
 		xSerialRxQueue = xQueueCreate( 2, sizeof ( unsigned char ) );
 		(void)lAsyncIORegisterCallback( iSerialReceive, vAsyncSerialIODataAvailableISR, xSerialRxQueue );
 	}

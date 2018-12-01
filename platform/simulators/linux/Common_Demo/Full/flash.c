@@ -86,7 +86,6 @@ Changes from V2.1.1
 #include "task.h"
 
 /* Demo program include files. */
-#include "partest.h"
 #include "flash.h"
 #include "print.h"
 
@@ -144,11 +143,11 @@ xLEDParameters *pxParameters;
 	{
 		/* Delay for half the flash period then turn the LED on. */
 		vTaskDelay( pxParameters->xFlashRate / ( portTickType ) 2 );
-		vParTestToggleLED( pxParameters->uxLED );
+		// vParTestToggleLED( pxParameters->uxLED );
 
 		/* Delay for half the flash period then turn the LED off. */
 		vTaskDelay( pxParameters->xFlashRate / ( portTickType ) 2 );
-		vParTestToggleLED( pxParameters->uxLED );
+		// vParTestToggleLED( pxParameters->uxLED );
 	}
 }
 

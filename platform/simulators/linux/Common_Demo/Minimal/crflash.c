@@ -216,7 +216,7 @@ unsigned portBASE_TYPE uxLEDToFlash;
 		else
 		{
 			/* We received the number of an LED to flash - flash it! */
-			vParTestToggleLED( uxLEDToFlash );
+			// vParTestToggleLED( uxLEDToFlash );
 		}
 	}
 

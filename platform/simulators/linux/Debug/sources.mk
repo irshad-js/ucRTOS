@@ -14,7 +14,6 @@ EXECUTABLES :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
-ParTest \
 FreeRTOS_Kernel \
 FreeRTOS_Kernel/portable/MemMang \
 FreeRTOS_Kernel/portable/GCC/Posix \

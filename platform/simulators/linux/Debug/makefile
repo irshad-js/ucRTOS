@@ -9,7 +9,6 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir.mk
--include ParTest/subdir.mk
 -include FreeRTOS_Kernel/subdir.mk
 -include FreeRTOS_Kernel/portable/MemMang/subdir.mk
 -include FreeRTOS_Kernel/portable/GCC/Posix/subdir.mk
@@ -27,7 +26,7 @@ endif
 
 -include ../makefile.defs
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Add inputs and outputs from these tool invocations to the build variables
 
 # All Target
 all: FreeRTOS_Posix
