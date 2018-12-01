@@ -24,3 +24,4 @@ void processInputDevice(StackBasedFsm_t* pFsm);
 void hardwareInputDeviceInit();
 
 #endif // _INPUTDEVICE_H
+
