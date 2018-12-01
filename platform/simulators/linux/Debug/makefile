@@ -15,6 +15,7 @@ RM := rm -rf
 -include FileIO/subdir.mk
 -include Common_Demo/Minimal/subdir.mk
 -include Common_Demo/Full/subdir.mk
+-include AsyncIO/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

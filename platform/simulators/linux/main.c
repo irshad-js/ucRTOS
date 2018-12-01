@@ -118,6 +118,11 @@
 #include "countsem.h"
 #include "recmutex.h"
 
+#include "AsyncIO/AsyncIO.h"
+#include "AsyncIO/AsyncIOSocket.h"
+#include "AsyncIO/PosixMessageQueueIPC.h"
+#include "AsyncIO/AsyncIOSerial.h"
+
 /* Priority definitions for the tasks in the demo application. */
 #define mainLED_TASK_PRIORITY		( tskIDLE_PRIORITY + 1 )
 #define mainCREATOR_TASK_PRIORITY	( tskIDLE_PRIORITY + 3 )
@@ -162,6 +167,7 @@ static void prvUDPTask( void *pvParameters );
 
 /* Send/Receive via Posix Message Queues for local IPC. */
 static void prvMessageQueueTask( void *pvParameters );
+static void vMessageQueueReceive( xMessageObject xMsg, void *pvContext );
 static volatile mqd_t xMessageQueuePipeHandle = 0;
 
 /* Send/Receive UDP packets. */
@@ -175,7 +181,74 @@ static int iSerialReceive = 0;
 /*-----------------------------------------------------------*/
 
 int main(void) {
-	// TODO: call main in core_main
+	xTaskHandle hUDPTask, hMQTask, hSerialTask;
+	xQueueHandle xUDPReceiveQueue = NULL, xIPCQueue = NULL, xSerialRxQueue = NULL;
+	int iSocketReceive = 0;
+	struct sockaddr_in xReceiveAddress;
+
+	/* Initialise hardware and utilities. */
+	vPrintInitialise();
+
+	/* Initialise Receives sockets. */
+	xReceiveAddress.sin_family = AF_INET;
+	xReceiveAddress.sin_addr.s_addr = INADDR_ANY;
+	xReceiveAddress.sin_port = htons( mainUDP_PORT );
+
+	/* Set-up the Receive Queue and open the socket ready to receive. */
+	xUDPReceiveQueue = xQueueCreate( 2, sizeof ( xUDPPacket ) );
+	iSocketReceive = iSocketOpenUDP( vUDPReceiveAndDeliverCallback, xUDPReceiveQueue, &xReceiveAddress );
+
+	/* Remember to open a whole in your Firewall to be able to receive!!! */
+
+	/* Set-up the IPC Message queue. */
+	xIPCQueue = xQueueCreate( 2, sizeof( xMessageObject ) );
+	xMessageQueuePipeHandle = xPosixIPCOpen( "/Local_Loopback", vMessageQueueReceive, xIPCQueue );
+	vPosixIPCEmpty( xMessageQueuePipeHandle );
+
+	/* Set-up the Serial Console Echo task */
+	if ( pdTRUE == lAsyncIOSerialOpen( "/dev/ttyS0", &iSerialReceive ) ) {
+		xSerialRxQueue = xQueueCreate( 2, sizeof ( unsigned char ) );
+		(void)lAsyncIORegisterCallback( iSerialReceive, vAsyncSerialIODataAvailableISR, xSerialRxQueue );
+	}
+
+	/* CREATE ALL THE DEMO APPLICATION TASKS. */
+	vStartMathTasks( tskIDLE_PRIORITY );
+	vStartPolledQueueTasks( mainQUEUE_POLL_PRIORITY );
+	vCreateBlockTimeTasks();
+	vStartSemaphoreTasks( mainSEMAPHORE_TASK_PRIORITY );
+	vStartMultiEventTasks();
+	vStartQueuePeekTasks();
+	vStartBlockingQueueTasks( mainQUEUE_BLOCK_PRIORITY );
+#if mainCPU_INTENSIVE_TASKS == 1
+	vStartRecursiveMutexTasks();
+	vStartDynamicPriorityTasks();
+	vStartGenericQueueTasks( mainGENERIC_QUEUE_PRIORITY );
+	vStartCountingSemaphoreTasks();
+#endif
+
+	/* Create the co-routines that communicate with the tick hook. */
+	vStartHookCoRoutines();
+
+	/* Create the "Print" task as described at the top of the file. */
+	xTaskCreate( vErrorChecks, "Print", configMINIMAL_STACK_SIZE, NULL, mainPRINT_TASK_PRIORITY, NULL );
+
+	/* This task has to be created last as it keeps account of the number of tasks
+	it expects to see running. */
+#if mainUSE_SUICIDAL_TASKS_DEMO == 1
+	vCreateSuicidalTasks( mainCREATOR_TASK_PRIORITY );
+#endif
+
+	/* Create a Task which waits to receive messages and sends its own when it times out. */
+	xTaskCreate( prvUDPTask, "UDPRxTx", configMINIMAL_STACK_SIZE, xUDPReceiveQueue, tskIDLE_PRIORITY + 1, &hUDPTask );
+
+	/* Create a Task which waits to receive messages and sends its own when it times out. */
+	xTaskCreate( prvMessageQueueTask, "MQ RxTx", configMINIMAL_STACK_SIZE, xIPCQueue, tskIDLE_PRIORITY + 1, &hMQTask );
+
+	/* Create a Task which waits to receive bytes. */
+	xTaskCreate( prvSerialConsoleEchoTask, "SerialRx", configMINIMAL_STACK_SIZE, xSerialRxQueue, tskIDLE_PRIORITY + 4, &hSerialTask );
+
+	/* Set the scheduler running.  This function will not return unless a task calls vTaskEndScheduler(). */
+	vTaskStartScheduler();
 
 	return 1;
 }
@@ -203,6 +276,102 @@ void vMainQueueSendPassed( void )
 {
 	/* This is just an example implementation of the "queue send" trace hook. */
 	uxQueueSendPassedCount++;
+}
+/*-----------------------------------------------------------*/
+
+void prvUDPTask( void *pvParameters )
+{
+static xUDPPacket xPacket;
+struct sockaddr_in xSendAddress;
+int iSocketSend, iReturn = 0, iSendTaskList = pdTRUE;
+xQueueHandle xUDPReceiveQueue = (xQueueHandle)pvParameters;
+
+	/* Open a socket for sending. */
+	iSocketSend = iSocketOpenUDP( NULL, NULL, NULL );
+
+	if ( iSocketSend != 0 )
+	{
+		xSendAddress.sin_family = AF_INET;
+		/* Set the UDP main address to reflect your local subnet. */
+		iReturn = !inet_aton( mainUDP_SEND_ADDRESS, (struct in_addr *) &( xSendAddress.sin_addr.s_addr ) );
+		xSendAddress.sin_port = htons( mainUDP_PORT );
+
+		/* Remember to open a whole in your Firewall to be able to receive!!! */
+
+		for (;;)
+		{
+			if ( pdPASS == xQueueReceive( xUDPReceiveQueue, &xPacket, 2500 / portTICK_RATE_MS ) )
+			{
+				/* Data received. Process it. */
+				xPacket.ucNull = 0;	/* Ensure the string is terminated. */
+				printf( "%s", xPacket.ucPacket );
+			}
+			else
+			{
+				/* Timeout. Send the data. */
+				if ( iSendTaskList )
+				{
+					vTaskList( xPacket.ucPacket );
+				}
+				else
+				{
+					vTaskGetRunTimeStats( xPacket.ucPacket );
+				}
+				iSendTaskList = !iSendTaskList;
+
+				/* Send the Updated Tasks list. */
+				iReturn = iSocketUDPSendTo( iSocketSend, &xPacket, &xSendAddress );
+
+				if ( sizeof( xUDPPacket ) != iReturn )
+				{
+					printf( "UDP Failed to send whole packet: %d.\n", errno );
+				}
+			}
+		}
+	}
+	else
+	{
+		vSocketClose( iSocketSend );
+		printf( "UDP Task: Unable to open a socket.\n" );
+	}
+
+	/* Unable to open the socket. Bail out. */
+	vTaskDelete( NULL );
+}
+/*-----------------------------------------------------------*/
+
+void prvMessageQueueTask( void *pvParameters )
+{
+xMessageObject xTxMsg, xRxMsg = { { 0 } };
+
+	sprintf( xTxMsg.cMesssageBytes, "Test message.\n" );
+
+	for ( ;; )
+	{
+		if ( pdTRUE == lPosixIPCSendMessage( xMessageQueuePipeHandle, xTxMsg ) )
+		{
+			if ( pdTRUE != xQueueReceive( (xQueueHandle)pvParameters, &xRxMsg, 5000 / portTICK_RATE_MS ) )
+			{
+				printf( "MQ Task: Queue Receive Failed.\n" );
+			}
+			else
+			{
+				printf( "MQ Task: %s\n", xRxMsg.cMesssageBytes );
+			}
+		}
+		vTaskDelay( 5000 );
+	}
+}
+/*-----------------------------------------------------------*/
+
+void vMessageQueueReceive( xMessageObject xMsg, void *pvContext )
+{
+portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+	if ( pdTRUE != xQueueSendFromISR( (xQueueHandle)pvContext, &xMsg, &xHigherPriorityTaskWoken ) )
+	{
+		printf( "MQ Rx failed.\n" );
+	}
+	portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
 }
 /*-----------------------------------------------------------*/
 
