@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
