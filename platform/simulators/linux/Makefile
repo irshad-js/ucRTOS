@@ -14,9 +14,9 @@ SIZE=$(BINPATH)/size
 #vpath %.c ../../../lib/LockFreeFifo
 #vpath %.c ../../../lib/eMIDI/src
 #vpath %.c ../../../lib/eMIDI/src/hal
-#vpath %.c ../../../lib/FreeRTOS/Source
-#vpath %.c ../../../lib/FreeRTOS/Source/portable/MemMang
-#vpath %.c ../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
+vpath %.c ../../../lib/FreeRTOS/Source
+vpath %.c ../../../lib/FreeRTOS/Source/portable/MemMang
+vpath %.c ../../../lib/FreeRTOS/Source/portable/GCC/Posix
 vpath %.c src
 #vpath %.c src/drivers
 #vpath %.c ../lib/NRF24L01P/src
@@ -24,7 +24,7 @@ vpath %.c src
 #vpath %.a lib
 
 
-CFLAGS  = -g -Wall
+CFLAGS  = -g -Wall -pthread
 CFLAGS += -Ihdr # -Ilib -Ilib/inc
 #CFLAGS += -Ilib/inc/core
 #CFLAGS += -I../../../core
@@ -32,8 +32,8 @@ CFLAGS += -Ihdr # -Ilib -Ilib/inc
 #CFLAGS += -I../../../lib/mystdio
 #CFLAGS += -I../../../lib/AsciiLib
 #CFLAGS += -I../../../lib/LockFreeFifo
-#CFLAGS += -I../../../lib/FreeRTOS/Source/include
-#CFLAGS += -I../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
+CFLAGS += -I../../../lib/FreeRTOS/Source/include
+CFLAGS += -I../../../lib/FreeRTOS/Source/portable/GCC/Posix
 #CFLAGS += -I../lib/NRF24L01P/src
 #CFLAGS += -I../lib/NRF24L01P/hal
 
@@ -41,10 +41,10 @@ CFLAGS += -Ihdr # -Ilib -Ilib/inc
 
 OBJDIR=obj
 BINDIR=bin
-MAIN_SRCS = main.c
+MAIN_SRCS = main.c heap_3.c port.c tasks.c list.c timers.c queue.c croutine.c event_groups.c
 
 #core_main.c hardware.c nesgamepad.c ssd1289.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c \
-#		port.c heap_1.c tasks.c list.c timers.c queue.c \
+#		port.c tasks.c list.c timers.c queue.c \
 #		lib/cmsis_boot/startup_stm32f4xx.s hal_stm32f4.c # add startup file to build
 
 #LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
