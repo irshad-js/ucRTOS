@@ -7,8 +7,6 @@ OBJCOPY=$(BINPATH)/objcopy
 SIZE=$(BINPATH)/size
 
 #vpath %.c .
-#vpath %.c lib/cmsis_boot
-#vpath %.c lib/stdperiph/src
 #vpath %.c ../../../core
 #vpath %.c ../../../core/screens
 #vpath %.c ../../../lib/mystdio
@@ -19,7 +17,7 @@ SIZE=$(BINPATH)/size
 #vpath %.c ../../../lib/FreeRTOS/Source
 #vpath %.c ../../../lib/FreeRTOS/Source/portable/MemMang
 #vpath %.c ../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
-vpath %.cpp src
+vpath %.c src
 #vpath %.c src/drivers
 #vpath %.c ../lib/NRF24L01P/src
 #vpath %.c ../lib/NRF24L01P/hal/stm32f4
@@ -43,7 +41,7 @@ CFLAGS += -Ihdr # -Ilib -Ilib/inc
 
 OBJDIR=obj
 BINDIR=bin
-MAIN_SRCS = main.cpp
+MAIN_SRCS = main.c
 
 #core_main.c hardware.c nesgamepad.c ssd1289.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c \
 #		port.c heap_1.c tasks.c list.c timers.c queue.c \
@@ -68,7 +66,7 @@ OUTPATH=bin
 
 ###################################################
 
-MAIN_OBJS=$(patsubst %.cpp,$(OBJDIR)/%.o,$(MAIN_SRCS))
+MAIN_OBJS=$(patsubst %.c,$(OBJDIR)/%.o,$(MAIN_SRCS))
 #LIB_OBJS=$(patsubst %.c,$(OBJDIR)/%.o,$(LIB_SRCS))
 #UCRTOS_LIB_OBJS=$(patsubst %.c,$(OBJDIR)/%.o,$(UCRTOS_LIB_SRCS))
 
@@ -82,7 +80,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 	mkdir -p $(BINDIR)
 
-$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
+$(OBJDIR)/%.o: %.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -L$(OBJDIR)
 
 #$(OBJDIR)/libucrtos.a: $(UCRTOS_LIB_OBJS)
