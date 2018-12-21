@@ -1,5 +1,5 @@
 /*
-	FreeRTOS.org V5.4.2 - Copyright (C) 2003-2009 Richard Barry.
+	FreeRTOS.org V9.0.0 - Copyright (C) 2003-2009 Richard Barry.
 
 	This file is part of the FreeRTOS.org distribution.
 
@@ -64,6 +64,8 @@
  * See http://www.freertos.org/a00110.html.
  *----------------------------------------------------------*/
 
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1 // required since version 7.5.0. TODO: refactor and remove this setting
+#define configENABLE_BACKWARD_COMPATIBILITY 1 // required since version 8.0.0. TODO: refactor and remove this setting
 #define configUSE_PREEMPTION			1
 #define configUSE_IDLE_HOOK				1
 #define configUSE_TICK_HOOK				0
