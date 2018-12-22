@@ -168,14 +168,14 @@ void MainFrame::OnAbout(wxCommandEvent& event) {
 
 // end of WX
 
-static DWORD WINAPI _rtosThread(void* data) {
+static DWORD WINAPI _rtosThread(void* pData) {
   return coreMain();
 }
 
 static HANDLE _hCreateLcdSimulator = CreateEvent(NULL, FALSE, FALSE, NULL);
 
-int main(int argc, char *argv[]) {
-  wxEntryStart(argc, argv);
+int main(int argc, char* pArgv[]) {
+  wxEntryStart(argc, pArgv);
 
   HANDLE hThread = CreateThread(NULL, 0, _rtosThread, NULL, 0, NULL);
 
@@ -203,3 +203,4 @@ extern "C" void mainLcdDraw() {
 
   pDrawPane->paintNow();
 }
+
