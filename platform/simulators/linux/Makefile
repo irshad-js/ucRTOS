@@ -12,7 +12,7 @@ vpath %.c ../../../lib/mystdio
 vpath %.c ../../../lib/AsciiLib
 vpath %.c ../../../lib/LockFreeFifo
 vpath %.c ../../../lib/eMIDI/src
-#vpath %.c ../../../lib/eMIDI/src/hal
+vpath %.c ../../../lib/eMIDI/src/hal
 vpath %.c ../../../lib/FreeRTOS/Source
 vpath %.c ../../../lib/FreeRTOS/Source/portable/MemMang
 vpath %.c ../../../lib/FreeRTOS/Source/portable/GCC/Posix
@@ -48,7 +48,7 @@ UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c
 		              SlotBasedMenu.c AsciiLib.c LockFreeFifo.c _examplescreen.c mainmenuscreen.c \
                   aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c \
                   floppyorgelscreen.c buttontestscreen.c livemodescreen.c \
-                  images.c helpers.c midifile.c midiplayer.c lut.c \
+                  images.c helpers.c midifile.c midiplayer.c lut.c emidi_linux.c \
 # skateboardscreen.c emidi_stm32f4.c nrf24l01p.c
 
 PROJ_NAME=ucrtos
