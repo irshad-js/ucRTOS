@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdarg.h>
+#include <string.h>
 #include "FreeRTOSConfig.h"
 #include "../../core/ucrtos.h"
 #include "../../../eMIDI/src/midifile.h"
@@ -19,9 +20,7 @@ void PrintCharUsr(char c) {
 }
 
 int eMidi_halTimeUs() {
-  //return upTimeMs() * 1000;
-
-  return 0; // TODO: implement upTimeMs()
+  return upTimeMs() * 1000;
 }
 
 // Display:
@@ -59,8 +58,8 @@ void hal_printf(char* format, ...) {
 
   va_list args;
   va_start(args, format);
-  // vsnprintf_s(formattedText, sizeof(formattedText), sizeof(formattedText), format, args);
-  // _printColored(formattedText, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+  vsnprintf(formattedText, sizeof(formattedText), format, args);
+  _printColored(formattedText, 0); // White
   va_end(args);
 }
 
