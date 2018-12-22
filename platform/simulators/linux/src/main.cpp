@@ -167,9 +167,7 @@ void MainFrame::OnAbout(wxCommandEvent& event) {
 // end of WX
 
 static void* _rtosThread(void* pData) {
-  printf("_rtosThread\n");
-
-  return (void*)coreMain();
+  coreMain();
 }
 
 //-----------------------------------------------------------------------------
@@ -195,17 +193,50 @@ extern "C" void vMainQueueSendPassed(void) {
 // main
 //-----------------------------------------------------------------------------
 
+// static HANDLE _hCreateLcdSimulator = CreateEvent(NULL, FALSE, FALSE, NULL);
+
+static void mySleepMs(int ms) {
+  printf("Now sleeping...");
+
+  clock_t c = clock();
+  while(clock() - c < 1000 * ms)
+    ;
+
+  printf(" done\n");
+}
+
 int main(int argc, char* pArgv[]) {
   printf("ucRTOS linux simulator\n");
-//  wxEntryStart(argc, pArgv);
-//  wxTheApp->CallOnInit();
-//  wxTheApp->OnRun();
+  wxEntryStart(argc, pArgv);
 
   pthread_t rtosThread;
-  pthread_create(&rtosThread, NULL, _rtosThread, (void*)NULL);
+  if (int error = pthread_create(&rtosThread, NULL, _rtosThread, (void*)NULL))
+    return 1;
 
-  int result;
-  pthread_join(rtosThread, (void**)&result);
-  return result;
+  wxTheApp->CallOnInit();
+  // WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
+  mySleepMs(2000);
+
+  // SetEvent(_hCreateLcdSimulator);
+  wxTheApp->OnRun();
+
+  pthread_join(rtosThread, NULL);
+  return 0;
+}
+
+extern "C" void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, int xMax, int yMax) {
+  // SetEvent(_hCreateLcdSimulator);
+  // WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
+
+  mySleepMs(1000); // TODO: remove
+
+  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
+  pDrawPane->init(pFrameBuffer, xMax, yMax);
+}
+
+extern "C" void mainLcdDraw() {
+  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
+
+  pDrawPane->paintNow();
 }
 

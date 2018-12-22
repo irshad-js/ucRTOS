@@ -21,7 +21,6 @@ vpath %.c src
 vpath %.c src/drivers
 #vpath %.c ../lib/NRF24L01P/src
 #vpath %.c ../lib/NRF24L01P/hal/stm32f4
-#vpath %.a lib
 
 CFLAGS  = -g -Wall -pthread
 CFLAGS += -Ihdr

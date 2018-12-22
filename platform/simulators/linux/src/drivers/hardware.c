@@ -29,11 +29,11 @@ void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, int xMax, int yMax);
 void mainLcdDraw();
 
 void hardwareDisplayInit(uint8_t* pFrameBuffer, int xMax, int yMax) {
-  // mainCreateWxLcdSimulator(pFrameBuffer, xMax, yMax);
+  mainCreateWxLcdSimulator(pFrameBuffer, xMax, yMax);
 }
 
 void hardwareDisplayDraw() {
-  // mainLcdDraw();
+  mainLcdDraw();
 }
 
 // Colored print:
