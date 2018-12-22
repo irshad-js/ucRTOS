@@ -1,3 +1,5 @@
+#include <wx/wx.h>
+#include <wx/dcbuffer.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -10,6 +12,12 @@ int main(int argc, char* pArgv[]) {
 
   return coreMain();
 }
+
+// WX
+
+// CANVAS
+
+
 
 //-----------------------------------------------------------------------------
 // FreeRTOS Application Hooks

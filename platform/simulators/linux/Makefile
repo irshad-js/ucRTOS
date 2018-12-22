@@ -1,6 +1,7 @@
 BINPATH=/usr/bin
 
 CC=$(BINPATH)/gcc
+CXX=$(BINPATH)/g++
 AR=$(BINPATH)/ar
 LD=$(BINPATH)/ld
 OBJCOPY=$(BINPATH)/objcopy
@@ -77,10 +78,10 @@ $(OBJDIR)/libucrtos.a: $(UCRTOS_LIB_OBJS)
 	$(AR) -r $@ $(UCRTOS_LIB_OBJS)
 
 $(OBJDIR)/main.o: src/main.cpp
-	$(CC) $(CFLAGS) -c $< -o $@ -L$(OBJDIR)
+	$(CXX) $(CFLAGS) -c $< -o $@ -L$(OBJDIR) `wx-config --cxxflags --libs`
 
 $(OUTPATH)/$(PROJ_NAME).elf: $(OBJDIR)/libucrtos.a $(MAIN_OBJS) $(OBJDIR)/main.o
-	$(CC) $(CFLAGS) $^ -o $@ -L. -Lobj -lucrtos
+	$(CXX) $(CFLAGS) $^ -o $@ -L. -Lobj -lucrtos `wx-config --cxxflags --libs`
 	$(SIZE) $@
 
 proj: $(OUTPATH)/$(PROJ_NAME).elf
