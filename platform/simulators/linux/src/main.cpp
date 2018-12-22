@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <time.h>
 
+extern "C" {
+  int coreMain(void);
+}
+
 int main(int argc, char* pArgv[]) {
   printf("ucRTOS linux simulator\n");
 
@@ -11,7 +15,7 @@ int main(int argc, char* pArgv[]) {
 // FreeRTOS Application Hooks
 //-----------------------------------------------------------------------------
 
-void vApplicationIdleHook(void) {
+extern "C" void vApplicationIdleHook(void) {
   // The co-routines are executed in the idle task using the idle task hook.
   // vCoRoutineSchedule(); // Comment this out if not using Co-routines.
 
@@ -22,7 +26,7 @@ void vApplicationIdleHook(void) {
   nanosleep(&xTimeToSleep, &xTimeSlept);
 }
 
-void vMainQueueSendPassed(void) {
+extern "C" void vMainQueueSendPassed(void) {
 
 }
 

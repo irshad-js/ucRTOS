@@ -38,7 +38,7 @@ CFLAGS += -I../../../lib/FreeRTOS/Source/portable/GCC/Posix
 
 OBJDIR=obj
 BINDIR=bin
-MAIN_SRCS = main.c heap_3.c port.c tasks.c list.c timers.c queue.c croutine.c event_groups.c \
+MAIN_SRCS = heap_3.c port.c tasks.c list.c timers.c queue.c croutine.c event_groups.c \
             core_main.c hardware.c \
 #nesgamepad.c ssd1289.c hal_linux.c
 
@@ -49,7 +49,7 @@ UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c
                   aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c \
                   floppyorgelscreen.c buttontestscreen.c livemodescreen.c \
                   images.c helpers.c midifile.c midiplayer.c lut.c emidi_linux.c \
-# skateboardscreen.c emidi_stm32f4.c nrf24l01p.c
+# skateboardscreen.c nrf24l01p.c
 
 PROJ_NAME=ucrtos
 OUTPATH=bin
@@ -76,7 +76,10 @@ $(OBJDIR)/%.o: %.c | $(OBJDIR)
 $(OBJDIR)/libucrtos.a: $(UCRTOS_LIB_OBJS)
 	$(AR) -r $@ $(UCRTOS_LIB_OBJS)
 
-$(OUTPATH)/$(PROJ_NAME).elf: $(OBJDIR)/libucrtos.a $(MAIN_OBJS)
+$(OBJDIR)/main.o: src/main.cpp
+	$(CC) $(CFLAGS) -c $< -o $@ -L$(OBJDIR)
+
+$(OUTPATH)/$(PROJ_NAME).elf: $(OBJDIR)/libucrtos.a $(MAIN_OBJS) $(OBJDIR)/main.o
 	$(CC) $(CFLAGS) $^ -o $@ -L. -Lobj -lucrtos
 	$(SIZE) $@
 
