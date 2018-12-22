@@ -17,7 +17,7 @@ vpath %.c ../../../lib/FreeRTOS/Source
 vpath %.c ../../../lib/FreeRTOS/Source/portable/MemMang
 vpath %.c ../../../lib/FreeRTOS/Source/portable/GCC/Posix
 vpath %.c src
-#vpath %.c src/drivers
+vpath %.c src/drivers
 #vpath %.c ../lib/NRF24L01P/src
 #vpath %.c ../lib/NRF24L01P/hal/stm32f4
 #vpath %.a lib
@@ -39,7 +39,8 @@ CFLAGS += -I../../../lib/FreeRTOS/Source/portable/GCC/Posix
 OBJDIR=obj
 BINDIR=bin
 MAIN_SRCS = main.c heap_3.c port.c tasks.c list.c timers.c queue.c croutine.c event_groups.c \
-#core_main.c #hardware.c nesgamepad.c ssd1289.c hal_linux.c
+            core_main.c hardware.c \
+#nesgamepad.c ssd1289.c hal_linux.c
 
 #LIB_SRCS = <TODO: add files if needed>
 
@@ -76,7 +77,7 @@ $(OBJDIR)/libucrtos.a: $(UCRTOS_LIB_OBJS)
 	$(AR) -r $@ $(UCRTOS_LIB_OBJS)
 
 $(OUTPATH)/$(PROJ_NAME).elf: $(OBJDIR)/libucrtos.a $(MAIN_OBJS)
-	$(CC) $(CFLAGS) $^ -o $@ -L. -Lobj
+	$(CC) $(CFLAGS) $^ -o $@ -L. -Lobj -lucrtos
 	$(SIZE) $@
 
 proj: $(OUTPATH)/$(PROJ_NAME).elf
