@@ -199,7 +199,7 @@ InputDeviceStates_t getInputDeviceState() {
 // RS485:
 void hal_rs485Send(char dataByte) {
   // Not used on win32 yet:
-  hal_printf("hal_rs485Send\n");  
+  hal_printf("hal_rs485Send\n");
 }
 
 void hal_rs485init(LockFreeFIFO_t* pFifo) {
