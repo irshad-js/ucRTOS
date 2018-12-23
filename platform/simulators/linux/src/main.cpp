@@ -166,13 +166,6 @@ void MainFrame::OnAbout(wxCommandEvent& event) {
 
 // end of WX
 
-static void* _rtosThread(void* pData) {
-  coreMain();
-  setEvent(_hThreadEvent);
-
-  return NULL;
-}
-
 //-----------------------------------------------------------------------------
 // FreeRTOS Application Hooks
 //-----------------------------------------------------------------------------
@@ -220,6 +213,13 @@ static void waitForEvent(volatile int& hEvent) {
 
 static void setEvent(volatile int& hEvent) {
   hEvent = 1;
+}
+
+static void* _rtosThread(void* pData) {
+  coreMain();
+  setEvent(_hThreadEvent);
+
+  return NULL;
 }
 
 int main(int argc, char* pArgv[]) {
