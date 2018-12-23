@@ -77,8 +77,10 @@ static void onBackPress(StackBasedFsm_t* pFsm) {
 }
 
 static void onTick(StackBasedFsm_t* pFsm) {
-  hal_printf("aboutScreen::onTick()");
-  draw();
+  // hal_printf("aboutScreen::onTick()");
+
+  if (upTimeMs() % 250 == 0)
+    draw();
 }
 
 void aboutScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
