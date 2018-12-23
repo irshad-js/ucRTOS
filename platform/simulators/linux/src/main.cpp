@@ -30,7 +30,7 @@ public:
     pBackBuffer_ = new wxBitmap(xMax_, yMax_);
   }
 
-  void paintEvent(wxPaintEvent & evt) {
+  void paintEvent(wxPaintEvent& evt) {
     // Always create the wxPaintDC object here, even if you don't use it!
     // Creating this object will tell wxWidgets that the invalid regions in the window have been repainted so
     // that the windowing system won't keep sending paint events ad infinitum:
@@ -40,8 +40,8 @@ public:
   }
 
   void paintNow() {
-    wxClientDC dc(this); // Windows only?
-    render(dc);
+    // wxClientDC dc(this); // Windows only?
+    // render(dc);
   }
 
   void render(wxDC& clientDc) {
@@ -77,8 +77,8 @@ private:
   int xMax_{0};
   int yMax_{0};
 
-  uint8_t* pFrameBuffer_{ nullptr };
-  wxBitmap* pBackBuffer_{ nullptr };
+  uint8_t* pFrameBuffer_{nullptr};
+  wxBitmap* pBackBuffer_{nullptr};
 
   DECLARE_EVENT_TABLE()
 };
@@ -168,6 +168,9 @@ void MainFrame::OnAbout(wxCommandEvent& event) {
 
 static void* _rtosThread(void* pData) {
   coreMain();
+  setEvent(_hThreadEvent);
+
+  return NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -193,8 +196,7 @@ extern "C" void vMainQueueSendPassed(void) {
 // main
 //-----------------------------------------------------------------------------
 
-// static HANDLE _hCreateLcdSimulator = CreateEvent(NULL, FALSE, FALSE, NULL);
-
+/*
 static void mySleepMs(int ms) {
   printf("Now sleeping...");
 
@@ -202,33 +204,49 @@ static void mySleepMs(int ms) {
   while(clock() - c < 1000 * ms)
     ;
 
-  printf(" done\n");
+  printf("done\n");
+}
+*/
+
+volatile int _hMainEvent = 0;
+volatile int _hThreadEvent = 0;
+
+static void waitForEvent(volatile int& hEvent) {
+  while (!hEvent)
+    ;
+
+  hEvent = 0;
+}
+
+static void setEvent(volatile int& hEvent) {
+  hEvent = 1;
 }
 
 int main(int argc, char* pArgv[]) {
   printf("ucRTOS linux simulator\n");
   wxEntryStart(argc, pArgv);
 
-  pthread_t rtosThread;
-  if (int error = pthread_create(&rtosThread, NULL, _rtosThread, (void*)NULL))
+  pthread_t hRtosThread;
+  if (pthread_create(&hRtosThread, NULL, _rtosThread, (void*)NULL))
     return 1;
 
   wxTheApp->CallOnInit();
-  // WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
-  mySleepMs(2000);
-
-  // SetEvent(_hCreateLcdSimulator);
+  printf("main: waiting for wx init function...\n");
+  waitForEvent(_hThreadEvent); // WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
+  printf("main: wx init function did signal!\n");
+  setEvent(_hMainEvent); // SetEvent(_hCreateLcdSimulator);
   wxTheApp->OnRun();
 
-  pthread_join(rtosThread, NULL);
+  waitForEvent(_hThreadEvent); // pthread_join(rtosThread, NULL);
   return 0;
 }
 
 extern "C" void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, int xMax, int yMax) {
-  // SetEvent(_hCreateLcdSimulator);
-  // WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
-
-  mySleepMs(1000); // TODO: remove
+  printf("wx init function: signalling main\n");
+  setEvent(_hThreadEvent); // SetEvent(_hCreateLcdSimulator);
+  printf("wx init function: waiting for main...\n");
+  waitForEvent(_hMainEvent); // WaitForSingleObject(_hCreateLcdSimulator, INFINITE);
+  printf("wx init function: main did signal!\n");
 
   BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
   pDrawPane->init(pFrameBuffer, xMax, yMax);
