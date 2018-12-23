@@ -2,6 +2,8 @@
 #include <time.h>
 #include <stdarg.h>
 #include <string.h>
+#include <fcntl.h>
+#include <linux/soundcard.h>
 #include "FreeRTOSConfig.h"
 #include "../../core/ucrtos.h"
 #include "../../../eMIDI/src/midifile.h"
@@ -114,39 +116,56 @@ void hal_strcpy_s(char* dst, int maxSize, const char* src) {
 
 // MIDI device:
 
-// static HMIDIOUT _hMidiOut;
+struct {
+  int32_t fd;
+  uint8_t devnum;
+} _midiDevCtx;
 
 void hardwareInitMidiDevice() {
-//  uint32_t result = midiOutOpen(&_hMidiOut, MIDI_MAPPER, 0, 0, 0);
+  const char* pDevice = "/dev/sequencer";
 
-//  if (result != MMSYSERR_NOERROR)
-//    hal_printfError("MIDI device does not work!");
+  _midiDevCtx.fd = open(pDevice, O_WRONLY, 0);
+  _midiDevCtx.devnum = 1;
+
+  if(_midiDevCtx.fd < 0) {
+    hal_printf("Error: cannot open %s\n", pDevice);
+    hal_printfError("MIDI device does not work!");
+    return;
+  }
 }
 
 void hardwareFreeMidiDevice() {
-//  uint32_t result = midiOutClose(_hMidiOut);
-
-//  if (result != MMSYSERR_NOERROR)
-//    hal_printfError("Error on freeing MIDI device!");
+  close(_hMidiDevCtx.fd);
 }
 
 void hardwareSendMidiMsg(const MidiEvent* pEvent) {
   if (pEvent->eventId == MIDI_EVENT_META)
     return;
 
-//  union {
-//    uint32_t word;
-//    uint8_t data[3];
-//  } message = { 0 };
+  int numParamBytes = 0;
 
-//  message.data[0] = pEvent->eventId;
-//  message.data[1] = pEvent->params.pRaw[0];
-//  message.data[2] = pEvent->params.pRaw[1];
+  switch(pEvent->eventId & 0xF0) {
+    case MIDI_EVENT_NOTE_OFF:          numParamBytes = 2; break;
+    case MIDI_EVENT_NOTE_ON:           numParamBytes = 2; break;
+//    case MIDI_EVENT_POLY_KEY_PRESSURE: numParamBytes = 2; break;
+//    case MIDI_EVENT_CONTROL_CHANGE:    numParamBytes = 2; break;
+    case MIDI_EVENT_PROGRAM_CHANGE:    numParamBytes = 1; break;
+//    case MIDI_EVENT_CHANNEL_PRESSURE:  numParamBytes = 1; break;
+    case MIDI_EVENT_PITCH_BEND:        numParamBytes = 2; break;
 
-//  MMRESULT flag = midiOutShortMsg(_hMidiOut, message.word);
-//  if (flag != MMSYSERR_NOERROR) {
-//    hal_printfWarning("Warning: MIDI Output is not open.\n");
-//  }
+    default:
+      return;
+  }
+
+  uint8_t packet[4] = { SEQ_MIDIPUTC, 0, _midiDevCtx.devnum, 0 };
+
+  packet[1] = pEvent->eventId;
+  write(_midiDevCtx.fd, packet, sizeof(packet));
+
+  for(int i = 0; i < numParamBytes; ++i) {
+    packet[1] = pEvent->params.pRaw[i];
+    write(_midiDevCtx.fd, packet, sizeof(packet));
+  }
 }
 
 void hardwareInputDeviceInit() {
@@ -194,7 +213,7 @@ InputDeviceStates_t getInputDeviceState() {
 
 // RS485:
 void hal_rs485Send(char dataByte) {
-  // Not used on win32 yet:
+  // Not used on linux simulator yet:
   hal_printf("hal_rs485Send\n");
 }
 
