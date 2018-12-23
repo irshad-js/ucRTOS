@@ -98,7 +98,7 @@ static bool isDebouncing(uint32_t timeOnLastButtonPress) {
 void processInputDevice(StackBasedFsm_t* pFsm) {
   FsmState* pState = fsmGetCurrentState(pFsm);
   InputDeviceStates_t buttonStates = getInputDeviceState();
-  static InputDeviceStates_t lastButtonStates = { 0 };
+  static InputDeviceStates_t lastButtonStates = {0};
   static uint32_t timeOnLastButtonPress = 0;
 
   // TODO: do deboucing here!
