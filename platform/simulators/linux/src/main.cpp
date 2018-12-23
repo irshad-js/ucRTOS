@@ -10,6 +10,8 @@ extern "C" {
 
 // WX
 
+volatile uint8_t _pButtonStates[256];
+
 // CANVAS
 
 class BasicDrawPane : public wxPanel {
@@ -151,6 +153,9 @@ public:
   ~WxApp();
 
 private:
+  void onKeyDown(wxKeyEvent& event);
+  void onKeyUp(wxKeyEvent& event);
+
   MainFrame* pMainFrame_{nullptr};
   BasicDrawPane* pDrawPane_{nullptr};
   RenderTimer* pTimer{nullptr};
@@ -159,12 +164,25 @@ private:
 IMPLEMENT_APP_NO_MAIN(WxApp);
 IMPLEMENT_WX_THEME_SUPPORT;
 
+void WxApp::onKeyDown(wxKeyEvent& event) {
+  uint8_t key = (uint8_t)event.GetKeyCode();
+  _pButtonStates[key] = 1;
+}
+
+void WxApp::onKeyUp(wxKeyEvent& event) {
+  uint8_t key = (uint8_t)event.GetKeyCode();
+  _pButtonStates[key] = 0;
+}
+
 bool WxApp::OnInit() {
   pMainFrame_ = new MainFrame("ucRTOS LCD Simulator", wxPoint(50, 50), wxSize(350, 340));
   pDrawPane_ = new BasicDrawPane(pMainFrame_);
   pMainFrame_->Show(true);
   pTimer = new RenderTimer(pDrawPane_);
   pTimer->start();
+
+  Connect(wxID_ANY, wxEVT_KEY_DOWN, wxKeyEventHandler(WxApp::onKeyDown));
+  Connect(wxID_ANY, wxEVT_KEY_UP, wxKeyEventHandler(WxApp::onKeyUp));
 
   printf("ucRTOS LCD Simulator started.\n");
   return true;
@@ -259,6 +277,10 @@ static void* _rtosThread(void* pData) {
 
 int main(int argc, char* pArgv[]) {
   printf("ucRTOS linux simulator\n");
+
+  for (int i = 0; i < 256; ++i)
+    _pButtonStates[i] = 0;
+
   wxEntryStart(argc, pArgv);
 
   pthread_t hRtosThread;
@@ -291,5 +313,11 @@ extern "C" void mainLcdDraw() {
   _doRender = true;
 
   // TODO: wait for rendering done here
+}
+
+extern "C" uint8_t mainGetButtonStateEmu(int virtualKeyCode) {
+  uint8_t key = (uint8_t)virtualKeyCode;
+
+  return _pButtonStates[key];
 }
 

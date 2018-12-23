@@ -155,40 +155,39 @@ void hardwareInputDeviceInit() {
 
 // Input device:
 
-// #define KEY_ACTION  VK_RETURN
-// #define KEY_BACK    VK_BACK
-// #define KEY_NORTH   'W'
-// #define KEY_WEST    'A'
-// #define KEY_SOUTH   'S'
-// #define KEY_EAST    'D'
-// #define KEY_START   VK_SPACE
-// #define KEY_SELECT 'X'
-// #define KEY_SIMULATE_DISCONNECTED VK_TAB
+#define KEY_ACTION    13   // RETURN
+#define KEY_BACK       8   // BACKSPACE
+#define KEY_NORTH     'W'
+#define KEY_WEST      'A'
+#define KEY_SOUTH     'S'
+#define KEY_EAST      'D'
+#define KEY_NORTH_ALT 59   // UP ARROW
+#define KEY_WEST_ALT  58   // LEFT ARROW
+#define KEY_SOUTH_ALT 61   // DOWN ARROW
+#define KEY_EAST_ALT  60   // RIGHT ARROW
+#define KEY_START     0x20 // SPACE
+#define KEY_SELECT    'X'
+#define KEY_SIMULATE_DISCONNECTED 9 // TAB
+
+int mainGetButtonStateEmu(int virtualKeyCode);
 
 uint8_t getButtonStateEmu(int virtualKeyCode) {
-  return 0;
-
-  // return (GetAsyncKeyState(virtualKeyCode) & 32768) >> 15;
-
-  // if (GetForegroundWindow() == g_hEmuWnd)
-  //   return (GetAsyncKeyState(virtualKeyCode) & 32768) >> 15;
-  // else
-  //   return 0;
+  return mainGetButtonStateEmu(virtualKeyCode);
 }
 
 InputDeviceStates_t getInputDeviceState() {
   InputDeviceStates_t states;
   memset(&states, 0, sizeof(InputDeviceStates_t));
 
-//  states.Connected = !getButtonStateEmu(KEY_SIMULATE_DISCONNECTED);
-//  states.Action    = getButtonStateEmu(KEY_ACTION);
-//  states.Back      = getButtonStateEmu(KEY_BACK);
-//  states.North     = getButtonStateEmu(KEY_NORTH) || getButtonStateEmu(VK_UP);
-//  states.West      = getButtonStateEmu(KEY_WEST)  || getButtonStateEmu(VK_LEFT);
-//  states.South     = getButtonStateEmu(KEY_SOUTH) || getButtonStateEmu(VK_DOWN);
-//  states.East      = getButtonStateEmu(KEY_EAST)  || getButtonStateEmu(VK_RIGHT);
-//  states.Start     = getButtonStateEmu(KEY_START);
-//  states.Select    = getButtonStateEmu(KEY_SELECT);
+  states.Connected = !getButtonStateEmu(KEY_SIMULATE_DISCONNECTED);
+  states.Action    = getButtonStateEmu(KEY_ACTION);
+  states.Back      = getButtonStateEmu(KEY_BACK);
+  states.North     = getButtonStateEmu(KEY_NORTH) || getButtonStateEmu(KEY_NORTH_ALT);
+  states.West      = getButtonStateEmu(KEY_WEST)  || getButtonStateEmu(KEY_WEST_ALT);
+  states.South     = getButtonStateEmu(KEY_SOUTH) || getButtonStateEmu(KEY_SOUTH_ALT);
+  states.East      = getButtonStateEmu(KEY_EAST)  || getButtonStateEmu(KEY_EAST_ALT);
+  states.Start     = getButtonStateEmu(KEY_START);
+  states.Select    = getButtonStateEmu(KEY_SELECT);
 
   return states;
 }
@@ -196,7 +195,7 @@ InputDeviceStates_t getInputDeviceState() {
 // RS485:
 void hal_rs485Send(char dataByte) {
   // Not used on win32 yet:
-  hal_printf("hal_rs485Send\n");  
+  hal_printf("hal_rs485Send\n");
 }
 
 void hal_rs485init(LockFreeFIFO_t* pFifo) {
