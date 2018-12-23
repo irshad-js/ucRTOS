@@ -58,8 +58,8 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   }
 
   Error error;
-  // error = eMidi_openPlayer(&context.player, "..\\..\\..\\lib\\eMIDI\\tests\\midis\\cdefgabc_0.mid", userEventCallback, NULL);
-  error = eMidi_openPlayer(&context.player, "..\\..\\..\\lib\\eMIDI\\tests\\midis\\fish_fry0.mid", userEventCallback, NULL);
+  // error = eMidi_openPlayer(&context.player, "..//..//..//lib//eMIDI//tests//midis//cdefgabc_0.mid", userEventCallback, NULL);
+  error = eMidi_openPlayer(&context.player, "..//..//..//lib//eMIDI//tests//midis//fish_fry0.mid", userEventCallback, NULL);
 
   if (error) {
     hal_printfError("Error on opening midi file!\n");
