@@ -11,7 +11,7 @@ static struct {
 } context;
 
 static void draw() {
-  hal_printf("buttonTestScreen::draw()");
+  // hal_printf("buttonTestScreen::draw()");
 
   InputDeviceStates_t state = getInputDeviceState();
 
@@ -109,7 +109,8 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 }
 
 static void onTick(StackBasedFsm_t* pFsm) {
-  draw();
+  if (upTimeMs() % 250 == 0)
+    draw();
 }
 
 void buttonTestScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
