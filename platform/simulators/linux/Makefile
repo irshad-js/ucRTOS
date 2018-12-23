@@ -22,7 +22,7 @@ vpath %.c src/drivers
 #vpath %.c ../lib/NRF24L01P/src
 #vpath %.c ../lib/NRF24L01P/hal/stm32f4
 
-CFLAGS  = -g -Wall -pthread
+CFLAGS  = -g -Wall -pthread -m64 # TODO: use -m32
 CFLAGS += -Ihdr
 CFLAGS += -I../../../core
 CFLAGS += -I../../../core/screens
@@ -40,7 +40,7 @@ OBJDIR=obj
 BINDIR=bin
 MAIN_SRCS = heap_3.c port.c tasks.c list.c timers.c queue.c croutine.c event_groups.c \
             core_main.c hardware.c \
-#nesgamepad.c ssd1289.c hal_linux.c
+            #hal_linux.c (NRF24 HAL)
 
 #LIB_SRCS = <TODO: add files if needed>
 
@@ -49,7 +49,7 @@ UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c
                   aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c \
                   floppyorgelscreen.c buttontestscreen.c livemodescreen.c \
                   images.c helpers.c midifile.c midiplayer.c lut.c emidi_linux.c \
-# skateboardscreen.c nrf24l01p.c
+                  # skateboardscreen.c nrf24l01p.c
 
 PROJ_NAME=ucrtos
 OUTPATH=bin
