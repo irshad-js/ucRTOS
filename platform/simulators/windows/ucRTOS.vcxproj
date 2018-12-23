@@ -17,7 +17,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C686325E-3261-42F7-AEB1-DDE5280E1CEB}</ProjectGuid>
     <ProjectName>ucRTOS</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -204,6 +204,7 @@
     <ClCompile Include="..\..\..\core\InputDevice.c" />
     <ClCompile Include="..\..\..\core\lut.c" />
     <ClCompile Include="..\..\..\core\screens\aboutscreen.c" />
+    <ClCompile Include="..\..\..\core\screens\buttontestscreen.c" />
     <ClCompile Include="..\..\..\core\screens\floppyorgelscreen.c" />
     <ClCompile Include="..\..\..\core\screens\imgtestscreen.c" />
     <ClCompile Include="..\..\..\core\screens\livemodescreen.c" />
@@ -267,6 +268,7 @@
     <ClInclude Include="..\..\..\core\InputDevice.h" />
     <ClInclude Include="..\..\..\core\lut.h" />
     <ClInclude Include="..\..\..\core\screens\aboutscreen.h" />
+    <ClInclude Include="..\..\..\core\screens\buttontestscreen.h" />
     <ClInclude Include="..\..\..\core\screens\floppyorgelscreen.h" />
     <ClInclude Include="..\..\..\core\screens\imgtestscreen.h" />
     <ClInclude Include="..\..\..\core\screens\livemodescreen.h" />
