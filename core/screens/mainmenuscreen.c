@@ -44,6 +44,8 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 
   hal_rs485init(&_context.fifoDebugPort); // TODO: move to live mode state?
   userMenuInit(&_context.menu, pFsm, 3, 45);
+
+  // CHECKME: adding the following menu entry messes up the LUT!?:
   menuAddSlot(&_context.menu, "Floppy Orgel", floppyOrgelScreen);
   menuAddSlot(&_context.menu, "Skateboard", NULL);
   menuAddSlot(&_context.menu, "Button Test", buttonTestScreen);
