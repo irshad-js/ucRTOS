@@ -61,8 +61,20 @@ static void onActionPress(StackBasedFsm_t* pFsm) {
   draw();
 }
 
+static void onActionRelease(StackBasedFsm_t* pFsm) {
+  hal_printf("buttonTestScreen::onActionRelease()");
+
+  draw();
+}
+
 static void onBackPress(StackBasedFsm_t* pFsm) {
   hal_printf("buttonTestScreen::onBackPress()");
+
+  draw();
+}
+
+static void onBackRelease(StackBasedFsm_t* pFsm) {
+  hal_printf("buttonTestScreen::onBackRelease()");
 
   draw();
 }
@@ -79,7 +91,7 @@ static void onStartPress(StackBasedFsm_t* pFsm) {
 }
 
 static void onStartRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onBackRelease()");
+  hal_printf("buttonTestScreen::onStartRelease()");
 
   context.startIsPressed = false;
 }
@@ -96,7 +108,7 @@ static void onSelectPress(StackBasedFsm_t* pFsm) {
 }
 
 static void onSelectRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onSelectRelease()");
+  hal_printf("buttonTestScreen::onSelectRelease()");
 
   context.selectIsPressed = false;
 }
@@ -115,7 +127,9 @@ static void onTick(StackBasedFsm_t* pFsm) {
 
 void buttonTestScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
   pState->onActionPress = onActionPress;
+  pState->onActionRelease = onActionRelease;
   pState->onBackPress = onBackPress;
+  pState->onBackRelease = onBackRelease;
   pState->onStartPress = onStartPress;
   pState->onStartRelease = onStartRelease;
   pState->onSelectPress = onSelectPress;
