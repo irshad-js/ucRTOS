@@ -40,8 +40,8 @@ public:
   }
 
   void paintNow() {
-    // wxClientDC dc(this); // Windows only?
-    // render(dc);
+    wxClientDC dc(this);
+    render(dc);
   }
 
   void render(wxDC& clientDc) {
@@ -85,6 +85,45 @@ private:
 
 // END OF CANVAS
 
+// RENDER TIMER
+
+volatile bool _doRender = false;
+
+class RenderTimer : public wxTimer {
+public:
+  RenderTimer(BasicDrawPane* pPane);
+  void Notify();
+  void start();
+
+private:
+  BasicDrawPane* pPane_;
+};
+
+RenderTimer::RenderTimer(BasicDrawPane* pPane) : wxTimer() {
+  pPane_ = pPane;
+}
+
+void RenderTimer::Notify() {
+  if (_doRender) {
+    pPane_->paintNow();
+    _doRender = false;
+  }
+}
+
+void RenderTimer::start() {
+  wxTimer::Start(10);
+}
+
+static void mySleepMs(int ms) {
+  printf("Now sleeping...");
+
+  clock_t c = clock();
+  while (clock() - c < 1000 * ms)
+    ;
+
+  printf("done\n");
+}
+
 class MainFrame : public wxFrame {
 public:
   MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
@@ -109,10 +148,12 @@ public:
   virtual bool OnInit();
   static WxApp* instance() { return static_cast<WxApp*>(wxApp::GetInstance()); }
   BasicDrawPane* drawPane() { return pDrawPane_; }
+  ~WxApp();
 
 private:
   MainFrame* pMainFrame_{nullptr};
   BasicDrawPane* pDrawPane_{nullptr};
+  RenderTimer* pTimer{nullptr};
 };
 
 IMPLEMENT_APP_NO_MAIN(WxApp);
@@ -122,9 +163,15 @@ bool WxApp::OnInit() {
   pMainFrame_ = new MainFrame("ucRTOS LCD Simulator", wxPoint(50, 50), wxSize(350, 340));
   pDrawPane_ = new BasicDrawPane(pMainFrame_);
   pMainFrame_->Show(true);
+  pTimer = new RenderTimer(pDrawPane_);
+  pTimer->start();
 
   printf("ucRTOS LCD Simulator started.\n");
   return true;
+}
+
+WxApp::~WxApp() {
+  delete pTimer;
 }
 
 BEGIN_EVENT_TABLE(BasicDrawPane, wxPanel)
@@ -189,18 +236,6 @@ extern "C" void vMainQueueSendPassed(void) {
 // main
 //-----------------------------------------------------------------------------
 
-/*
-static void mySleepMs(int ms) {
-  printf("Now sleeping...");
-
-  clock_t c = clock();
-  while(clock() - c < 1000 * ms)
-    ;
-
-  printf("done\n");
-}
-*/
-
 volatile int _hMainEvent = 0;
 volatile int _hThreadEvent = 0;
 
@@ -253,8 +288,8 @@ extern "C" void mainCreateWxLcdSimulator(uint8_t* pFrameBuffer, int xMax, int yM
 }
 
 extern "C" void mainLcdDraw() {
-  BasicDrawPane* pDrawPane = WxApp::instance()->drawPane();
+  _doRender = true;
 
-  pDrawPane->paintNow();
+  // TODO: wait for rendering done here
 }
 
