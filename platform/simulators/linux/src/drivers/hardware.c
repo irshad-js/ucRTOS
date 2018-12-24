@@ -135,7 +135,7 @@ void hardwareInitMidiDevice() {
 }
 
 void hardwareFreeMidiDevice() {
-  close(_hMidiDevCtx.fd);
+  close(_midiDevCtx.fd);
 }
 
 void hardwareSendMidiMsg(const MidiEvent* pEvent) {
