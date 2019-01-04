@@ -3,13 +3,11 @@
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
 #include "nrf24l01p.h"
-#include "stm32f4xx_conf.h"
 #include "skateboardscreen.h"
 
 static struct {
   bool buttonIsPressed;
   int* pReturnValue;
-
 } context;
 
 static void draw() {
@@ -23,57 +21,40 @@ static void draw() {
   displayDraw();
 }
 
-static void onActionPress(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onActionPress()");
+static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("skateboard::onActionPress; pressed=%d\n", pressed);
 
-  context.buttonIsPressed = true;
+  context.buttonIsPressed = pressed;
 }
 
-static void onActionRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onActionRelease()");
-
-  context.buttonIsPressed = false;
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("skateboard::onBack; pressed=%d\n", pressed);
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onBackPress()");
+static void onStart(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("skateboard::onStart; pressed=%d\n", pressed);
 }
 
-static void onStartPress(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onStartPress()");
+static void onSelect(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("skateboard::onSelect; pressed=%d\n", pressed);
+
+  if (pressed)
+    leaveState(pFsm);
 }
 
-static void onSelectPress(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onSelectPress()");
-
-  leaveState(pFsm);
-}
-
-static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
-  hal_printf("skateboard::onDirectionPress()");
-}
-
-static void onBackRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onBackRelease()");
-}
-
-static void onStartRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onStartRelease()");
-}
-
-static void onSelectRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onSelectRelease()");
+static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
+  hal_printf("skateboard::onDirection\n");
 }
 
 static void onReenter(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onReenter()");
+  hal_printf("skateboard::onReenter\n");
 }
 
 static void onLeaveState(StackBasedFsm_t* pFsm) {
-  hal_printf("skateboard::onLeaveState()");
+  hal_printf("skateboard::onLeaveState\n");
 
   if (!context.pReturnValue) {
-    hal_printfWarning("Cannot return value. pReturnValue is null");
+    hal_printfWarning("Cannot return value. pReturnValue is null\n");
     return;
   }
 
@@ -95,52 +76,47 @@ void timing_handler() {
 static void Delay(volatile uint32_t nCount) {
   time_var1 = nCount;
 
-  while(time_var1);
+  while (time_var1)
+    ;
 }
 
 static void blink() {
-  GPIO_SetBits(GPIOD, GPIO_Pin_12);
+  // TODO: add API function for controlling debug LED
+
+  //  GPIO_SetBits(GPIOD, GPIO_Pin_12);
   Delay(50);
-  GPIO_ResetBits(GPIOD, GPIO_Pin_12);
+
+  //  GPIO_ResetBits(GPIOD, GPIO_Pin_12);
   Delay(50);
 }
 
-int sendUartChar(char ch) {
-  while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-  USART_SendData(USART1, ch);
-
-  return ch;
+static void sendUartText(const char* pText) {
+  hal_printf(pText);
 }
 
-void sendUartText(const char* pText) {
-  for(int i = 0; pText[i]; i++)
-    sendUartChar(pText[i]);
-}
-
-void debugPrint(const char* pText) {
+static void debugPrint(const char* pText) {
   sendUartText(pText);
 }
 
-void debugPrintln(const char* pText) {
-  sendUartText(pText);
-  sendUartChar('\n');
+static void debugPrintln(const char* pText) {
+  hal_printf("%s\n", pText);
 }
 
-void debugPrintDec(int n) {
+static void debugPrintDec(int n) {
   char pNum[32];
   snprintf(pNum, sizeof(pNum), "%d", n);
 
   sendUartText(pNum);
 }
 
-void debugPrintHex(int n) {
+static void debugPrintHex(int n) {
   char pHex[32];
   snprintf(pHex, sizeof(pHex), "0x%02X", n);
 
   sendUartText(pHex);
 }
 
-void printFullConfig() {
+static void printFullConfig() {
   debugPrintln("NRF24 Configuration:");
   debugPrint("Mode: "); debugPrintln(nrf24_isListening() ? "Listening" : "Transmitting");
   debugPrint("RF Channel: "); debugPrintDec(nrf24_getRFChannel()); debugPrintln("");
@@ -200,7 +176,7 @@ void printFullConfig() {
   debugPrint("TX_FIFO: "); debugPrintln(fifoIsFull ? "Full" : "Free");
 }
 
-void setup_nrf24() {
+static void setup_nrf24() {
   nrf24_init();
 
   uint8_t rxaddr[] = {0x01, 0x02, 0x03, 0x02, 0x01 };
@@ -225,18 +201,17 @@ void setup_nrf24() {
 }
 
 static void init() {
-  nrf24_init();
   setup_nrf24();
 }
 
 // -----------------------------------------
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
-  hal_printf("skateboard::onEnter()");
+  hal_printf("skateboard::onEnter\n");
 
   SkateboardScreenParams* pSkateboardScreenParams = (SkateboardScreenParams*)pParams;
   if (!pParams)
-    hal_printfWarning("skateboard::onEnter; Param is nullptr");
+    hal_printfWarning("skateboard::onEnter; pParams is nullptr");
 
   context.buttonIsPressed = false;
 
@@ -273,7 +248,7 @@ static void onTick(StackBasedFsm_t* pFsm) {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   };
 
-  if(context.buttonIsPressed)
+  if (context.buttonIsPressed)
     pData[4] = 0x42;
   else
     pData[4] = 0x23;
@@ -284,25 +259,12 @@ static void onTick(StackBasedFsm_t* pFsm) {
 // Always implement this as last function of your state file:
 
 void skateboardScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
-  // This callback MUST be set:
   pState->onEnterState    = onEnter;
-
-  // The following callbacks are all optional:
-
-  // Button press callbacks:
-  pState->onActionPress    = onActionPress;
-  pState->onBackPress      = onBackPress;
-  pState->onStartPress     = onStartPress;
-  pState->onSelectPress    = onSelectPress;
-  pState->onDirectionPress = onDirectionPress; // TODO: implement onDirectionRelease()
-
-  // Button release callbacks
-  pState->onActionRelease = onActionRelease;
-  pState->onBackRelease   = onBackRelease;
-  pState->onStartRelease  = onStartRelease;
-  pState->onSelectRelease = onSelectRelease;
-
-  // State callbacks:
+  pState->onAction        = onAction;
+  pState->onBack          = onBack;
+  pState->onStart         = onStart;
+  pState->onSelect        = onSelect;
+  pState->onDirection     = onDirection;
   pState->onReenterState  = onReenter;
   pState->onLeaveState    = onLeaveState;
   pState->onTick          = onTick;
