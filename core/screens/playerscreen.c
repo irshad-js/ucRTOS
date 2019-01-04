@@ -26,20 +26,20 @@ static void draw() {
 static void userEventCallback(const MidiEvent* pEvent, void* pContext) {
   eMidi_printMidiEvent(pEvent);
 
-	int numParamBytes = 0;
+  int numParamBytes = 0;
 
-	switch (pEvent->eventId & 0xF0) {
-	case MIDI_EVENT_NOTE_OFF:          numParamBytes = 2; break;
-	case MIDI_EVENT_NOTE_ON:           numParamBytes = 2; break;
-		//    case MIDI_EVENT_POLY_KEY_PRESSURE: numParamBytes = 2; break;
-	case MIDI_EVENT_CONTROL_CHANGE:    numParamBytes = 2; break;
-	case MIDI_EVENT_PROGRAM_CHANGE:    numParamBytes = 1; break;
-		//    case MIDI_EVENT_CHANNEL_PRESSURE:  numParamBytes = 1; break;
-	case MIDI_EVENT_PITCH_BEND:        numParamBytes = 2; break;
+  switch (pEvent->eventId & 0xF0) {
+  case MIDI_EVENT_NOTE_OFF:          numParamBytes = 2; break;
+  case MIDI_EVENT_NOTE_ON:           numParamBytes = 2; break;
+    //    case MIDI_EVENT_POLY_KEY_PRESSURE: numParamBytes = 2; break;
+  case MIDI_EVENT_CONTROL_CHANGE:    numParamBytes = 2; break;
+  case MIDI_EVENT_PROGRAM_CHANGE:    numParamBytes = 1; break;
+    //    case MIDI_EVENT_CHANNEL_PRESSURE:  numParamBytes = 1; break;
+  case MIDI_EVENT_PITCH_BEND:        numParamBytes = 2; break;
 
-	default:
-		return;
-	}
+  default:
+    return;
+  }
 
   hardwareSendMidiMsg(pEvent);
 }

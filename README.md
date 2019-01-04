@@ -7,17 +7,19 @@ The ecosystem consists of:
 * Display (320x240 LCD)
 * File system (SD-Card)
 * Input device (NES-Gamepad)
-* Real time kernel (FreeRTOS)
+* Bus Interface (RS485)
+* RF Interface (NRF24)
+* Real time kernel (FreeRTOS v9.0.0)
 * Simple menu system
 
-For faster development there are simulators which run under Windows and Linux. This allows quick protoyping on e.g. menus or images without the need of flashing the microcontroller after each change. The simulators do not have real time behaviour. This is because of either Windows nor Linux are real time operating systems. However, the deterministic task switching behaviour of the real time scheduler is simulated correctly. At this time only Windows 7 with Visual Studio 2017 is supported. Support for Eclipse is under development.
+For faster development there are simulators which run under Windows and Linux. This allows quick protoyping on e.g. menus or images without the need of flashing the microcontroller after each change. The simulators do not have real time behaviour. This is because of either Windows nor Linux are real time operating systems. However, the deterministic task switching behaviour of the real time scheduler is simulated correctly. Simulators are tested on Windows 7 with Visual Studio 2017 and Arch Linux.
 
 Supported embedded devices so far:
 * STM32F4Discovery (STM32F407VG)
 
 Supported simulators so far:
 * Windows 7 with Visual Studio 2017
-* Linux with Eclipse (Not working yet, but under development)
+* Linux
 
 ## Building Instructions
 
@@ -39,7 +41,7 @@ make flash
 
 ### Windows Simulator with Visual Studio 2017
 
-Note: The simulator does not work properly on Windows 10. It can be compiled and run but the timings are incorrect. Therefore **it is suggested using Windows 7**
+Note: The simulator does not work properly on Windows 10. It can be compiled and run but the timings are incorrect. Therefore **it is suggested using Windows 7**.
 
 The LCD simulation is based on the wxWidgets GUI Library which is included as a sub repository. Before you are able to build the simulator you need to clone and build wxWidgets first:
 
@@ -62,4 +64,12 @@ This meight take a few minutes to complete.
 
 #### Build the simulator
 
-Browse to platform\simulators\windows, open ucRTOS.sln. Select Win32 as target platform and hit Build Solution from Build menu.
+1. To build the simulator navigate to platform/simulators/linux and execute **make**
+2. Run the simulator by executing **platform/simulators/linux/bin/ucrtos.elf**
+
+### Debugging using Eclipse
+
+Create a Debug configuration and select **platform/simulators/linux/bin/ucrtos.elf** als target. Since the purpose of the simulators is debugging, the executable is always built with debug information.
+
+
+
