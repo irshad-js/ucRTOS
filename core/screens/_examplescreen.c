@@ -55,65 +55,39 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   draw();
 }
 
-static void onActionPress(StackBasedFsm_t* pFsm) {
+static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("example::onActionPress()");
 
-  // This function is called, when the player presses the action button on the game pad.
+  // This function is called, when the player presses or releases the action button on the game pad.
   // On the NES game pad this is the 'A' button.
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("example::onBackPress()");
 
-  // This function is called, when the player presses the back button on the Gamepad.
+  // This function is called, when the player presses or releases the back button on the game pad.
   // On the NES game pad this is the 'B' button.
 
   // In most cases you want to go to the previous screen. This is done by calling the 'leaveState()' function:
   leaveState(pFsm);
 }
 
-static void onStartPress(StackBasedFsm_t* pFsm) {
+static void onStart(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("example::onStartPress()");
 
-  // This function is called, when the player presses the Start button on the Gamepad.
+  // This function is called, when the player presses or releases the Start button on the game pad.
 }
 
-static void onSelectPress(StackBasedFsm_t* pFsm) {
+static void onSelect(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("example::onSelectPress()");
 
-  // This function is called, when the player presses the Select button on the Gamepad.
+  // This function is called, when the player presses or releases the Select button on the game pad.
 }
 
-static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
+static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
   hal_printf("example::onDirectionPress()");
 
-  // This function is called, if the user presses one of the direction buttons on the game pad.
-}
-
-static void onActionRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onActionRelease()");
-
-  // This function is called, when the player releases the action button on the game pad.
-  // On the NES game pad this is the 'A' button.
-}
-
-static void onBackRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onBackRelease()");
-
-  // This function is called, when the player releases the back button on the Gamepad.
-  // On the NES game pad this is the 'B' button.
-}
-
-static void onStartRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onStartRelease()");
-
-  // This function is called, when the player releases the Start button on the Gamepad.
-}
-
-static void onSelectRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onSelectRelease()");
-
-  // This function is called, when the player releases the Select button on the Gamepad.
+  // This function is called, if the user presses or releases one of the direction buttons on the game pad.
 }
 
 static void onReenter(StackBasedFsm_t* pFsm) {
@@ -153,17 +127,11 @@ void exampleScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
   // The following callbacks are all optional:
 
   // Button press callbacks:
-  pState->onActionPress    = onActionPress;
-  pState->onBackPress      = onBackPress;
-  pState->onStartPress     = onStartPress;
-  pState->onSelectPress    = onSelectPress;
-  pState->onDirectionPress = onDirectionPress; // TODO: implement onDirectionRelease()
-
-  // Button release callbacks
-  pState->onActionRelease = onActionRelease;
-  pState->onBackRelease   = onBackRelease;
-  pState->onStartRelease  = onStartRelease;
-  pState->onSelectRelease = onSelectRelease;
+  pState->onAction    = onAction;
+  pState->onBack      = onBack;
+  pState->onStart     = onStart;
+  pState->onSelect    = onSelect;
+  pState->onDirection = onDirection;
 
   // State callbacks:
   pState->onReenterState  = onReenter;

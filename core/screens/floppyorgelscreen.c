@@ -11,12 +11,12 @@
 static struct {
   LockFreeFIFO_t* pFifoDebugPort;
   SlotBasedMenu_t menu;
-  
+
 } context;
 
 static void draw() {
   displayClear();
-  displayDrawText(CENTER, 0 + 0 * 18, "Floppy Orgel Menu", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);  
+  displayDrawText(CENTER, 0 + 0 * 18, "Floppy Orgel Menu", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   menuDraw(&context.menu);
   displayDraw();
 }
@@ -29,23 +29,25 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   userMenuInit(&context.menu, pFsm, 3, 85);
   menuAddSlot(&context.menu, "Live Mode", liveModeScreen);
   menuAddSlot(&context.menu, "MIDI Player", playerMenuScreen);
-      
+
   draw();
 }
 
-static void onActionPress(StackBasedFsm_t* pFsm) {
+static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("FloppyOrgelScreen::onActionPress()");
 
-  userMenuTransitToSelectedSlot(&context.menu, context.pFifoDebugPort);
+  if (pressed)
+    userMenuTransitToSelectedSlot(&context.menu, context.pFifoDebugPort);
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("FloppyOrgelScreen::onBackPress()");
 
-  userMenuTransitBack(&context.menu);
+  if (pressed)
+    userMenuTransitBack(&context.menu);
 }
 
-static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
+static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
   hal_printf("FloppyOrgelScreen::onDirectionPress()");
 
   if (south)
@@ -65,10 +67,11 @@ static void onReenter(StackBasedFsm_t* pFsm) {
 
 // Always implement this as last function of your state file:
 
-void floppyOrgelScreen(StackBasedFsm_t* pFsm, FsmState* pState) {  
-  pState->onEnterState     = onEnter;  
-  pState->onActionPress    = onActionPress;
-  pState->onBackPress      = onBackPress;
-  pState->onDirectionPress = onDirectionPress;
-  pState->onReenterState   = onReenter;  
+void floppyOrgelScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
+  pState->onEnterState   = onEnter;
+  pState->onAction       = onAction;
+  pState->onBack         = onBack;
+  pState->onDirection    = onDirection;
+  pState->onReenterState = onReenter;
 }
+

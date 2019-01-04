@@ -8,19 +8,15 @@
 // CHECKME: decouple state handling from fsm?
 
 static void initStateCallBacks(FsmState* pState) {
-  pState->onActionPress    = NULL;
-  pState->onActionRelease  = NULL;
-  pState->onBackPress      = NULL;
-  pState->onBackRelease    = NULL;
-  pState->onStartPress     = NULL;
-  pState->onStartRelease   = NULL;
-  pState->onSelectPress    = NULL;
-  pState->onSelectRelease  = NULL;
-  pState->onDirectionPress = NULL;
-  pState->onEnterState     = NULL;
-  pState->onLeaveState     = NULL;
-  pState->onReenterState   = NULL;
-  pState->onTick           = NULL;
+  pState->onAction       = NULL;
+  pState->onBack         = NULL;
+  pState->onStart        = NULL;
+  pState->onSelect       = NULL;
+  pState->onDirection    = NULL;
+  pState->onEnterState   = NULL;
+  pState->onLeaveState   = NULL;
+  pState->onReenterState = NULL;
+  pState->onTick         = NULL;
 }
 
 static bool isCallbackDefined(void* pCallBack, char* pCallBackName) {

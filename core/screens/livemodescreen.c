@@ -21,20 +21,21 @@ static void draw() {
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("LiveModeScreen::onEnter()");
-    
+
   context.pFifoDebugPort = (LockFreeFIFO_t*)pParams;
 
-  displayClear();  
+  displayClear();
   displayDrawText(CENTER, 0, "--- Live mode ---", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 18, "Now receiving MIDI-Data on debug port...", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  
+
   draw();
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("LiveModeScreen::onBackPress()");
 
-  leaveState(pFsm);
+  if (pressed)
+    leaveState(pFsm);
 }
 
 static void onLeaveState(StackBasedFsm_t* pFsm) {
@@ -54,7 +55,8 @@ static void onTick(StackBasedFsm_t* pFsm) {
 
 void liveModeScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
   pState->onEnterState = onEnter;
-  pState->onBackPress  = onBackPress;    
+  pState->onBack       = onBack;
   pState->onLeaveState = onLeaveState;
   pState->onTick       = onTick;
 }
+

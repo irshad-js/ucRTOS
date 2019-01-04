@@ -81,10 +81,11 @@ static void onLeaveState(StackBasedFsm_t* pFsm) {
   hardwareFreeMidiDevice();
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("player::onBackPress\n");
 
-  leaveState(pFsm);
+  if (pressed)
+    leaveState(pFsm);
 }
 
 static void onTick(StackBasedFsm_t* pFsm) {
@@ -99,7 +100,7 @@ static void onTick(StackBasedFsm_t* pFsm) {
 void playerScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
   pState->onEnterState = onEnter;
   pState->onLeaveState = onLeaveState;
-  pState->onBackPress  = onBackPress;
+  pState->onBack       = onBack;
   pState->onTick       = onTick;
 }
 

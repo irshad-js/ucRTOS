@@ -56,32 +56,32 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   draw();
 }
 
-static void onActionPress(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenuScreen::onActionPress\n");
+static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("mainMenuScreen::onAction; pressed=%d\n", pressed);
 
   userMenuTransitToSelectedSlot(&_context.menu, &_context.fifoDebugPort);
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenuScreen::onBackPress\n");
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("mainMenuScreen::onBack; pressed=%d\n", pressed);
 
   userMenuTransitBack(&_context.menu);
 }
 
-static void onStartPress(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenuScreen::onStartPress\n");
+static void onStart(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("mainMenuScreen::onStart; pressed=%d\n", pressed);
 
   // This function is called, when the player presses the Start button on the Gamepad.
 }
 
-static void onSelectPress(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenuScreen::onSelectPress\n");
+static void onSelect(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("mainMenuScreen::onSelect; pressed=%d\n", pressed);
 
   // This function is called, when the player presses the Select button on the Gamepad.
 }
 
-static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
-  hal_printf("mainMenuScreen::onDirectionPress\n");
+static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
+  hal_printf("mainMenuScreen::onDirection;\n");
 
   if (south)
     menuMoveCursorDown(&_context.menu);
@@ -90,32 +90,6 @@ static void onDirectionPress(StackBasedFsm_t* pFsm, bool south, bool north, bool
     menuMoveCursorUp(&_context.menu);
 
   draw();
-}
-
-static void onActionRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenuScreen::onActionRelease\n");
-
-  // This function is called, when the player releases the action button on the game pad.
-  // On the NES game pad this is the 'A' button.
-}
-
-static void onBackRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenuScreen::onBackRelease\n");
-
-  // This function is called, when the player releases the back button on the Gamepad.
-  // On the NES game pad this is the 'B' button.
-}
-
-static void onStartRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenuScreen::onStartRelease\n");
-
-  // This function is called, when the player releases the Start button on the Gamepad.
-}
-
-static void onSelectRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("mainMenuScreen::onSelectRelease\n");
-
-  // This function is called, when the player releases the Select button on the Gamepad.
 }
 
 static void onReenter(StackBasedFsm_t* pFsm) {
@@ -141,27 +115,14 @@ static void onTick(StackBasedFsm_t* pFsm) {
 // Always implement this as last function of your state file:
 
 void mainMenuScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
-  // This callback MUST be set:
-  pState->onEnterState    = onEnter;
-
-  // The following callbacks are all optional:
-
-  // Button press callbacks:
-  pState->onActionPress    = onActionPress;
-  pState->onBackPress      = onBackPress;
-  pState->onStartPress     = onStartPress;
-  pState->onSelectPress    = onSelectPress;
-  pState->onDirectionPress = onDirectionPress; // TODO: implement onDirectionRelease()
-
-  // Button release callbacks
-  pState->onActionRelease = onActionRelease;
-  pState->onBackRelease   = onBackRelease;
-  pState->onStartRelease  = onStartRelease;
-  pState->onSelectRelease = onSelectRelease;
-
-  // State callbacks:
-  pState->onReenterState  = onReenter;
-  pState->onLeaveState    = onLeaveState;
-  pState->onTick          = onTick;
+  pState->onEnterState   = onEnter;
+  pState->onAction       = onAction;
+  pState->onBack         = onBack;
+  pState->onStart        = onStart;
+  pState->onSelect       = onSelect;
+  pState->onDirection    = onDirection;
+  pState->onReenterState = onReenter;
+  pState->onLeaveState   = onLeaveState;
+  pState->onTick         = onTick;
 }
 

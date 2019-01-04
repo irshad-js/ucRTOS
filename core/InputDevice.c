@@ -31,8 +31,8 @@ static void processCursorButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
       if (isInRepetitionMode) {
         if (upTimeMs() > timeOnLastDirectionPress + CURSOR_DELAY_MS_BEFORE_REPEAT) {
           if (upTimeMs() > timeOnLastRepetition + 1000 / CURSOR_SPEED_ITEMS_PER_SECOND) {
-            if (pState->onDirectionPress)
-              pState->onDirectionPress(pFsm, pButtonStates->South, pButtonStates->North, pButtonStates->West,
+            if (pState->onDirection)
+              pState->onDirection(pFsm, pButtonStates->South, pButtonStates->North, pButtonStates->West,
                   pButtonStates->East);
 
             // hal_printf("timeOnLastRepetition: %d, repeat on: %d", timeOnLastRepetition, timeOnLastRepetition + 1000 / CURSOR_SPEED_ITEMS_PER_SECOND);
@@ -48,8 +48,8 @@ static void processCursorButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
         isInRepetitionMode = true;
 
         // hal_printf("In repetition mode");
-        if (pState->onDirectionPress)
-          pState->onDirectionPress(pFsm, pButtonStates->South, pButtonStates->North, pButtonStates->West,
+        if (pState->onDirection)
+          pState->onDirection(pFsm, pButtonStates->South, pButtonStates->North, pButtonStates->West,
               pButtonStates->East);
       }
     }
@@ -63,19 +63,19 @@ static void processCursorButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
 }
 
 static void processButton(StackBasedFsm_t* pFsm, uint16_t currentButtonState, uint16_t lastButtonState,
-    OnButtonPressCallback onButtonPress, OnButtonReleaseCallback onButtonRelease,
+    OnButtonCallback onButtonPress, OnButtonCallback onButtonRelease,
     uint32_t* pTimeOnLastButtonPress) {
 
   if (currentButtonState && !lastButtonState) {
     if (onButtonPress)
-      onButtonPress(pFsm);
+      onButtonPress(pFsm, true);
 
     *pTimeOnLastButtonPress = upTimeMs();
   }
 
   if (!currentButtonState && lastButtonState) {
     if (onButtonRelease)
-      onButtonRelease(pFsm);
+      onButtonRelease(pFsm, false);
 
     *pTimeOnLastButtonPress = upTimeMs(); // CHECKME: Is this also needed on release for debouce?
   }
@@ -85,10 +85,10 @@ static void processActionButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
     InputDeviceStates_t* pLastButtonStates, uint32_t* pTimeOnLastButtonPress) {
 
   // Force user to press button again after entering a menu
-  processButton(pFsm, pButtonStates->Action, pLastButtonStates->Action, pState->onActionPress, pState->onActionRelease, pTimeOnLastButtonPress); // Action button
-  processButton(pFsm, pButtonStates->Back,   pLastButtonStates->Back,   pState->onBackPress,   pState->onBackRelease,   pTimeOnLastButtonPress); // Back button
-  processButton(pFsm, pButtonStates->Start,  pLastButtonStates->Start,  pState->onStartPress,  pState->onStartRelease,  pTimeOnLastButtonPress); // Start button
-  processButton(pFsm, pButtonStates->Select, pLastButtonStates->Select, pState->onSelectPress, pState->onSelectRelease, pTimeOnLastButtonPress); // Select button
+  processButton(pFsm, pButtonStates->Action, pLastButtonStates->Action, pState->onAction, pState->onAction, pTimeOnLastButtonPress); // Action button
+  processButton(pFsm, pButtonStates->Back,   pLastButtonStates->Back,   pState->onBack,   pState->onBack,   pTimeOnLastButtonPress); // Back button
+  processButton(pFsm, pButtonStates->Start,  pLastButtonStates->Start,  pState->onStart,  pState->onStart,  pTimeOnLastButtonPress); // Start button
+  processButton(pFsm, pButtonStates->Select, pLastButtonStates->Select, pState->onSelect, pState->onSelect, pTimeOnLastButtonPress); // Select button
 }
 
 static bool isDebouncing(uint32_t timeOnLastButtonPress) {

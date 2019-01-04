@@ -18,13 +18,15 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   draw();
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("imgTestScreen::onBackPress()");
 
-  leaveState(pFsm);
+  if (pressed)
+    leaveState(pFsm);
 }
 
 void imgTestScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
-  pState->onEnterState    = onEnter;
-  pState->onBackPress     = onBackPress;
+  pState->onEnterState = onEnter;
+  pState->onBack       = onBack;
 }
+

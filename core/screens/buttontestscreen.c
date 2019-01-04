@@ -55,62 +55,51 @@ static void draw() {
   displayDraw();
 }
 
-static void onActionPress(StackBasedFsm_t* pFsm) {
-  hal_printf("buttonTestScreen::onActionPress()");
+static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("buttonTestScreen::onAction; pressed=%d\n", pressed);
 
   draw();
 }
 
-static void onActionRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("buttonTestScreen::onActionRelease()");
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("buttonTestScreen::onBack; pressed=%d\n", pressed);
 
   draw();
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
-  hal_printf("buttonTestScreen::onBackPress()");
+static void onStart(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("buttonTestScreen::onStart; pressed=%d\n", pressed);
+
+  if (pressed) {
+    context.startIsPressed = true;
+
+    draw();
+
+    if (context.startIsPressed && context.selectIsPressed)
+      leaveState(pFsm);
+  }
+  else
+    context.startIsPressed = false;
+}
+
+static void onSelect(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("buttonTestScreen::onSelect; pressed=%d\n", pressed);
+
+  if (pressed) {
+    context.selectIsPressed = true;
+
+    draw();
+
+    if (context.startIsPressed && context.selectIsPressed)
+      leaveState(pFsm);
+  }
+  else
+    context.selectIsPressed = false;
+}
+static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
+  hal_printf("buttonTestScreen::onDirection; south=%d, north=%d, west=%d, east=%d", south, north, west, east);
 
   draw();
-}
-
-static void onBackRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("buttonTestScreen::onBackRelease()");
-
-  draw();
-}
-
-static void onStartPress(StackBasedFsm_t* pFsm) {
-  hal_printf("buttonTestScreen::onStartPress()");
-
-  context.startIsPressed = true;
-
-  draw();
-
-  if (context.startIsPressed && context.selectIsPressed)
-    leaveState(pFsm);
-}
-
-static void onStartRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("buttonTestScreen::onStartRelease()");
-
-  context.startIsPressed = false;
-}
-
-static void onSelectPress(StackBasedFsm_t* pFsm) {
-  hal_printf("buttonTestScreen::onSelectPress()");
-
-  context.selectIsPressed = true;
-
-  draw();
-
-  if (context.startIsPressed && context.selectIsPressed)
-    leaveState(pFsm);
-}
-
-static void onSelectRelease(StackBasedFsm_t* pFsm) {
-  hal_printf("buttonTestScreen::onSelectRelease()");
-
-  context.selectIsPressed = false;
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
@@ -126,15 +115,12 @@ static void onTick(StackBasedFsm_t* pFsm) {
 }
 
 void buttonTestScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
-  pState->onActionPress = onActionPress;
-  pState->onActionRelease = onActionRelease;
-  pState->onBackPress = onBackPress;
-  pState->onBackRelease = onBackRelease;
-  pState->onStartPress = onStartPress;
-  pState->onStartRelease = onStartRelease;
-  pState->onSelectPress = onSelectPress;
-  pState->onSelectRelease = onSelectRelease;
-  pState->onEnterState = onEnter;
-  pState->onTick = onTick;
+  pState->onEnterState  = onEnter;
+  pState->onAction      = onAction;
+  pState->onBack        = onBack;
+  pState->onStart       = onStart;
+  pState->onSelect      = onSelect;
+  pState->onDirection   = onDirection;
+  pState->onTick        = onTick;
 }
 

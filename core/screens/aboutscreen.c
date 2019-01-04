@@ -70,10 +70,11 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   draw();
 }
 
-static void onBackPress(StackBasedFsm_t* pFsm) {
-  hal_printf("aboutScreen::onBackPress()");
+static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
+  hal_printf("aboutScreen::onBack; pressed=%d", pressed);
 
-  leaveState(pFsm);
+  if (pressed)
+   leaveState(pFsm);
 }
 
 static void onTick(StackBasedFsm_t* pFsm) {
@@ -85,6 +86,7 @@ static void onTick(StackBasedFsm_t* pFsm) {
 
 void aboutScreen(StackBasedFsm_t* pFsm, FsmState* pState) {
   pState->onEnterState = onEnter;
-  pState->onBackPress  = onBackPress;
+  pState->onBack       = onBack;
   pState->onTick       = onTick;
 }
+
