@@ -19,8 +19,7 @@ vpath %.c ../../../lib/FreeRTOS/Source/portable/MemMang
 vpath %.c ../../../lib/FreeRTOS/Source/portable/GCC/Posix
 vpath %.c src
 vpath %.c src/drivers
-#vpath %.c ../lib/NRF24L01P/src
-#vpath %.c ../lib/NRF24L01P/hal/stm32f4
+vpath %.c ../../simulators/lib
 
 CFLAGS  = -g -Wall -pthread -m64 # TODO: use -m32
 CFLAGS += -Ihdr
@@ -31,16 +30,15 @@ CFLAGS += -I../../../lib/AsciiLib
 CFLAGS += -I../../../lib/LockFreeFifo
 CFLAGS += -I../../../lib/FreeRTOS/Source/include
 CFLAGS += -I../../../lib/FreeRTOS/Source/portable/GCC/Posix
-#CFLAGS += -I../lib/NRF24L01P/src
-#CFLAGS += -I../lib/NRF24L01P/hal
+CFLAGS += -I../../embedded/lib/NRF24L01P/src
+CFLAGS += -I../../embedded/lib/NRF24L01P/hal
 
 ###################################################
 
 OBJDIR=obj
 BINDIR=bin
 MAIN_SRCS = heap_3.c port.c tasks.c list.c timers.c queue.c croutine.c event_groups.c \
-            core_main.c hardware.c \
-            #hal_linux.c (NRF24 HAL)
+            core_main.c hardware.c
 
 #LIB_SRCS = <TODO: add files if needed>
 
@@ -49,7 +47,7 @@ UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c
                   aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c \
                   floppyorgelscreen.c buttontestscreen.c livemodescreen.c \
                   images.c helpers.c midifile.c midiplayer.c lut.c emidi_linux.c \
-                  # skateboardscreen.c nrf24l01p.c
+                  skateboardscreen.c nrf24l01p_dummy.c
 
 PROJ_NAME=ucrtos
 OUTPATH=bin
