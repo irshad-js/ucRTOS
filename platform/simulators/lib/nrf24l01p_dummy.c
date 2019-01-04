@@ -126,6 +126,16 @@ void nrf24_flushTxFifo() {
 }
 
 int8_t nrf24_sendPacket(void* pPacket, int8_t payloadSize, uint8_t listenAfterSend) {
+  hal_printf("nrf24_sendPacket [%d]: ");
+
+  for (int i = 0; i < payloadSize; ++i) {
+    uint8_t* p = (uint8_t*)pPacket;
+
+    hal_printf("%02X ", p[i]);
+  }
+
+  hal_printf("\n");
+
   return NRF_OK;
 }
 
