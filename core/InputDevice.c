@@ -63,19 +63,18 @@ static void processCursorButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
 }
 
 static void processButton(StackBasedFsm_t* pFsm, uint16_t currentButtonState, uint16_t lastButtonState,
-    OnButtonCallback onButtonPress, OnButtonCallback onButtonRelease,
-    uint32_t* pTimeOnLastButtonPress) {
+    OnButtonCallback onButton, uint32_t* pTimeOnLastButtonPress) {
 
   if (currentButtonState && !lastButtonState) {
-    if (onButtonPress)
-      onButtonPress(pFsm, true);
+    if (onButton)
+      onButton(pFsm, true);
 
     *pTimeOnLastButtonPress = upTimeMs();
   }
 
   if (!currentButtonState && lastButtonState) {
-    if (onButtonRelease)
-      onButtonRelease(pFsm, false);
+    if (onButton)
+      onButton(pFsm, false);
 
     *pTimeOnLastButtonPress = upTimeMs(); // CHECKME: Is this also needed on release for debouce?
   }
@@ -85,10 +84,10 @@ static void processActionButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
     InputDeviceStates_t* pLastButtonStates, uint32_t* pTimeOnLastButtonPress) {
 
   // Force user to press button again after entering a menu
-  processButton(pFsm, pButtonStates->Action, pLastButtonStates->Action, pState->onAction, pState->onAction, pTimeOnLastButtonPress); // Action button
-  processButton(pFsm, pButtonStates->Back,   pLastButtonStates->Back,   pState->onBack,   pState->onBack,   pTimeOnLastButtonPress); // Back button
-  processButton(pFsm, pButtonStates->Start,  pLastButtonStates->Start,  pState->onStart,  pState->onStart,  pTimeOnLastButtonPress); // Start button
-  processButton(pFsm, pButtonStates->Select, pLastButtonStates->Select, pState->onSelect, pState->onSelect, pTimeOnLastButtonPress); // Select button
+  processButton(pFsm, pButtonStates->Action, pLastButtonStates->Action, pState->onAction, pTimeOnLastButtonPress); // Action button
+  processButton(pFsm, pButtonStates->Back,   pLastButtonStates->Back,   pState->onBack,   pTimeOnLastButtonPress); // Back button
+  processButton(pFsm, pButtonStates->Start,  pLastButtonStates->Start,  pState->onStart,  pTimeOnLastButtonPress); // Start button
+  processButton(pFsm, pButtonStates->Select, pLastButtonStates->Select, pState->onSelect, pTimeOnLastButtonPress); // Select button
 }
 
 static bool isDebouncing(uint32_t timeOnLastButtonPress) {
