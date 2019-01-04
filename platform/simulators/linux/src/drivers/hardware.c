@@ -52,7 +52,7 @@ static void _printColored(const char* text, uint16_t colorAttributes) {
 //  SetConsoleTextAttribute(hConsole, saved_attributes); // Restore original font color
 //  printf("\n\r");
 
-  printf("%s\n\r", text);
+  printf("%s", text);
 }
 
 void hal_printf(char* format, ...) {
