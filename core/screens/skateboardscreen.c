@@ -8,15 +8,26 @@
 static struct {
   bool buttonIsPressed;
   int* pReturnValue;
+  int16_t speed;
+  int16_t steering;
 } context;
 
 static void draw() {
   displayClear();
 
   displayDrawText(CENTER, 0 + 0 * 18, "Skateboard screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(30, 0 + 2 * 18, "Press 'A' button to accelerate", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(30, 0 + 3 * 18, "Press 'B' button to brake", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(30, 0 + 4 * 18, "Press 'Select' button to exit", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(30, 0 + 2 * 18, "Press 'Up' button to accelerate", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(30, 0 + 3 * 18, "Press 'Down' button to brake", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(30, 0 + 4 * 18, "Press 'A' button to invert speed", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(30, 0 + 5 * 18, "Press 'B' button to stop motors", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(30, 0 + 6 * 18, "Press 'Select' button to exit", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+
+  char pBuf[64];
+  mysprintf(pBuf, "Speed: %i", context.speed);
+  displayDrawText(30, 0 + 8 * 18, pBuf, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+
+  mysprintf(pBuf, "Steering: %i", context.steering);
+  displayDrawText(30, 0 + 9 * 18, pBuf, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
   displayDraw();
 }
@@ -25,10 +36,20 @@ static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("skateboard::onActionPress; pressed=%d\n", pressed);
 
   context.buttonIsPressed = pressed;
+
+  if (pressed) {
+    context.speed *= -1;
+    draw();
+  }
 }
 
 static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("skateboard::onBack; pressed=%d\n", pressed);
+
+  if (pressed) {
+    context.speed = 0;
+    draw();
+  }
 }
 
 static void onStart(StackBasedFsm_t* pFsm, bool pressed) {
@@ -44,6 +65,27 @@ static void onSelect(StackBasedFsm_t* pFsm, bool pressed) {
 
 static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
   hal_printf("skateboard::onDirection\n");
+
+  static const int increment = 25;
+
+  if (north) {
+    if (context.speed < 1000)
+      context.speed += increment;
+  }
+  else if (south) {
+    if (context.speed > -1000)
+      context.speed -= increment;
+  }
+  else if (east) {
+    if (context.steering < 1000)
+      context.steering += increment;
+  }
+  else if (west) {
+    if (context.steering > -1000)
+      context.steering -= increment;
+  }
+
+  draw();
 }
 
 static void onReenter(StackBasedFsm_t* pFsm) {
@@ -179,8 +221,8 @@ static void printFullConfig() {
 static void setup_nrf24() {
   nrf24_init();
 
-  uint8_t rxaddr[] = {0x01, 0x02, 0x03, 0x02, 0x01 };
-  uint8_t txaddr[] = {0x01, 0x02, 0x03, 0x02, 0x01 };
+  uint8_t rxaddr[] = {0x01, 0x02, 0x03, 0x02, 0x01};
+  uint8_t txaddr[] = {0x01, 0x02, 0x03, 0x02, 0x01};
 
   nrf24_setRxAddress(PIPE_0, rxaddr);
   nrf24_setTxAddress(txaddr);
@@ -202,6 +244,9 @@ static void setup_nrf24() {
 
 static void init() {
   setup_nrf24();
+
+  context.speed = 0;
+  context.steering = 0;
 }
 
 // -----------------------------------------
@@ -243,17 +288,34 @@ static void onTick(StackBasedFsm_t* pFsm) {
   }
 */
 
-  uint8_t pData[] = {
-    0xC0, 0xFE, 0xFE, 0x00, 0x42, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-  };
+  union {
+    struct {
+      uint8_t pMagic[4];
 
-  if (context.buttonIsPressed)
-    pData[4] = 0x42;
-  else
-    pData[4] = 0x23;
+      struct {
+        int16_t steering;
+        int16_t speed;
+      } payload;
+    } msg;
 
-  nrf24_sendPacket(pData, 16, false);
+    uint8_t pRaw[16];
+  } data;
+
+  memset(&data, 0, 16);
+
+  data.msg.pMagic[0] = 0xC0;
+  data.msg.pMagic[1] = 0xFE;
+  data.msg.pMagic[2] = 0xFE;
+  data.msg.pMagic[3] = 0x00;
+  data.msg.payload.steering = context.steering;
+  data.msg.payload.speed = context.speed;
+
+  static int lastXmitMs = 0;
+
+  if (upTimeMs() - lastXmitMs > 100) {
+    nrf24_sendPacket(data.pRaw, 16, false);
+    lastXmitMs = upTimeMs();
+  }
 }
 
 // Always implement this as last function of your state file:
