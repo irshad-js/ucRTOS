@@ -98,9 +98,9 @@ void LCD_FSMCConfig(void) {
   //-----------------------------------------
   // Structure fuer das Timing
   //-----------------------------------------
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime      = 5;  // 5;
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime       = 5;  // 1;
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime         = 10; // 5;
+  FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime      = 5;  // 5   5;
+  FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime       = 5;  // 5   1;
+  FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime         = 10; // 10  5;
   FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0;  // 0;
   FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision           = 0;  // 0;
   FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency           = 0;  // 0'
@@ -171,7 +171,7 @@ uint16_t SSD1289_ReadData(void) {
 #define LCD_REG_34    0x22
 void LCD_WriteRAM_Prepare(void) {
   LCD_REG = LCD_REG_34;
-  //delayMs(5);
+  delayMs(5);
 }
 ///
 
@@ -244,12 +244,12 @@ void SSD1289_Init(void) {
   power_control_5.VCM = 48;
   power_control_5.nOTP = 1;
   driver_output.MUX = 319;
-  driver_output.TB = 1; // 1
+  driver_output.TB = 0; // 1
   driver_output.SM = 0;
   driver_output.BGR = 1;
   driver_output.CAD = 0;
   driver_output.REV = 1;
-  driver_output.RL = 0; // ;0;
+  driver_output.RL = 1; // ;0;
   lcd_drive_ac.NW = 0;
   lcd_drive_ac.WSMD = 0;
   lcd_drive_ac.EOR = 1;
