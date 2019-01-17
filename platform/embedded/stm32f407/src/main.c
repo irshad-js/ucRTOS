@@ -92,7 +92,7 @@ static void initBusUart(uint32_t baudrate) {
 
 static void init() {
   initLeds();
-  initDebugUart(9600);
+  initDebugUart(115200);
   initBusUart(9600);
 
   // CHECKME: why is SystemCoreClock divided by 1000 here? It seems to be required for
@@ -107,3 +107,4 @@ int main(void) {
 
   return coreMain();
 }
+
