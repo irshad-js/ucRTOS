@@ -9,7 +9,7 @@ SIZE=$(BINPATH)/arm-none-eabi-size
 ###################################################
 
 # Check for valid float argument
-# NOTE that you have to run make clan after
+# NOTE that you have to run make clean after
 # changing these as hardfloat and softfloat are not
 # binary compatible
 ifneq ($(FLOAT_TYPE), hard)
