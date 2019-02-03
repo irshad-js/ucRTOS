@@ -72,7 +72,7 @@ U 1 1 5C438854
 P 9150 4100
 F 0 "U3" H 8850 4700 50  0000 C CNN
 F 1 "MAX485E" H 8850 4600 50  0000 C CNN
-F 2 "" H 9150 3400 50  0001 C CNN
+F 2 "Package_DIP:DIP-8_W7.62mm" H 9150 3400 50  0001 C CNN
 F 3 "https://datasheets.maximintegrated.com/en/ds/MAX1487E-MAX491E.pdf" H 9150 4150 50  0001 C CNN
 	1    9150 4100
 	1    0    0    -1  
@@ -83,7 +83,7 @@ U 1 1 5C438977
 P 10550 4800
 F 0 "J6" H 10600 5217 50  0000 C CNN
 F 1 "RS485" H 10600 5126 50  0000 C CNN
-F 2 "" H 10550 4800 50  0001 C CNN
+F 2 "Connector_IDC:IDC-Header_2x05_P2.54mm_Vertical" H 10550 4800 50  0001 C CNN
 F 3 "~" H 10550 4800 50  0001 C CNN
 	1    10550 4800
 	-1   0    0    -1  
@@ -94,7 +94,7 @@ U 1 1 5C4ADF61
 P 9000 2050
 F 0 "J5" H 9050 3067 50  0000 C CNN
 F 1 "HY32D" H 9050 2976 50  0000 C CNN
-F 2 "" H 9000 2050 50  0001 C CNN
+F 2 "Connector_IDC:IDC-Header_2x17_P2.54mm_Vertical" H 9000 2050 50  0001 C CNN
 F 3 "~" H 9000 2050 50  0001 C CNN
 	1    9000 2050
 	1    0    0    -1  
@@ -105,7 +105,7 @@ U 1 1 5C4B7AD4
 P 2550 5050
 F 0 "J3" H 2550 5715 50  0000 C CNN
 F 1 "SD_Card" H 2550 5624 50  0000 C CNN
-F 2 "" H 2550 5050 50  0001 C CNN
+F 2 "Connector_IDC:IDC-Header_2x08_P2.54mm_Vertical" H 2550 5050 50  0001 C CNN
 F 3 "http://portal.fciconnect.com/Comergent//fci/drawing/10067847.pdf" H 2550 5050 50  0001 C CNN
 	1    2550 5050
 	1    0    0    -1  
@@ -318,7 +318,7 @@ U 1 1 5C4D88B3
 P 7450 1300
 F 0 "J4" H 7550 1700 50  0000 L CNN
 F 1 "FTDI" H 7500 1600 50  0000 L CNN
-F 2 "" H 7450 1300 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical" H 7450 1300 50  0001 C CNN
 F 3 "~" H 7450 1300 50  0001 C CNN
 	1    7450 1300
 	1    0    0    -1  
@@ -717,7 +717,7 @@ U 1 1 5C4DFC91
 P 7600 4100
 F 0 "U2" H 7000 4750 50  0000 L CNN
 F 1 "NRF24L01_Breakout" H 6650 4650 50  0000 L CNN
-F 2 "RF_Module:nRF24L01_Breakout" H 7750 4700 50  0001 L CIN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical" H 7750 4700 50  0001 L CIN
 F 3 "http://www.nordicsemi.com/eng/content/download/2730/34105/file/nRF24L01_Product_Specification_v2_0.pdf" H 7600 4000 50  0001 C CNN
 	1    7600 4100
 	1    0    0    -1  
@@ -1007,7 +1007,7 @@ U 1 1 5D0AB0A9
 P 5550 4850
 F 0 "U1" H 5700 4965 50  0000 C CNN
 F 1 "DP83848_Breakout" H 5700 4874 50  0000 C CNN
-F 2 "" H 5550 4850 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_2x10_P2.54mm_Horizontal" H 5550 4850 50  0001 C CNN
 F 3 "" H 5550 4850 50  0001 C CNN
 	1    5550 4850
 	1    0    0    -1  
