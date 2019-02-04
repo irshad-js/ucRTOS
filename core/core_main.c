@@ -75,79 +75,97 @@ static void _prvGamePadTask(void* pParams) {
   }
 }
 
-// -
-
 // TODO: implement proper HAL for file system:
 
-// static bool hal_findNext(DIR* pDir, FILINFO* pFinfo) {
-//   FRESULT error;
-//
-//   if (error = f_readdir(pDir, pFinfo))
-//     return false;
-//
-//   bool foundFile = pFinfo->fname[0];
-//
-//   if(!foundFile)
-//     return false;
-//
-//   return true;
-// }
-//
-// static bool hal_findInit(DIR* pDir, const char* pPath, FILINFO* pFinfo) {
-//   FRESULT error;
-//
-//   if(error = f_opendir(pDir, pPath))
-//     return false;
-//
-//   bool foundFile = hal_findNext(pDir, pFinfo);
-//
-//   if(!foundFile)
-//     return false;
-//
-//   return true;
-// }
-//
-// void hal_findFree(DIR* pDir) {
-//   return  f_closedir(pDir) != FR_OK;
-// }
-//
-// static void _prvFileSystemTask(void* pParameters) {
-//   DIR dir;
-//   FILINFO finfo;
-//   FATFS FatFs;
-//   char pLfn[_MAX_LFN] = {0};
-//   finfo.lfname = pLfn;
-//   finfo.lfsize = _MAX_LFN;
-//
-//   uint32_t total = 0;
-//   uint32_t free = 0;
-//
-//   while(1) {
-//     f_mount(&FatFs, "0:", 1);
-//
-//     if (TM_FATFS_DriveSize(&total, &free) == FR_OK) {
-//       myprintf("Total: %d Bytes\n", total);
-//       myprintf("Free: %d Bytes\n", free);
-//     }
-//
-//     bool endOfDirectory = !hal_findInit(&dir, "/", &finfo);
-//     int curFileIndex = 0;
-//
-//     while (!endOfDirectory) {
-//       const char* p = finfo.lfname[0] ? finfo.lfname : finfo.fname;
-//
-//       if (p[0] != '.' && p[1] != '.') {
-//         myprintf("%s\n", p);
-//         endOfDirectory = !hal_findNext(&dir, &finfo);
-//       }
-//     }
-//
-//     hal_findFree(&dir);
-//     f_mount(0, "", 1); // unmount
-//   }
-//
-//   while(1);
-// }
+/*
+
+static bool hal_findNext(DIR* pDir, FILINFO* pFinfo) {
+  FRESULT error;
+
+  if (error = f_readdir(pDir, pFinfo))
+    return false;
+
+  bool foundFile = pFinfo->fname[0];
+
+  if(!foundFile)
+    return false;
+
+  return true;
+}
+
+static bool hal_findInit(DIR* pDir, const char* pPath, FILINFO* pFinfo) {
+  FRESULT error;
+
+  if(error = f_opendir(pDir, pPath)) {
+    myprintf("f_opendir on pDir=0x%X pPath=%s failed with error 0x%X\n", pDir, pPath, error); // TODO: remove
+    return false;
+  }
+
+  bool foundFile = hal_findNext(pDir, pFinfo);
+
+  if(!foundFile)
+    return false;
+
+  return true;
+}
+
+void hal_findFree(DIR* pDir) {
+  return  f_closedir(pDir) != FR_OK;
+}
+
+static void _prvFileSystemTask(void* pParameters) {
+  FATFS fatFs;
+
+  uint32_t total = 0;
+  uint32_t free = 0;
+
+  int error;
+
+  myprintf("Now mounting...\n");
+
+  if (error = f_mount(&fatFs, "0:", 1))
+    myprintf("Mounting failed with error: 0x%X\n", error);
+  else {
+    myprintf("Success!\n");
+
+    if (TM_FATFS_DriveSize(&total, &free) == FR_OK) {
+      myprintf("Total: %d Bytes\n", total);
+      myprintf("Free: %d Bytes\n", free);
+    }
+  }
+
+  DIR dir;
+  FILINFO finfo;
+  char pLfn[_MAX_LFN] = {0};
+  finfo.lfname = pLfn;
+  finfo.lfsize = _MAX_LFN;
+
+  bool endOfDirectory = !hal_findInit(&dir, "/", &finfo);
+  int curFileIndex = 0;
+
+  myprintf("now listing files:\n");
+  myprintf("------------------\n");
+
+  while (!endOfDirectory) {
+    const char* p = finfo.lfname[0] ? finfo.lfname : finfo.fname;
+
+    if (p[0] != '.' && p[1] != '.') {
+      myprintf("%s\n", p);
+      endOfDirectory = !hal_findNext(&dir, &finfo);
+    }
+  }
+
+  myprintf("------------------\n");
+  myprintf("done.\n");
+
+  hal_findFree(&dir);
+  f_mount(0, "", 1); // unmount
+
+  while(1)
+    ;
+}
+
+*/
 
 uint32_t upTimeMs() {
   return xTaskGetTickCount() / (configTICK_RATE_HZ / 1000);
@@ -167,7 +185,7 @@ int coreMain(void) {
   xTaskCreate(_prvBlinkTask,   "Blink Task", configMINIMAL_STACK_SIZE, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
   xTaskCreate(_prvDisplayTask, "Display Task", 2048, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
   // xTaskCreate(_prvGamePadTask, "Game pad Task", 512, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
-  // xTaskCreate(_prvFileSystemTask, "File System Task", 1024, NULL, mainQUEUE_RECEIVE_TASK_PRIORITY, NULL);
+  // xTaskCreate(_prvFileSystemTask, "File System Task", 1024, NULL, mainDEFAULT_TASK_PRIORITY, NULL);
 
   vTaskStartScheduler();
 
