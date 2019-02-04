@@ -88,6 +88,8 @@ MAIN_SRCS = main.c core_main.c hardware.c nesgamepad.c ssd1289.c stm32f4xx_it.c 
             port.c heap_1.c tasks.c list.c timers.c queue.c \
             ff.c ccsbcs.c tm_stm32f4_fatfs.c diskio.c syscall.c tm_stm32f4_gpio.c fatfs_sd_sdio.c \
             lib/cmsis_boot/startup_stm32f4xx.s hal_stm32f4.c # add startup file to build
+            # CHECKME: for some reason tm_stm32f4_gpio.c and fatfs_sd_sdio.c have to be added in
+            #          MAIN_SRCS or mounting of sd card will fail with error 0x03!?
 
 LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
 	stm32f4xx_exti.c stm32f4xx_rng.c stm32f4xx_can.c stm32f4xx_flash.c \
