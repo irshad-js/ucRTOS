@@ -225,9 +225,6 @@
 /* Includes ------------------------------------------------------------------*/
 //#include "stm324x9i_eval_ioe16.h"
 #include "stm32f4xx.h"
-#include "stm32f4xx_sdio.h" // TODO: remove
-#include "stm32f4xx_dma.h" // TODO: remove
-#include "misc.h" // TODO: remove
 #include "fatfs_sd_sdio.h"
 #include <string.h>
 /*

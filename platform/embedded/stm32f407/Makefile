@@ -38,8 +38,13 @@ vpath %.c src
 vpath %.c src/drivers
 vpath %.c ../lib/NRF24L01P/src
 vpath %.c ../lib/NRF24L01P/hal/stm32f4
-vpath %.a lib
+vpath %.c lib/tm/tm_stm32f4_gpio
+vpath %.c lib/tm/tm_stm32f4_fatfs
+vpath %.c lib/tm/tm_stm32f4_fatfs/fatfs
+vpath %.c lib/tm/tm_stm32f4_fatfs/fatfs/drivers
+vpath %.c lib/tm/tm_stm32f4_fatfs/fatfs/option
 
+vpath %.a lib
 
 CFLAGS  = -std=gnu99 -g -O2 -Wall -Tlink.ld -Xlinker -Map=obj/ucrtos.map
 CFLAGS += -mlittle-endian -mthumb -mthumb-interwork -nostartfiles -mcpu=cortex-m4
@@ -57,6 +62,13 @@ CFLAGS += -I../../../lib/FreeRTOS/Source/include
 CFLAGS += -I../../../lib/FreeRTOS/Source/portable/GCC/ARM_CM4F
 CFLAGS += -I../lib/NRF24L01P/src
 CFLAGS += -I../lib/NRF24L01P/hal
+CFLAGS += -Ilib/tm
+CFLAGS += -Ilib/tm/tm_stm32f4_gpio
+CFLAGS += -Ilib/tm/tm_stm32f4_delay
+CFLAGS += -Ilib/tm/tm_stm32f4_fatfs
+CFLAGS += -Ilib/tm/tm_stm32f4_fatfs/fatfs
+CFLAGS += -Ilib/tm/tm_stm32f4_fatfs/fatfs/drivers
+CFLAGS += -Ilib/tm/tm_stm32f4_fatfs/fatfs/option
 
 CFLAGS += -ffreestanding # -nostdlib # nostdlib parameter should be set!?
 
@@ -73,8 +85,9 @@ endif
 OBJDIR=obj
 BINDIR=bin
 MAIN_SRCS = main.c core_main.c hardware.c nesgamepad.c ssd1289.c stm32f4xx_it.c system_stm32f4xx.c syscalls.c \
-		port.c heap_1.c tasks.c list.c timers.c queue.c \
-		lib/cmsis_boot/startup_stm32f4xx.s hal_stm32f4.c # add startup file to build
+            port.c heap_1.c tasks.c list.c timers.c queue.c \
+            ff.c ccsbcs.c tm_stm32f4_fatfs.c diskio.c syscall.c tm_stm32f4_gpio.c fatfs_sd_sdio.c \
+            lib/cmsis_boot/startup_stm32f4xx.s hal_stm32f4.c # add startup file to build
 
 LIB_SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \
 	stm32f4xx_exti.c stm32f4xx_rng.c stm32f4xx_can.c stm32f4xx_flash.c \
