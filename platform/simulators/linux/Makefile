@@ -45,7 +45,7 @@ MAIN_SRCS = heap_3.c port.c tasks.c list.c timers.c queue.c croutine.c event_gro
 UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c \
 		              SlotBasedMenu.c AsciiLib.c LockFreeFifo.c _examplescreen.c mainmenuscreen.c \
                   aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c \
-                  floppyorgelscreen.c buttontestscreen.c livemodescreen.c \
+                  floppyorgelscreen.c buttontestscreen.c livemodescreen.c sdcardscreen.c \
                   images.c helpers.c midifile.c midiplayer.c lut.c emidi_linux.c \
                   skateboardscreen.c nrf24l01p_dummy.c
 

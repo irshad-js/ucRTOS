@@ -11,6 +11,7 @@
 #include "skateboardscreen.h"
 #include "floppyorgelscreen.h"
 #include "buttontestscreen.h"
+#include "sdcardscreen.h"
 #include "mainmenuscreen.h"
 
 static struct {
@@ -48,6 +49,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   // CHECKME: adding the following menu entry messes up the LUT!?:
   menuAddSlot(&_context.menu, "Floppy Orgel", floppyOrgelScreen);
   menuAddSlot(&_context.menu, "Skateboard", skateboardScreen);
+  menuAddSlot(&_context.menu, "SD Card", sdCardScreen);
   menuAddSlot(&_context.menu, "Button Test", buttonTestScreen);
   menuAddSlot(&_context.menu, "Example", exampleScreen);
   menuAddSlot(&_context.menu, "Image Test", imgTestScreen);
