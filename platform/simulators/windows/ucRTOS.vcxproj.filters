@@ -180,6 +180,12 @@
     <ClCompile Include="..\..\..\core\screens\buttontestscreen.c">
       <Filter>core\src\screens</Filter>
     </ClCompile>
+    <ClCompile Include="..\lib\nrf24l01p_dummy.c">
+      <Filter>platform\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\core\screens\sdcardscreen.c">
+      <Filter>core\src\screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hdr\FreeRTOSConfig.h">
@@ -294,6 +300,9 @@
       <Filter>lib\LockFreeFifo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\core\screens\buttontestscreen.h">
+      <Filter>core\hdr\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\core\screens\sdcardscreen.h">
       <Filter>core\hdr\screens</Filter>
     </ClInclude>
   </ItemGroup>

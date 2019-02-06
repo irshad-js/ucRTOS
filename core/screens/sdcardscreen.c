@@ -5,6 +5,7 @@
 #include "sdcardscreen.h"
 
 static struct {
+  int dummy;
 } context;
 
 static void draw() {

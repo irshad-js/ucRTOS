@@ -2,7 +2,7 @@
 #include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
-#include "nrf24l01p.h"
+#include "../../../embedded/lib/NRF24L01P/src/nrf24l01p.h"
 #include "skateboardscreen.h"
 
 static struct {

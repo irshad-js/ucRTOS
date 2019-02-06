@@ -17,7 +17,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C686325E-3261-42F7-AEB1-DDE5280E1CEB}</ProjectGuid>
     <ProjectName>ucRTOS</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -211,8 +211,10 @@
     <ClCompile Include="..\..\..\core\screens\mainmenuscreen.c" />
     <ClCompile Include="..\..\..\core\screens\playerscreen.c" />
     <ClCompile Include="..\..\..\core\screens\playermenuscreen.c" />
+    <ClCompile Include="..\..\..\core\screens\sdcardscreen.c" />
     <ClCompile Include="..\..\..\core\screens\skateboardscreen.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\core\screens\_examplescreen.c" />
     <ClCompile Include="..\..\..\core\SlotBasedMenu.c" />
@@ -257,6 +259,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Optimised|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="..\lib\nrf24l01p_dummy.c" />
     <ClCompile Include="src\drivers\hardware.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\platform_hooks.c" />
@@ -275,6 +278,7 @@
     <ClInclude Include="..\..\..\core\screens\mainmenuscreen.h" />
     <ClInclude Include="..\..\..\core\screens\playercreen.h" />
     <ClInclude Include="..\..\..\core\screens\playermenuscreen.h" />
+    <ClInclude Include="..\..\..\core\screens\sdcardscreen.h" />
     <ClInclude Include="..\..\..\core\screens\skateboardscreen.h" />
     <ClInclude Include="..\..\..\core\screens\_examplescreen.h" />
     <ClInclude Include="..\..\..\core\SlotBasedMenu.h" />

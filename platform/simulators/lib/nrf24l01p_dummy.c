@@ -1,6 +1,6 @@
 #include <stdint.h>
-#include "nrf24l01p.h"
-#include "nrf24_hal.h"
+#include "../../../embedded/lib/NRF24L01P/src/nrf24l01p.h"
+#include "../../../embedded/lib/NRF24L01P/hal/nrf24_hal.h"
 
 uint8_t nrf24_shockburstIsEnabled(uint8_t pipeId) {
   return 0;
@@ -62,11 +62,11 @@ void nrf24_setPayloadSize(uint8_t pipeId, uint8_t size) {
 }
 
 uint8_t nrf24_getRxAddress(uint8_t pipeId, uint8_t* pRxAddress) {
-
+  return 0;
 }
 
 uint8_t nrf24_getTxAddress(uint8_t* pTxAddress) {
-
+  return 0;
 }
 
 uint8_t nrf24_crcIsEnabled() {
