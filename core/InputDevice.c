@@ -59,8 +59,8 @@ static void processCursorButtons(StackBasedFsm_t* pFsm, FsmState* pState, InputD
       isInRepetitionMode = false;
       // hal_printf("End of repetition mode");
 
-      pState->onDirection(pFsm, pButtonStates->South, pButtonStates->North, pButtonStates->West,
-          pButtonStates->East);
+      if (pState->onDirection)
+        pState->onDirection(pFsm, pButtonStates->South, pButtonStates->North, pButtonStates->West, pButtonStates->East);
     }
   }
 }
