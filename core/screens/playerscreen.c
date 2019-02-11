@@ -9,8 +9,6 @@
 
 static struct {
   MidiPlayer player;
-  int someLocalVariable;
-  int* pReturnValue;
 } context;
 
 static void draw() {
@@ -50,16 +48,13 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hardwareInitMidiDevice();
 
   PlayerScreenParams* pPlayerParams = (PlayerScreenParams*)pParams;
-  if (!pPlayerParams)
-    hal_printfWarning("Param is nullptr\n");
-  else {
-    context.someLocalVariable = pPlayerParams->someInt;
-    context.pReturnValue = pPlayerParams->pReturnValue;
+  if (!pPlayerParams) {
+    hal_printfError("Cannot play, param is nullptr!\n");
+    leaveState(pFsm);
   }
 
   Error error;
-  // error = eMidi_openPlayer(&context.player, "..//..//..//lib//eMIDI//tests//midis//cdefgabc_0.mid", userEventCallback, NULL);
-  error = eMidi_openPlayer(&context.player, "..//..//..//lib//eMIDI//tests//midis//fish_fry0.mid", userEventCallback, NULL);
+  error = eMidi_openPlayer(&context.player, pPlayerParams->pFileName, userEventCallback, NULL);
 
   if (error) {
     hal_printfError("Error on opening midi file!\n");

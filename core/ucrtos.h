@@ -7,6 +7,10 @@
 
 #define pdUS_TO_TICKS(xTimeInUs) ((TickType_t)(((TickType_t)(xTimeInUs) * (TickType_t )configTICK_RATE_HZ) / (TickType_t)1000000))
 
+typedef struct {
+  char fileName[256];
+} FO_FIND_DATA;
+
 // Timing
 uint32_t upTimeMs();
 void delayUs(uint32_t us);

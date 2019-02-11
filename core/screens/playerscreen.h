@@ -2,8 +2,7 @@
 #define __PLAYERSCREEN_H__
 
 typedef struct {
-  int someInt;
-  int* pReturnValue;
+  char* pFileName;
 } PlayerScreenParams;
 
 void playerScreen(StackBasedFsm_t* pFsm, FsmState* pState);
