@@ -4,6 +4,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <linux/soundcard.h>
+#include <dirent.h>
 #include "FreeRTOSConfig.h"
 #include "../../core/ucrtos.h"
 #include "../../../eMIDI/src/midifile.h"
@@ -220,6 +221,78 @@ void hal_rs485Send(char dataByte) {
 void hal_rs485init(LockFreeFIFO_t* pFifo) {
 
 }
+
+// Filesystem:
+
+static DIR* _pDir;
+
+bool hal_findInit(char* path, FO_FIND_DATA* findData) {
+  struct dirent* pDirent = NULL;
+
+  char pSearchPath[256];
+  strcpy(pSearchPath, path);
+  strcat(pSearchPath, "/");
+
+  _pDir = opendir(pSearchPath);
+
+  if (!_pDir)
+    return false;
+
+  pDirent = readdir(_pDir);
+
+  if (!pDirent)
+    return false;
+
+  strcpy(findData->fileName, pDirent->d_name);
+
+  return true;
+}
+
+bool hal_findNext(FO_FIND_DATA* findData) {
+  struct dirent* pDirent = readdir(_pDir);
+
+  if (!pDirent)
+    return false;
+
+  strcpy(findData->fileName, pDirent->d_name);
+
+  return true;
+}
+
+void hal_findFree() {
+  closedir(_pDir);
+}
+
+int32_t hal_fopen(FILE** pFile, const char* pFileName) {
+  FILE* p = fopen(pFileName, "rb");
+
+  if (!p) {
+    *pFile = NULL;
+    return -1;
+  }
+
+  *pFile = p;
+
+  return 0;
+}
+
+int32_t hal_fclose(FILE* pFile) {
+  return fclose(pFile);
+}
+
+int32_t hal_fseek(FILE* pFile, int startPos) {
+  return fseek(pFile, startPos, SEEK_SET);
+}
+
+size_t hal_fread(FILE* pFile, void* dst, size_t numBytes) {
+  return fread(dst, numBytes, 1, pFile);
+}
+
+int32_t hal_ftell(FILE* pFile) {
+  return ftell(pFile);
+}
+
+// Common:
 
 static void reverse(char s[]) {
   int i, j;

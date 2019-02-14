@@ -11,11 +11,17 @@
 #define MENU_MAX_SLOTS 12
 #define MENU_FILES_PER_PAGE 10
 
+#define MIDI_PATH ""
+
 #ifdef _WIN32
+  #undef MIDI_PATH
   #define DONT_DEFINE_COMMON_MAIN
   #define MIDI_PATH "_sdcard"
-#else
-  #define MIDI_PATH ""
+#endif
+
+#ifdef __linux__
+  #undef MIDI_PATH
+  #define MIDI_PATH "./_sdcard"
 #endif
 
 static struct {
@@ -35,7 +41,7 @@ static void onBrowseNewPage(int currentPage, int totalPages) {
   context.menu.numSlots = 0; // Clear all slots.
 
   while (!endOfDirectory) {
-    if (context.findData.fileName[0] != '.' && context.findData.fileName[1] != '.') {
+    if (context.findData.fileName[0] != '.') {
       if (curFileIndex >= (currentPage - 1) * MENU_FILES_PER_PAGE)
         menuAddSlot(&context.menu, context.findData.fileName, playerScreen);
 
