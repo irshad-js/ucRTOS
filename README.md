@@ -19,7 +19,7 @@ Supported embedded devices so far:
 
 Supported simulators so far:
 * Windows 7 with Visual Studio 2017
-* Linux
+* Linux with GCC
 
 ## Building Instructions
 
