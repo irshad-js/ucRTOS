@@ -72,6 +72,20 @@ void hardwareDisplayDraw() {
 
 // MIDI device:
 
+static uint16_t midiNote2Ticks[] = {
+        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+        0,     0,     0, 64282, 60675, 57269, 54055, 51021, 48157, 45455, 42903, 40495,
+    38223, 36077, 34052, 32141, 30337, 28635, 27027, 25511, 24079, 22727, 21452, 20248,
+    19111, 18039, 17026, 16071, 15169, 14317, 13514, 12755, 12039, 11364, 10726, 10124,
+    9556,   9019,  8513,  8035,  7584,  7159,  6757,  6378,  6020,  5682,  5363,  5062,
+    4778,   4510,  4257,  4018,  3792,  3579,  3378,  3189,  3010,  2841,  2681,  2531,
+    0,         0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+    0,         0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+    0,         0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+    0,         0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+    0,         0,     0,     0,     0,     0,     0,     0,
+};
+
 void hardwareInitMidiDevice() {
   // TODO: implement
 }
@@ -80,8 +94,50 @@ void hardwareFreeMidiDevice() {
   // TODO: implement
 }
 
+static void _sendBusData(unsigned char* pData, int dataSize) {
+  for(int i = 0; i < dataSize; i++)
+    hal_rs485Send(pData[i]);
+}
+
+static void midiNoteOn(int32_t channel, int32_t note, int32_t velocity) {
+  uint16_t ticks = velocity ? midiNote2Ticks[note] : 0;
+  unsigned char data[5] = {0x55, 0xAA, channel, ((char*)&ticks)[1], ((char*)&ticks)[0]};
+  _sendBusData(data, sizeof(data));
+}
+
+static void midiNoteOff(int32_t channel, int32_t note) {
+  midiNoteOn(channel, note, 0);
+}
+
 void hardwareSendMidiMsg(const MidiEvent* pEvent) {
-  // TODO: implement
+  if (pEvent->eventId == MIDI_EVENT_META)
+    return;
+
+  switch(pEvent->eventId & 0xF0) {
+    case MIDI_EVENT_NOTE_OFF: {
+      uint8_t channel = pEvent->eventId & 0x0F;
+      midiNoteOff(channel, pEvent->params.msg.noteOff.note);
+      break;
+    }
+    case MIDI_EVENT_NOTE_ON: {
+      uint8_t channel = pEvent->eventId & 0x0F;
+      midiNoteOn(channel, pEvent->params.msg.noteOn.note, pEvent->params.msg.noteOn.velocity);
+      break;
+    }
+//    case MIDI_EVENT_POLY_KEY_PRESSURE:
+//      break;
+//    case MIDI_EVENT_CONTROL_CHANGE:
+//      break;
+//    case MIDI_EVENT_PROGRAM_CHANGE:
+//      break;
+//    case MIDI_EVENT_CHANNEL_PRESSURE:
+//        break;
+//    case MIDI_EVENT_PITCH_BEND:
+//      break;
+
+    default:
+      return;
+  }
 }
 
 // Input Device
@@ -135,6 +191,13 @@ void hal_printfWarning(char* pFormat, ...) {
 }
 
 void hal_printfError(char* pFormat, ...) {
+  va_list args;
+  va_start(args, pFormat);
+  myvprintf(pFormat, args);
+  va_end(args);
+}
+
+void hal_printfSuccess(char* pFormat, ...) {
   va_list args;
   va_start(args, pFormat);
   myvprintf(pFormat, args);
