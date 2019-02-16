@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <lut.h>
+#include <ff.h>
 #include "stm32f4xx_conf.h"
 #include "ssd1289.h"
 #include "nesgamepad.h"
@@ -162,3 +163,147 @@ void USART1_IRQHandler() {
   if(USART_GetITStatus(USART1, USART_IT_RXNE))
     writeToRingBuffer(_pFifoDebugPort, USART1->DR); // The Interrupt gets released just by reading USART1->DR
 }
+
+// Filesystem:
+
+static FATFS SD_Fs;
+static DIR dirs;
+
+static bool mountSdCard() {
+  /* Try to mount SD card */
+  /* SD card is at 0: */
+  hal_printf("Mounting SD card... ");
+  if (f_mount(&SD_Fs, "0:", 1) == FR_OK) {
+    hal_printf("success!\n\r"); /* Mounted ok */
+
+    /* Get total and free space on SD card */
+    uint32_t free, total;
+    TM_FATFS_DriveSize(&total, &free);
+
+    /* Total space */
+    hal_printf("Total: %8u kB; %5u MB; %2u GB\n\r", total, total / 1024, total / 1048576);
+    hal_printf("Free:  %8u kB; %5u MB; %2u GB\n\r", free, free / 1024, free / 1048576);
+    return true;
+  }
+  else {
+    hal_printf("Failed! No SD-Card?\n\r");
+    return false;
+  }
+}
+
+void hal_fileSystemInit() {
+  mountSdCard();
+}
+
+bool hal_findNext(FO_FIND_DATA* findData) {
+  static FILINFO finfo;
+  finfo.lfname = findData->fileName;
+  finfo.lfsize = 256;
+  FRESULT fres = f_readdir(&dirs, &finfo);
+  bool foundFile = finfo.lfname[0];
+
+  return fres == FR_OK && foundFile;
+}
+
+bool hal_findInit(char* path, FO_FIND_DATA* findData) {
+  FRESULT fres = f_opendir(&dirs, "/");
+  return fres == FR_OK && hal_findNext(findData);
+}
+
+void hal_findFree() {
+  // Not needed in this implementation.
+}
+
+// Returns 1, if file was opened successfully or 0 on error.
+// TODO: check pointer dereferencing here!!!
+int32_t hal_fopen(FILE** pFile, const char* pFileName) {
+  static FIL file;
+  FRESULT res = f_open(&file, pFileName, FA_READ);
+  *pFile = &file;
+
+  return res == FR_OK;
+}
+
+int32_t hal_fclose(FILE* pFile) {
+  return f_close((FIL*)pFile);
+}
+
+int32_t hal_fseek(FILE* pFile, int startPos) {
+  return f_lseek((FIL*)pFile, startPos);
+}
+
+size_t hal_fread(FILE* pFile, void* dst, size_t numBytes) {
+  UINT bytesRead;
+  f_read((FIL*)pFile, dst, numBytes, &bytesRead); // TODO: word access? Does it increase performance?
+  return bytesRead;
+}
+
+int32_t hal_ftell(FILE* pFile) {
+  return f_tell((FIL*)pFile);
+}
+
+// eMIDI:
+
+static int _filePos = 0;
+static uint32_t _fileSize = 0;
+
+int eMidi_timeUs() {
+  return upTimeMs() * 1000;
+}
+
+FILE* eMidi_fopen(const char* pPathName, const char* pMode) {
+  FILE* pFile;
+  hal_fopen(&pFile, pPathName);
+
+  if (!pFile)
+    return NULL;
+
+  _filePos = 0;
+  _fileSize = f_size((FIL*)pFile);
+
+  return pFile;
+}
+
+int eMidi_fclose(FILE* pStream) {
+  return hal_fclose(pStream);
+}
+
+long eMidi_ftell(FILE* pStream) {
+  return hal_ftell(pStream);
+}
+
+int eMidi_fseek(FILE* pStream, long offset, int whence) {
+  switch (whence) {
+    case SEEK_CUR: _filePos += offset;   break;
+    case SEEK_SET: _filePos = 0;         break;
+    case SEEK_END: _filePos = _fileSize; break;
+      break;
+
+    default:
+      return -1;
+  }
+
+  return hal_fseek(pStream, _filePos);
+}
+
+size_t eMidi_fread(void* p, size_t size, size_t nmemb, FILE* pStream) {
+  int numBytesRead = hal_fread(pStream, p, nmemb);
+  _filePos += numBytesRead;
+
+  return numBytesRead;
+}
+
+size_t eMidi_fwrite(const void* p, size_t size, size_t nmemb, FILE* pStream) {
+  return -1; // Not supported
+}
+
+int eMidi_printf(const char* pFormat, ...) {
+  va_list args;
+  va_start(args, pFormat);
+
+  int ret = myvprintf(pFormat, args);
+
+  va_end(args);
+  return ret;
+}
+
