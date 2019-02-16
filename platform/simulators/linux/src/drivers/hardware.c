@@ -4,6 +4,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <linux/soundcard.h>
+#include <dirent.h>
 #include "FreeRTOSConfig.h"
 #include "../../core/ucrtos.h"
 #include "../../../eMIDI/src/midifile.h"
@@ -38,72 +39,133 @@ void hardwareDisplayDraw() {
   mainLcdDraw();
 }
 
-// Colored print:
+// --
 
-static void _printColored(const char* text, uint16_t colorAttributes) {
-//  HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-//  CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
-//  WORD saved_attributes;
+enum GeneralFormatting {
+  GEN_FORMAT_RESET       = 0,
+  GEN_FORMAT_BRIGHT      = 1,
+  GEN_FORMAT_DIM         = 2,
+  GEN_FORMAT_ITALIC      = 3,
+  GEN_FORMAT_UNDERSCORE  = 4,
+  GEN_FORMAT_SLOW_BLINK  = 5,
+  GEN_FORMAT_RAPID_BLINK = 6,
+  GEN_FORMAT_REVERSE     = 7,
+  GEN_FORMAT_HIDDEN      = 8,
+  GEN_FORMAT_CROSSED_OUT = 9
+};
 
-//  GetConsoleScreenBufferInfo(hConsole, &consoleInfo); // Save current font color
-//  saved_attributes = consoleInfo.wAttributes;
-//  SetConsoleTextAttribute(hConsole, colorAttributes); // Change font color
-//  printf(text);
-//  SetConsoleTextAttribute(hConsole, saved_attributes); // Restore original font color
-//  printf("\n\r");
+enum ForegroundColors {
+  FOREGROUND_COL_BLACK         = 30,
+  FOREGROUND_COL_RED           = 31,
+  FOREGROUND_COL_GREEN         = 32,
+  FOREGROUND_COL_YELLOW        = 33,
+  FOREGROUND_COL_BLUE          = 34,
+  FOREGROUND_COL_MAGENTA       = 35,
+  FOREGROUND_COL_CYAN          = 36,
+  FOREGROUND_COL_LIGHT_GRAY    = 37,
+  FOREGROUND_COL_DEFAULT       = 39,
+  FOREGROUND_COL_DARK_GRAY     = 90,
+  FOREGROUND_COL_LIGHT_RED     = 91,
+  FOREGROUND_COL_LIGHT_GREEN   = 92,
+  FOREGROUND_COL_LIGHT_YELLOW  = 93,
+  FOREGROUND_COL_LIGHT_BLUE    = 94,
+  FOREGROUND_COL_LIGHT_MAGENTA = 95,
+  FOREGROUND_COL_LIGHT_CYAN    = 96,
+  FOREGROUND_COL_WHITE         = 97
+};
 
-  printf("%s", text);
+enum BackgroundColors {
+  BACKGROUND_COL_BLACK         = 40,
+  BACKGROUND_COL_RED           = 41,
+  BACKGROUND_COL_GREEN         = 42,
+  BACKGROUND_COL_YELLOW        = 43,
+  BACKGROUND_COL_BLUE          = 44,
+  BACKGROUND_COL_MAGENTA       = 45,
+  BACKGROUND_COL_CYAN          = 46,
+  BACKGROUND_COL_LIGHT_GRAY    = 47,
+  BACKGROUND_COL_DEFAULT       = 49,
+  BACKGROUND_COL_DARK_GRAY     = 100,
+  BACKGROUND_COL_LIGHT_REDY    = 101,
+  BACKGROUND_COL_LIGHT_GREEN   = 102,
+  BACKGROUND_COL_LIGHT_YELLOW  = 103,
+  BACKGROUND_COL_LIGHT_BLUE    = 104,
+  BACKGROUND_COL_LIGHT_MAGENTA = 105,
+  BACKGROUND_COL_LIGHT_CYAN    = 106,
+  BACKGROUND_COL_WHITE         = 107
+};
+
+static void _printColored(const char* pText, int32_t background, int32_t foreground, int32_t effect) {
+  char pBuf[512];
+
+  const char* p = pText;
+  const char* pStart = p;
+
+  while (*p++) {
+    if (*p == '\n') {
+      int len = p - pStart;
+      strncpy(pBuf, pStart, len);
+      pBuf[len] = '\0';
+      printf("\x1b[%d;%d;%dm%s", effect, foreground, background, pBuf);
+      printf("\x1b[0m\n");
+
+      pStart = p + 1;
+    }
+  }
+
+  printf("\x1b[%d;%d;%dm%s", effect, foreground, background, pStart);
 }
 
-void hal_printf(char* format, ...) {
-  char formattedText[512];
+void hal_printf(char* pFormat, ...) {
+  char pFormattedText[512];
 
   va_list args;
-  va_start(args, format);
-  vsnprintf(formattedText, sizeof(formattedText), format, args);
-  _printColored(formattedText, 0); // White
+  va_start(args, pFormat);
+  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
+  _printColored(pFormattedText, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_DEFAULT, GEN_FORMAT_RESET);
   va_end(args);
 }
 
-void hal_printfError(const char* format, ...) {
-  char formattedText[512];
+void hal_printfError(const char* pFormat, ...) {
+  char pFormattedText[512];
 
   va_list args;
-  va_start(args, format);
-  // vsnprintf_s(formattedText, sizeof(formattedText), sizeof(formattedText), format, args);
-  // _printColored(formattedText, FOREGROUND_RED | FOREGROUND_INTENSITY);
+  va_start(args, pFormat);
+  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
+  _printColored(pFormattedText, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_RED, GEN_FORMAT_BRIGHT);
   va_end(args);
 }
 
-void hal_printfWarning(char* format, ...) {
-  char formattedText[512];
+void hal_printfWarning(char* pFormat, ...) {
+  char pFormattedText[512];
 
   va_list args;
-  va_start(args, format);
-  // vsnprintf_s(formattedText, sizeof(formattedText), sizeof(formattedText), format, args);
-  // _printColored(formattedText, BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_INTENSITY); // Yellow
+  va_start(args, pFormat);
+  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
+  _printColored(pFormattedText, BACKGROUND_COL_RED, FOREGROUND_COL_YELLOW, GEN_FORMAT_BRIGHT);
   va_end(args);
 }
 
-void hal_printfSuccess(char* format, ...) {
-  char formattedText[512];
+void hal_printfSuccess(char* pFormat, ...) {
+  char pFormattedText[512];
 
   va_list args;
-  va_start(args, format);
-  // vsnprintf_s(formattedText, sizeof(formattedText), sizeof(formattedText), format, args);
-  // _printColored(formattedText, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+  va_start(args, pFormat);
+  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
+  _printColored(pFormattedText, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_GREEN, GEN_FORMAT_BRIGHT);
   va_end(args);
 }
 
-void hal_printfInfo(char* format, ...) {
-  char formattedText[512];
+void hal_printfInfo(char* pFormat, ...) {
+  char pFormattedText[512];
 
   va_list args;
-  va_start(args, format);
-  // vsnprintf_s(formattedText, sizeof(formattedText), sizeof(formattedText), format, args);
-  // _printColored(formattedText, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+  va_start(args, pFormat);
+  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
+  _printColored(pFormattedText, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_YELLOW, GEN_FORMAT_BRIGHT);
   va_end(args);
 }
+
+// --
 
 void hal_strcpy_s(char* dst, int maxSize, const char* src) {
   for (int i = 0; i < maxSize - 1; i++) {
@@ -220,6 +282,78 @@ void hal_rs485Send(char dataByte) {
 void hal_rs485init(LockFreeFIFO_t* pFifo) {
 
 }
+
+// Filesystem:
+
+static DIR* _pDir;
+
+bool hal_findInit(char* path, FO_FIND_DATA* findData) {
+  struct dirent* pDirent = NULL;
+
+  char pSearchPath[256];
+  strcpy(pSearchPath, path);
+  strcat(pSearchPath, "/");
+
+  _pDir = opendir(pSearchPath);
+
+  if (!_pDir)
+    return false;
+
+  pDirent = readdir(_pDir);
+
+  if (!pDirent)
+    return false;
+
+  strcpy(findData->fileName, pDirent->d_name);
+
+  return true;
+}
+
+bool hal_findNext(FO_FIND_DATA* findData) {
+  struct dirent* pDirent = readdir(_pDir);
+
+  if (!pDirent)
+    return false;
+
+  strcpy(findData->fileName, pDirent->d_name);
+
+  return true;
+}
+
+void hal_findFree() {
+  closedir(_pDir);
+}
+
+int32_t hal_fopen(FILE** pFile, const char* pFileName) {
+  FILE* p = fopen(pFileName, "rb");
+
+  if (!p) {
+    *pFile = NULL;
+    return -1;
+  }
+
+  *pFile = p;
+
+  return 0;
+}
+
+int32_t hal_fclose(FILE* pFile) {
+  return fclose(pFile);
+}
+
+int32_t hal_fseek(FILE* pFile, int startPos) {
+  return fseek(pFile, startPos, SEEK_SET);
+}
+
+size_t hal_fread(FILE* pFile, void* dst, size_t numBytes) {
+  return fread(dst, numBytes, 1, pFile);
+}
+
+int32_t hal_ftell(FILE* pFile) {
+  return ftell(pFile);
+}
+
+// Common:
 
 static void reverse(char s[]) {
   int i, j;

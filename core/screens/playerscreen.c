@@ -86,8 +86,18 @@ static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
 static void onTick(StackBasedFsm_t* pFsm) {
   // hal_printf("player::onTick()");
 
-  if (eMidi_playerTick(&context.player) != EMIDI_OK)
+  Error error;
+
+  if (error = eMidi_playerTick(&context.player)) {
+    if (error == EMIDI_OK_END_OF_FILE)
+      hal_printfSuccess("Playback finished\n");
+    else {
+      hal_printfError("Playback failed\n");
+      eMidi_printError(error);
+    }
+
     leaveState(pFsm);
+  }
 }
 
 // Always implement this as last function of your state file:

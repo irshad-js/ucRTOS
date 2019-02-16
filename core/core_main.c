@@ -19,7 +19,7 @@ static void _prvBlinkTask(void *pParameters) {
   const int blinkFrequenyUs = 100000;
 
   while (1) {
-    myprintf("blink\n");
+    // myprintf("blink\n");
     statusLedOn();
     delayUs(blinkFrequenyUs);
     statusLedOff();
