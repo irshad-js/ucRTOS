@@ -7,17 +7,7 @@
 
 static struct {
   LockFreeFIFO_t* pFifoDebugPort;
-
 } context;
-
-static void draw() {
-  displayClear();
-
-  displayDrawText(CENTER, 0 + 0 * 18, "Live Mode screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-  displayDrawText(CENTER, 0 + 1 * 18, "TODO: implement RS485 processing", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
-
-  displayDraw();
-}
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("LiveModeScreen::onEnter()");
@@ -28,7 +18,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   displayDrawText(CENTER, 0, "--- Live mode ---", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 18, "Now receiving MIDI-Data on debug port...", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
 
-  draw();
+  displayDraw();
 }
 
 static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
