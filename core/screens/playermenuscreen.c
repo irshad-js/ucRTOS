@@ -26,7 +26,7 @@ static struct {
 } context;
 
 static void onBrowseNewPage(int currentPage, int totalPages) {
-  hal_printf("playlist::onBrowseNewPage()");
+  hal_printf("playlist::onBrowseNewPage()\n");
 
   // Set tracks of current page
   bool endOfDirectory = !hal_findInit(context.filePath, &context.findData);
@@ -122,6 +122,8 @@ static void draw() {
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("playerMenuScreen::onEnter\n");
+
+  hal_fileSystemInit();
 
   context.curPage = 1;
 
