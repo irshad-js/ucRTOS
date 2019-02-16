@@ -287,6 +287,10 @@ void hal_rs485init(LockFreeFIFO_t* pFifo) {
 
 static DIR* _pDir;
 
+void hal_fileSystemInit() {
+  // Not used on linux simulator
+}
+
 bool hal_findInit(char* path, FO_FIND_DATA* findData) {
   struct dirent* pDirent = NULL;
 
