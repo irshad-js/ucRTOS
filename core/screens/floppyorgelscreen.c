@@ -22,7 +22,7 @@ static void draw() {
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
-  hal_printf("FloppyOrgelScreen::onEnter()");
+  hal_printf("FloppyOrgelScreen::onEnter()\n");
 
   context.pFifoDebugPort = (LockFreeFIFO_t*)pParams;
 
@@ -34,21 +34,21 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 }
 
 static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
-  hal_printf("FloppyOrgelScreen::onActionPress()");
+  hal_printf("FloppyOrgelScreen::onActionPress()\n");
 
   if (pressed)
     userMenuTransitToSelectedSlot(&context.menu, context.pFifoDebugPort);
 }
 
 static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
-  hal_printf("FloppyOrgelScreen::onBackPress()");
+  hal_printf("FloppyOrgelScreen::onBackPress()\n");
 
   if (pressed)
     userMenuTransitBack(&context.menu);
 }
 
 static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
-  hal_printf("FloppyOrgelScreen::onDirectionPress()");
+  hal_printf("FloppyOrgelScreen::onDirectionPress()\n");
 
   if (south)
     menuMoveCursorDown(&context.menu);
@@ -60,7 +60,7 @@ static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west
 }
 
 static void onReenter(StackBasedFsm_t* pFsm) {
-  hal_printf("FloppyOrgelScreen::onReenter()");
+  hal_printf("FloppyOrgelScreen::onReenter()\n");
 
   draw();
 }
