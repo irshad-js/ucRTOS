@@ -210,6 +210,10 @@ void hal_rs485init(LockFreeFIFO_t* pFifo) {
 
 static HANDLE fo_findHandle;
 
+void hal_fileSystemInit() {
+  // Not used on windows simulator
+}
+
 bool hal_findInit(char* path, FO_FIND_DATA* findData) {
   char searchPath[256];
   WIN32_FIND_DATAA search_data;
