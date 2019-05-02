@@ -94,9 +94,8 @@ enum BackgroundColors {
   BACKGROUND_COL_WHITE         = 107
 };
 
-static void _printColored(const char* pText, int32_t background, int32_t foreground, int32_t effect) {
-  char pBuf[512];
-
+static void _printColored(const char* pFormat, va_list args, int32_t background, int32_t foreground,
+    int32_t effect) {
   const char* p = pText;
   const char* pStart = p;
 
@@ -105,8 +104,9 @@ static void _printColored(const char* pText, int32_t background, int32_t foregro
       int len = p - pStart;
       strncpy(pBuf, pStart, len);
       pBuf[len] = '\0';
-      printf("\x1b[%d;%d;%dm%s", effect, foreground, background, pBuf);
-      printf("\x1b[0m\n");
+      vprintf("\x1b[%d;%d;%dm", effect, foreground, background);
+      vprintf(pFormat, args);
+      vprintf("\x1b[0m\n");
 
       pStart = p + 1;
     }
@@ -116,52 +116,37 @@ static void _printColored(const char* pText, int32_t background, int32_t foregro
 }
 
 void hal_printf(char* pFormat, ...) {
-  char pFormattedText[512];
-
   va_list args;
   va_start(args, pFormat);
-  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
-  _printColored(pFormattedText, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_DEFAULT, GEN_FORMAT_RESET);
+  _printColored(pFormattedText, args, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_DEFAULT, GEN_FORMAT_RESET);
   va_end(args);
 }
 
 void hal_printfError(const char* pFormat, ...) {
-  char pFormattedText[512];
-
   va_list args;
   va_start(args, pFormat);
-  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
-  _printColored(pFormattedText, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_RED, GEN_FORMAT_BRIGHT);
+  _printColored(pFormattedText, args, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_RED, GEN_FORMAT_BRIGHT);
   va_end(args);
 }
 
 void hal_printfWarning(char* pFormat, ...) {
-  char pFormattedText[512];
-
   va_list args;
   va_start(args, pFormat);
-  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
-  _printColored(pFormattedText, BACKGROUND_COL_RED, FOREGROUND_COL_YELLOW, GEN_FORMAT_BRIGHT);
+  _printColored(pFormattedText, args, BACKGROUND_COL_RED, FOREGROUND_COL_YELLOW, GEN_FORMAT_BRIGHT);
   va_end(args);
 }
 
 void hal_printfSuccess(char* pFormat, ...) {
-  char pFormattedText[512];
-
   va_list args;
   va_start(args, pFormat);
-  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
-  _printColored(pFormattedText, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_GREEN, GEN_FORMAT_BRIGHT);
+  _printColored(pFormattedText, args, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_GREEN, GEN_FORMAT_BRIGHT);
   va_end(args);
 }
 
 void hal_printfInfo(char* pFormat, ...) {
-  char pFormattedText[512];
-
   va_list args;
   va_start(args, pFormat);
-  vsnprintf(pFormattedText, sizeof(pFormattedText), pFormat, args);
-  _printColored(pFormattedText, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_YELLOW, GEN_FORMAT_BRIGHT);
+  _printColored(pFormattedText, args, BACKGROUND_COL_DEFAULT, FOREGROUND_COL_YELLOW, GEN_FORMAT_BRIGHT);
   va_end(args);
 }
 
