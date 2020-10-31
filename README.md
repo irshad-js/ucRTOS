@@ -62,7 +62,28 @@ This meight take a few minutes to complete.
 3. Select Win32 as target platform and hit Build Solution from Build menu.
 4. After compiling is finished, the simulator can be built.
 
+### Linux Simulator
+
 #### Build the simulator
+
+#### Cloning wxWidgets subrepository
+```
+1. cd \<Path to ucRTOS repository\>
+2. git submodule init
+3. git submodule update
+```
+
+#### Build wxWidgets ####
+```
+cd platform/simulators/lib/wxWidgets
+mkdir gtk-build
+cd gtk-build
+../configure --prefix=$PWD/../lib/gtk3_so --with-gtk=3 --with-opengl
+make -j4
+make install
+make clean
+set -x PATH $PATH:$PWD/../lib/gtk3_so/bin
+```
 
 1. To build the simulator navigate to platform/simulators/linux and execute **make**
 2. Run the simulator by executing **platform/simulators/linux/bin/ucrtos.elf**
