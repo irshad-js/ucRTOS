@@ -25,6 +25,7 @@ CFLAGS  = -g -Wall -pthread -m64 # TODO: use -m32
 CFLAGS += -Ihdr
 CFLAGS += -I../../../core
 CFLAGS += -I../../../core/screens
+CFLAGS += -I../lib/wxWidgets/include
 CFLAGS += -I../../../lib/mystdio
 CFLAGS += -I../../../lib/AsciiLib
 CFLAGS += -I../../../lib/LockFreeFifo
