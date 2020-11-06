@@ -48,7 +48,7 @@ UCRTOS_LIB_SRCS = myprintf.c display.c StackBasedFsm.c InputDevice.c core_main.c
                   aboutscreen.c imgtestscreen.c playermenuscreen.c playerscreen.c \
                   floppyorgelscreen.c buttontestscreen.c livemodescreen.c sdcardscreen.c \
                   images.c helpers.c midifile.c midiplayer.c lut.c emidi_linux.c \
-                  skateboardscreen.c nrf24l01p_dummy.c
+                  skateboardscreen.c magiclanternscreen.c nrf24l01p_dummy.c
 
 PROJ_NAME=ucrtos
 OUTPATH=bin
