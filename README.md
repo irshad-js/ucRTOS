@@ -73,20 +73,8 @@ This meight take a few minutes to complete.
 3. git submodule update
 ```
 
-#### Build wxWidgets ####
-```
-cd platform/simulators/lib/wxWidgets
-mkdir gtk-build
-cd gtk-build
-../configure --prefix=$PWD/../lib/gtk3_so --with-gtk=3 --with-opengl
-make -j4
-make install
-make clean
-set -x PATH $PATH:$PWD/../lib/gtk3_so/bin
-```
-
-1. To build the simulator navigate to platform/simulators/linux and execute **make**
-2. Run the simulator by executing **platform/simulators/linux/bin/ucrtos.elf**
+1. Run the simulator by executing **platform/simulators/linux/bin/run_ucrtos.sh**
+On first execution wxWidgets will be build which can take a few minutes. If code of ucrtos is changed it will be rebuild automatically.
 
 ### Debugging using Eclipse
 
