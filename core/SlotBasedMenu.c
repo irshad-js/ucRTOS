@@ -37,13 +37,8 @@ static void menuDrawCursor(SlotBasedMenu_t* pSbm) {
       displayDrawImage(pSbm->xPos, pSbm->yPos + 18 * pSbm->cursorPos, _pCursorImg);
       break;
 
-    // case BROWSE_MENU:
-    //   canvas_drawImage(pSbm->xPos, pSbm->yPos + 18 * (pSbm->cursorPos % MENU_FILES_PER_PAGE), cursorImg);
-    //   break;
-
-    // case SETTINGS_MENU:
-    //   canvas_drawImage(pSbm->xPos, pSbm->yPos + 18 * pSbm->cursorPos, cursorImg);
-    //   break;
+    default:
+      break;
   }
 }
 

@@ -11,8 +11,6 @@
 typedef enum {
   INVALID_MENU,
   USER_MENU
-  // SETTINGS_MENU,
-  // BROWSE_MENU
 } MenuType_t;
 
 typedef struct {
