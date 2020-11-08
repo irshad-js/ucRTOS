@@ -7,7 +7,6 @@
 void hal_strcpy_s(char* dst, int maxSize, const char* src);
 
 static void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos) {
-  pSbm->type = INVALID_MENU;
   pSbm->xPos = xPos;
   pSbm->yPos = yPos;
   pSbm->cursorPos = 0;
@@ -19,8 +18,6 @@ static void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos,
 
 void userMenuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos) {
   menuInit(pSbm, pFsm, xPos, yPos);
-
-  pSbm->type = USER_MENU;
 }
 
 void userMenuTransitToSelectedSlot(SlotBasedMenu_t* pMenu, void* pArgs) {
@@ -32,18 +29,11 @@ void userMenuTransitBack(SlotBasedMenu_t* pMenu) {
 }
 
 static void menuDrawCursor(SlotBasedMenu_t* pSbm) {
-  switch (pSbm->type) {
-    case USER_MENU:
-      displayDrawImage(pSbm->xPos, pSbm->yPos + 18 * pSbm->cursorPos, _pCursorImg);
-      break;
-
-    default:
-      break;
-  }
+  displayDrawImage(pSbm->xPos, pSbm->yPos + 18 * pSbm->cursorPos, _pCursorImg);
 }
 
 void menuAddSlot(SlotBasedMenu_t* pSbm, const char* label, TransitionFunc pFunc) {
-  if (pSbm->type != USER_MENU || pSbm->numSlots >= MENU_MAX_SLOTS)
+  if (pSbm->numSlots >= MENU_MAX_SLOTS)
     return;
 
   hal_strcpy_s(pSbm->slot[pSbm->numSlots].pLabel, MAX_MENU_ITEM_CHARS, label);

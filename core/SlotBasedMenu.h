@@ -8,11 +8,6 @@
 #define MENU_MAX_SLOTS 12
 #define MENU_FILES_PER_PAGE 10
 
-typedef enum {
-  INVALID_MENU,
-  USER_MENU
-} MenuType_t;
-
 typedef struct {
   char pLabel[MAX_MENU_ITEM_CHARS];
   TransitionFunc pNextStateTransitionFunc;
@@ -25,7 +20,6 @@ typedef void(*SettingsMenuSaveCallback)();
 typedef void(*SettingsMenuCancelCallback)();
 
 typedef struct {
-  MenuType_t type;
   uint16_t xPos;
   uint16_t yPos;
   uint8_t numSlots;
