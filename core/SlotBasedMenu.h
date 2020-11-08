@@ -17,10 +17,6 @@ typedef struct {
   TransitionFunc pNextStateTransitionFunc;
 } MenuSlot_t;
 
-// settings menu callbacks
-typedef void(*SettingsMenuSaveCallback)();
-typedef void(*SettingsMenuCancelCallback)();
-
 typedef struct {
   uint16_t xPos;
   uint16_t yPos;
