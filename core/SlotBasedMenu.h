@@ -8,8 +8,8 @@
 #define MENU_MAX_SLOTS 12
 
 typedef enum {
-  INVALID_SLOT;
-  TRANSIT_SLOT;
+  INVALID_SLOT,
+  TRANSIT_SLOT
 } SlotType_t;
 
 typedef struct {
