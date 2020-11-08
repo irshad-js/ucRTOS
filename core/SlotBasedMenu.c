@@ -20,11 +20,11 @@ void userMenuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, in
   menuInit(pSbm, pFsm, xPos, yPos);
 }
 
-void userMenuTransitToSelectedSlot(SlotBasedMenu_t* pMenu, void* pArgs) {
+void menuAction(SlotBasedMenu_t* pMenu, void* pArgs) {
   fsmPush(pMenu->pFsm, pMenu->slot[pMenu->cursorPos].pNextStateTransitionFunc, pArgs);
 }
 
-void userMenuTransitBack(SlotBasedMenu_t* pMenu) {
+void menuBack(SlotBasedMenu_t* pMenu) {
   fsmPop(pMenu->pFsm);
 }
 

@@ -26,16 +26,14 @@ typedef struct {
   MenuSlot_t slot[MENU_MAX_SLOTS];
 } SlotBasedMenu_t;
 
-// general menu functions
+// menu functions:
 void userMenuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos);
 void menuTick(SlotBasedMenu_t* sbm);
 void menuAddSlot(SlotBasedMenu_t* pSbm, const char* label, TransitionFunc pFunc);
 void menuDraw(SlotBasedMenu_t* sbm);
 void menuMoveCursorUp(SlotBasedMenu_t* sbm);
 void menuMoveCursorDown(SlotBasedMenu_t* sbm);
-
-// user menu specific functions
-void userMenuTransitToSelectedSlot(SlotBasedMenu_t* pMenu, void* pArgs);
-void userMenuTransitBack(SlotBasedMenu_t* pMenu);
+void menuAction(SlotBasedMenu_t* pMenu, void* pArgs);
+void menuBack(SlotBasedMenu_t* pMenu);
 
 #endif // __SLOT_BASED_FSM_H
