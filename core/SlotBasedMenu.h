@@ -27,7 +27,7 @@ typedef struct {
 } SlotBasedMenu_t;
 
 // menu functions:
-void userMenuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos);
+void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos);
 void menuTick(SlotBasedMenu_t* sbm);
 void menuAddSlot(SlotBasedMenu_t* pSbm, const char* label, TransitionFunc pFunc);
 void menuDraw(SlotBasedMenu_t* sbm);

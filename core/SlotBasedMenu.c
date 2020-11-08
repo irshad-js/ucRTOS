@@ -6,7 +6,7 @@
 
 void hal_strcpy_s(char* dst, int maxSize, const char* src);
 
-static void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos) {
+void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos) {
   pSbm->xPos = xPos;
   pSbm->yPos = yPos;
   pSbm->cursorPos = 0;
@@ -14,10 +14,6 @@ static void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos,
   pSbm->pFsm = pFsm;
 
   memset(pSbm->slot, 0, sizeof(pSbm->slot));
-}
-
-void userMenuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos) {
-  menuInit(pSbm, pFsm, xPos, yPos);
 }
 
 void menuAction(SlotBasedMenu_t* pMenu, void* pArgs) {
