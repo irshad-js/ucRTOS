@@ -17,8 +17,6 @@ typedef struct {
   TransitionFunc pNextStateTransitionFunc;
 } MenuSlot_t;
 
-typedef void (*BrowseNewPageCallback)(int currentPage, int totalPages);
-
 // settings menu callbacks
 typedef void(*SettingsMenuSaveCallback)();
 typedef void(*SettingsMenuCancelCallback)();
