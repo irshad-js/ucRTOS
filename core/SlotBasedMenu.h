@@ -6,7 +6,6 @@
 #include "config.h"
 
 #define MENU_MAX_SLOTS 12
-#define MENU_FILES_PER_PAGE 10
 
 typedef struct {
   char pLabel[MAX_MENU_ITEM_CHARS];
