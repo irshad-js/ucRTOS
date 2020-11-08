@@ -45,7 +45,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("mainMenuScreen::onEnter()\n");
 
   hal_rs485init(&_context.fifoDebugPort); // TODO: move to live mode state?
-  userMenuInit(&_context.menu, pFsm, 3, 45);
+  menuInit(&_context.menu, pFsm, 3, 45);
 
   // CHECKME: adding the following menu entry messes up the LUT!?:
   menuAddSlot(&_context.menu, "Floppy Orgel", floppyOrgelScreen);
@@ -63,13 +63,13 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("mainMenuScreen::onAction; pressed=%d\n", pressed);
 
-  userMenuTransitToSelectedSlot(&_context.menu, &_context.fifoDebugPort);
+  menuAction(&_context.menu, &_context.fifoDebugPort);
 }
 
 static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("mainMenuScreen::onBack; pressed=%d\n", pressed);
 
-  userMenuTransitBack(&_context.menu);
+  menuBack(&_context.menu);
 }
 
 static void onStart(StackBasedFsm_t* pFsm, bool pressed) {

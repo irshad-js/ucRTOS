@@ -23,7 +23,7 @@ static void draw() {
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("magiclantern::onEnter()\n");
 
-  userMenuInit(&context.menu, pFsm, 3, 85);
+  menuInit(&context.menu, pFsm, 3, 85);
   menuAddSlot(&context.menu, "Address: 00000000", 0);
   menuAddSlot(&context.menu, "Size:    00000000", 0);
   menuAddSlot(&context.menu, "read", 0);

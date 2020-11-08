@@ -26,7 +26,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 
   context.pFifoDebugPort = (LockFreeFIFO_t*)pParams;
 
-  userMenuInit(&context.menu, pFsm, 3, 85);
+  menuInit(&context.menu, pFsm, 3, 85);
   menuAddSlot(&context.menu, "Live Mode", liveModeScreen);
   menuAddSlot(&context.menu, "MIDI Player", playerMenuScreen);
 
@@ -37,14 +37,14 @@ static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("FloppyOrgelScreen::onActionPress()\n");
 
   if (pressed)
-    userMenuTransitToSelectedSlot(&context.menu, context.pFifoDebugPort);
+    menuAction(&context.menu, context.pFifoDebugPort);
 }
 
 static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("FloppyOrgelScreen::onBackPress()\n");
 
   if (pressed)
-    userMenuTransitBack(&context.menu);
+    menuBack(&context.menu);
 }
 
 static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {

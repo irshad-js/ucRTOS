@@ -133,7 +133,7 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 
   context.curPage = 1;
 
-  userMenuInit(&context.menu, pFsm, 3, 50);
+  menuInit(&context.menu, pFsm, 3, 50);
   strcpy(context.filePath, MIDI_PATH);
 
   draw();
@@ -149,7 +149,7 @@ static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
     PlayerScreenParams params;
     params.pFileName = path;
 
-    userMenuTransitToSelectedSlot(&context.menu, &params);
+    menuAction(&context.menu, &params);
   }
 }
 
