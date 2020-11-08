@@ -18,5 +18,9 @@ fi
 
 export PATH="$PATH:$PWD/../lib/wxWidgets/gtk-build"
 
-make
-bin/ucrtos.elf
+if make; then
+    bin/ucrtos.elf
+else
+    echo build failed.
+fi
+
