@@ -1,22 +1,21 @@
 #include "../StackBasedFsm.h"
 #include "../../lib/colorprint/colorprint.h"
 #include "../display.h"
+#include "../SlotBasedMenu.h"
 
 #include "magiclanternscreen.h"
 
 static struct {
-  // put your local variables here. This can also be used to return a value to the previous state:
-
-  int someLocalVariable;
-  int* pReturnValue;
-
+  SlotBasedMenu_t menu;
 } context;
 
 static void draw() {
   displayClear();
 
-  displayDrawText(CENTER, 0 + 0 * 18, "Magic Lantern screen", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+  displayDrawText(CENTER, 0 + 0 * 18, "Portable RAM dumper", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
   displayDrawText(CENTER, 0 + 1 * 18, "Press 'Back' button to exit", 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00);
+
+  menuDraw(&context.menu);
 
   displayDraw();
 }
@@ -24,17 +23,10 @@ static void draw() {
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("magiclantern::onEnter()\n");
 
-  // This function is called, when the state is entered for the first time.
-  // It must be defined in every state and is used for initialization.
-  // This can also be used for passing a return value to the previous state.
-
-  MagicLanternScreenParams* pMlParams = (MagicLanternScreenParams*)pParams;
-  if (!pMlParams)
-    hal_printfWarning("Param is nullptr\n");
-  else {
-    context.someLocalVariable = pMlParams->someInt;
-    context.pReturnValue = pMlParams->pReturnValue;
-  }
+  userMenuInit(&context.menu, pFsm, 3, 85);
+  menuAddSlot(&context.menu, "Address: 00000000", 0);
+  menuAddSlot(&context.menu, "Size:    00000000", 0);
+  menuAddSlot(&context.menu, "read", 0);
 
   draw();
 }
@@ -71,7 +63,13 @@ static void onSelect(StackBasedFsm_t* pFsm, bool pressed) {
 static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
   hal_printf("magiclantern::onDirectionPress()\n");
 
-  // This function is called, if the user presses or releases one of the direction buttons on the game pad.
+  if (south)
+    menuMoveCursorDown(&context.menu);
+
+  if (north)
+    menuMoveCursorUp(&context.menu);
+
+  draw();
 }
 
 static void onReenter(StackBasedFsm_t* pFsm) {
@@ -83,16 +81,6 @@ static void onReenter(StackBasedFsm_t* pFsm) {
 
 static void onLeaveState(StackBasedFsm_t* pFsm) {
   hal_printf("magiclantern::onLeaveState()\n");
-
-  // This function is called, when the user leaves the current state. Either by going to a next state or by
-  // going back to the previous state.
-
-  if (!context.pReturnValue) {
-    hal_printfWarning("Cannot return value. pReturnValue is null\n");
-    return;
-  }
-
-  *context.pReturnValue = 42;
 }
 
 static void onTick(StackBasedFsm_t* pFsm) {
