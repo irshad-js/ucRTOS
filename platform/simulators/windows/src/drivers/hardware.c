@@ -46,7 +46,7 @@ void hardwareDisplayDraw() {
 
 // Colored print:
 
-static void _printColored(char* pFormat, va_list args, uint16_t colorAttributes) {
+static void _printColored(const char* pFormat, va_list args, uint16_t colorAttributes) {
   HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
   CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
   WORD saved_attributes;
@@ -58,7 +58,7 @@ static void _printColored(char* pFormat, va_list args, uint16_t colorAttributes)
   SetConsoleTextAttribute(hConsole, saved_attributes); // Restore original font color
 }
 
-void hal_printf(char* pFormat, ...) {
+void hal_printf(const char* pFormat, ...) {
   va_list args;
   va_start(args, pFormat);
   _printColored(pFormat, args, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
@@ -72,33 +72,33 @@ void hal_printfError(const char* pFormat, ...) {
   va_end(args);
 }
 
-void hal_printfWarning(char* pFormat, ...) {
+void hal_printfWarning(const char* pFormat, ...) {
   va_list args;
   va_start(args, pFormat);
   _printColored(pFormat, args, BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_INTENSITY); // Yellow
   va_end(args);
 }
 
-void hal_printfSuccess(char* pFormat, ...) {
+void hal_printfSuccess(const char* pFormat, ...) {
   va_list args;
   va_start(args, pFormat);
   _printColored(pFormat, args, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
   va_end(args);
 }
 
-void hal_printfInfo(char* pFormat, ...) {
+void hal_printfInfo(const char* pFormat, ...) {
   va_list args;
   va_start(args, pFormat);
   _printColored(pFormat, args, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
   va_end(args);
 }
 
-void hal_strcpy_s(char* dst, int maxSize, const char* src) {
+void hal_strcpy_s(char* pDst, int maxSize, const char* pSrc) {
   for (int i = 0; i < maxSize - 1; i++) {
-    dst[i] = src[i];
+    pDst[i] = pSrc[i];
 
     if (i == maxSize - 1)
-      dst[i] = 0;
+      pDst[i] = 0;
   }
 }
 
@@ -198,14 +198,14 @@ void hal_fileSystemInit() {
   // Not used on windows simulator
 }
 
-bool hal_findInit(char* path, FO_FIND_DATA* findData) {
-  char searchPath[256];
+bool hal_findInit(const char* pPath, FO_FIND_DATA* findData) {
+  char pSearchPath[256];
   WIN32_FIND_DATAA search_data;
   memset(&search_data, 0, sizeof(WIN32_FIND_DATAA));
-  strcpy(searchPath, path);
-  strcat(searchPath, "/*");
+  strcpy(pSearchPath, pPath);
+  strcat(pSearchPath, "/*");
 
-  fo_findHandle = FindFirstFileA(searchPath, &search_data);
+  fo_findHandle = FindFirstFileA(pSearchPath, &search_data);
   strcpy_s(findData->fileName, sizeof(findData->fileName), search_data.cFileName);
   return fo_findHandle != INVALID_HANDLE_VALUE ? TRUE : FALSE;
 }
@@ -234,8 +234,8 @@ int32_t hal_fseek(FILE* pFile, int startPos) {
   return fseek(pFile, startPos, SEEK_SET);
 }
 
-size_t hal_fread(FILE* pFile, void* dst, size_t numBytes) {
-  return fread_s(dst, numBytes, 1, numBytes, pFile); // TODO: word access? Does it increase performance?
+size_t hal_fread(FILE* pFile, void* pDst, size_t numBytes) {
+  return fread_s(pDst, numBytes, 1, numBytes, pFile); // TODO: word access? Does it increase performance?
 }
 
 int32_t hal_ftell(FILE* pFile) {
