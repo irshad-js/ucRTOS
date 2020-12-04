@@ -37,8 +37,9 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
   hal_printf("magiclantern::onActionPress()\n");
 
-  // This function is called, when the player presses or releases the action button on the game pad.
-  // On the NES game pad this is the 'A' button.
+  menuAction(&context.menu, 0);
+
+  draw();
 }
 
 static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
@@ -48,7 +49,14 @@ static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
   // On the NES game pad this is the 'B' button.
 
   // In most cases you want to go to the previous screen. This is done by calling the 'leaveState()' function:
-  leaveState(pFsm);
+  MenuSlot_t* pSlot = &context.menu.pSlot[context.menu.cursorPos];
+
+  if (pSlot->type == HEXVALUE_SLOT && pSlot->hexValueSlot.inEditMode)
+    menuBack(&context.menu);
+  else
+    leaveState(pFsm);
+
+  draw();
 }
 
 static void onStart(StackBasedFsm_t* pFsm, bool pressed) {
