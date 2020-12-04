@@ -95,7 +95,7 @@ void menuDraw(SlotBasedMenu_t* pSbm) {
         x += 8 * 2;
 
         for (int j = 0; j < 8; ++j) {
-          uint8_t cd = j == pSlot->inEditMode && pSlot->digitPos ? 0xFF : 0xAA;
+          uint8_t cd = pSlot->inEditMode && j == pSlot->digitPos ? 0xFF : 0xAA;
 
           displayDrawText(x, y, "X", cd, cd, cd, 0x00, 0x00, 0x00);
 
