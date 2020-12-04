@@ -77,9 +77,37 @@ void menuDraw(SlotBasedMenu_t* pSbm) {
   for (int i = 0; i < pSbm->numSlots; i++) {
     uint16_t x = (uint16_t)(pSbm->xPos + 28);
     uint16_t y = (uint16_t)(pSbm->yPos - 5 + 18 * i);
-    uint8_t c = pSbm->pSlot[i].transitSlot.pNextStateTransitionFunc ? 0xFF : 0xAA;
 
-    displayDrawText(x, y, pSbm->pSlot[i].transitSlot.pLabel, c, c, c, 0x00, 0x00, 0x00);
+    switch (pSbm->pSlot[i].type) {
+      case TRANSIT_SLOT: {
+        uint8_t c = pSbm->pSlot[i].transitSlot.pNextStateTransitionFunc ? 0xFF : 0xAA;
+        displayDrawText(x, y, pSbm->pSlot[i].transitSlot.pLabel, c, c, c, 0x00, 0x00, 0x00);
+        break;
+      }
+
+      case HEXVALUE_SLOT: {
+        uint8_t cl = pSbm->pSlot[i].hexValueSlot.inEditMode ? 0xFF : 0xAA;
+        displayDrawText(x, y, pSbm->pSlot[i].hexValueSlot.pLabel, cl, cl, cl, 0x00, 0x00, 0x00);
+        x += 8 * strlen(pSbm->pSlot[i].hexValueSlot.pLabel);
+        displayDrawText(x, y, ": ", cl, cl, cl, 0x00, 0x00, 0x00);
+        x += 8 * 2;
+
+        for (int j = 0; j < 8; ++j) {
+          uint8_t cd = j == pSbm->pSlot[i].hexValueSlot.digitPos ? 0xFF : 0xAA;
+
+          displayDrawText(x, y, "X", cd, cd, cd, 0x00, 0x00, 0x00);
+
+          x += 8;
+        }
+
+        break;
+      }
+
+      default: {
+        hal_printfError("Error: invalid menu type!\n");
+        break;
+      }
+    }
   }
 
   menuDrawCursor(pSbm);
@@ -89,6 +117,12 @@ void menuMoveCursorUp(SlotBasedMenu_t* pSbm) {
   switch (pSbm->pSlot[pSbm->cursorPos].type) {
     case TRANSIT_SLOT: {
       if (pSbm->cursorPos > 0)
+        pSbm->cursorPos--;
+      break;
+    }
+
+    case HEXVALUE_SLOT: {
+      if (!pSbm->pSlot[pSbm->cursorPos].hexValueSlot.inEditMode && pSbm->cursorPos > 0)
         pSbm->cursorPos--;
       break;
     }
@@ -104,6 +138,12 @@ void menuMoveCursorDown(SlotBasedMenu_t* pSbm) {
   switch (pSbm->pSlot[pSbm->cursorPos].type) {
     case TRANSIT_SLOT: {
       if (pSbm->cursorPos + 1 < pSbm->numSlots)
+        pSbm->cursorPos++;
+      break;
+    }
+
+    case HEXVALUE_SLOT: {
+      if (!pSbm->pSlot[pSbm->cursorPos].hexValueSlot.inEditMode && pSbm->cursorPos + 1 < pSbm->numSlots)
         pSbm->cursorPos++;
       break;
     }
