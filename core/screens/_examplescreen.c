@@ -38,7 +38,7 @@ static void draw() {
 }
 
 static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
-  hal_printf("example::onEnter()\n");
+  hal_printf("example::onEnter;\n");
 
   // This function is called, when the state is entered for the first time.
   // It must be defined in every state and is used for initialization.
@@ -56,14 +56,14 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
 }
 
 static void onAction(StackBasedFsm_t* pFsm, bool pressed) {
-  hal_printf("example::onActionPress()\n");
+  hal_printf("example::onAction; pressed=%d\n", pressed);
 
   // This function is called, when the player presses or releases the action button on the game pad.
   // On the NES game pad this is the 'A' button.
 }
 
 static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
-  hal_printf("example::onBackPress()\n");
+  hal_printf("example::onBack; pressed=%d\n", pressed);
 
   // This function is called, when the player presses or releases the back button on the game pad.
   // On the NES game pad this is the 'B' button.
@@ -73,32 +73,32 @@ static void onBack(StackBasedFsm_t* pFsm, bool pressed) {
 }
 
 static void onStart(StackBasedFsm_t* pFsm, bool pressed) {
-  hal_printf("example::onStartPress()\n");
+  hal_printf("example::onStart; pressed=%d\n", pressed);
 
   // This function is called, when the player presses or releases the Start button on the game pad.
 }
 
 static void onSelect(StackBasedFsm_t* pFsm, bool pressed) {
-  hal_printf("example::onSelectPress()\n");
+  hal_printf("example::onSelect; pressed=%d\n", pressed);
 
   // This function is called, when the player presses or releases the Select button on the game pad.
 }
 
 static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west, bool east) {
-  hal_printf("example::onDirectionPress()\n");
+  hal_printf("example::onDirection; pressed: south=%d, north=%d, west=%d, east=%d\n", south, north, west, east);
 
   // This function is called, if the user presses or releases one of the direction buttons on the game pad.
 }
 
 static void onReenter(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onReenter()\n");
+  hal_printf("example::onReenter;\n");
 
   // This function is called, when the user pressed the back button on a higher state and lands back in this
   // state again.
 }
 
 static void onLeaveState(StackBasedFsm_t* pFsm) {
-  hal_printf("example::onLeaveState()\n");
+  hal_printf("example::onLeaveState;\n");
 
   // This function is called, when the user leaves the current state. Either by going to a next state or by
   // going back to the previous state.
