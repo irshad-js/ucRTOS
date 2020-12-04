@@ -28,16 +28,16 @@ typedef struct {
   uint8_t numSlots;
   uint8_t cursorPos;
   StackBasedFsm_t* pFsm;
-  MenuSlot_t slot[MENU_MAX_SLOTS];
+  MenuSlot_t pSlot[MENU_MAX_SLOTS];
 } SlotBasedMenu_t;
 
 // menu functions:
 void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos);
-void menuTick(SlotBasedMenu_t* sbm);
-void menuAddSlot(SlotBasedMenu_t* pSbm, const char* label, TransitionFunc pFunc);
-void menuDraw(SlotBasedMenu_t* sbm);
-void menuMoveCursorUp(SlotBasedMenu_t* sbm);
-void menuMoveCursorDown(SlotBasedMenu_t* sbm);
+void menuTick(SlotBasedMenu_t* pSbm);
+void menuAddSlot(SlotBasedMenu_t* pSbm, const char* pLabel, TransitionFunc pFunc);
+void menuDraw(SlotBasedMenu_t* pSbm);
+void menuMoveCursorUp(SlotBasedMenu_t* pSbm);
+void menuMoveCursorDown(SlotBasedMenu_t* pSbm);
 void menuAction(SlotBasedMenu_t* pMenu, void* pArgs);
 void menuBack(SlotBasedMenu_t* pMenu);
 
