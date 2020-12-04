@@ -24,6 +24,11 @@ void menuAction(SlotBasedMenu_t* pSbm, void* pArgs) {
       break;
     }
 
+    case HEXVALUE_SLOT: {
+      pSbm->pSlot[pSbm->cursorPos].hexValueSlot.inEditMode = true;
+      break;
+    }
+
     default: {
       hal_printfError("Error: invalid menu type!\n");
       break;
@@ -35,6 +40,11 @@ void menuBack(SlotBasedMenu_t* pSbm) {
   switch (pSbm->pSlot[pSbm->cursorPos].type) {
     case TRANSIT_SLOT: {
       fsmPop(pSbm->pFsm);
+      break;
+    }
+
+    case HEXVALUE_SLOT: {
+      pSbm->pSlot[pSbm->cursorPos].hexValueSlot.inEditMode = false;
       break;
     }
 
