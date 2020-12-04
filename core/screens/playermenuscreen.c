@@ -43,7 +43,7 @@ static void onBrowseNewPage(int currentPage, int totalPages) {
   while (!endOfDirectory) {
     if (context.findData.fileName[0] != '.') {
       if (curFileIndex >= (currentPage - 1) * MENU_FILES_PER_PAGE)
-        menuAddSlot(&context.menu, context.findData.fileName, playerScreen);
+        menuAddTransitSlot(&context.menu, context.findData.fileName, playerScreen);
 
       curFileIndex++;
     }

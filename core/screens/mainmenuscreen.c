@@ -48,14 +48,14 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   menuInit(&_context.menu, pFsm, 3, 45);
 
   // CHECKME: adding the following menu entry messes up the LUT!?:
-  menuAddSlot(&_context.menu, "Floppy Orgel", floppyOrgelScreen);
-  menuAddSlot(&_context.menu, "Magic Lantern", magicLanternScreen);
-  menuAddSlot(&_context.menu, "Skateboard", skateboardScreen);
-  menuAddSlot(&_context.menu, "SD Card", sdCardScreen);
-  menuAddSlot(&_context.menu, "Button Test", buttonTestScreen);
-  menuAddSlot(&_context.menu, "Example", exampleScreen);
-  menuAddSlot(&_context.menu, "Image Test", imgTestScreen);
-  menuAddSlot(&_context.menu, "About", aboutScreen);
+  menuAddTransitSlot(&_context.menu, "Floppy Orgel", floppyOrgelScreen);
+  menuAddTransitSlot(&_context.menu, "Magic Lantern", magicLanternScreen);
+  menuAddTransitSlot(&_context.menu, "Skateboard", skateboardScreen);
+  menuAddTransitSlot(&_context.menu, "SD Card", sdCardScreen);
+  menuAddTransitSlot(&_context.menu, "Button Test", buttonTestScreen);
+  menuAddTransitSlot(&_context.menu, "Example", exampleScreen);
+  menuAddTransitSlot(&_context.menu, "Image Test", imgTestScreen);
+  menuAddTransitSlot(&_context.menu, "About", aboutScreen);
 
   draw();
 }

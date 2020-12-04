@@ -27,8 +27,8 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   context.pFifoDebugPort = (LockFreeFIFO_t*)pParams;
 
   menuInit(&context.menu, pFsm, 3, 85);
-  menuAddSlot(&context.menu, "Live Mode", liveModeScreen);
-  menuAddSlot(&context.menu, "MIDI Player", playerMenuScreen);
+  menuAddTransitSlot(&context.menu, "Live Mode", liveModeScreen);
+  menuAddTransitSlot(&context.menu, "MIDI Player", playerMenuScreen);
 
   draw();
 }

@@ -49,7 +49,7 @@ static void menuDrawCursor(SlotBasedMenu_t* pSbm) {
   displayDrawImage(pSbm->xPos, pSbm->yPos + 18 * pSbm->cursorPos, _pCursorImg);
 }
 
-void menuAddSlot(SlotBasedMenu_t* pSbm, const char* pLabel, TransitionFunc pFunc) {
+void menuAddTransitSlot(SlotBasedMenu_t* pSbm, const char* pLabel, TransitionFunc pFunc) {
   if (pSbm->numSlots >= MENU_MAX_SLOTS)
     return;
 

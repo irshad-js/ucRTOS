@@ -34,7 +34,7 @@ typedef struct {
 // menu functions:
 void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos);
 void menuTick(SlotBasedMenu_t* pSbm);
-void menuAddSlot(SlotBasedMenu_t* pSbm, const char* pLabel, TransitionFunc pFunc);
+void menuAddTransitSlot(SlotBasedMenu_t* pSbm, const char* pLabel, TransitionFunc pFunc);
 void menuDraw(SlotBasedMenu_t* pSbm);
 void menuMoveCursorUp(SlotBasedMenu_t* pSbm);
 void menuMoveCursorDown(SlotBasedMenu_t* pSbm);
