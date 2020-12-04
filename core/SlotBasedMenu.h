@@ -15,6 +15,11 @@ typedef enum {
 typedef struct {
   char pLabel[MAX_MENU_ITEM_CHARS];
   TransitionFunc pNextStateTransitionFunc;
+} TransitSlot_t;
+
+typedef struct {
+  SlotType_t type;
+  TransitSlot_t transitSlot;
 } MenuSlot_t;
 
 typedef struct {

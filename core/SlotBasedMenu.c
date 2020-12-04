@@ -3,6 +3,7 @@
 #include "SlotBasedMenu.h"
 #include "images.h"
 #include "display.h"
+#include "../lib/colorprint/colorprint.h"
 
 void hal_strcpy_s(char* dst, int maxSize, const char* src);
 
@@ -17,11 +18,31 @@ void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_
 }
 
 void menuAction(SlotBasedMenu_t* pMenu, void* pArgs) {
-  fsmPush(pMenu->pFsm, pMenu->slot[pMenu->cursorPos].pNextStateTransitionFunc, pArgs);
+  switch (pMenu->slot[pMenu->cursorPos].type) {
+    case TRANSIT_SLOT: {
+      fsmPush(pMenu->pFsm, pMenu->slot[pMenu->cursorPos].transitSlot.pNextStateTransitionFunc, pArgs);
+      break;
+    }
+
+    default: {
+      hal_printfError("Error: invalid menu type!\n");
+      break;
+    }
+  }
 }
 
 void menuBack(SlotBasedMenu_t* pMenu) {
-  fsmPop(pMenu->pFsm);
+  switch (pMenu->slot[pMenu->cursorPos].type) {
+    case TRANSIT_SLOT: {
+      fsmPop(pMenu->pFsm);
+      break;
+    }
+
+    default: {
+      hal_printfError("Error: invalid menu type!\n");
+      break;
+    }
+  }
 }
 
 static void menuDrawCursor(SlotBasedMenu_t* pSbm) {
@@ -32,8 +53,9 @@ void menuAddSlot(SlotBasedMenu_t* pSbm, const char* label, TransitionFunc pFunc)
   if (pSbm->numSlots >= MENU_MAX_SLOTS)
     return;
 
-  hal_strcpy_s(pSbm->slot[pSbm->numSlots].pLabel, MAX_MENU_ITEM_CHARS, label);
-  pSbm->slot[pSbm->numSlots].pNextStateTransitionFunc = pFunc;
+  pSbm->slot[pSbm->numSlots].type = TRANSIT_SLOT;
+  hal_strcpy_s(pSbm->slot[pSbm->numSlots].transitSlot.pLabel, MAX_MENU_ITEM_CHARS, label);
+  pSbm->slot[pSbm->numSlots].transitSlot.pNextStateTransitionFunc = pFunc;
   pSbm->numSlots++;
 }
 
@@ -41,20 +63,40 @@ void menuDraw(SlotBasedMenu_t* sbm) {
   for (int i = 0; i < sbm->numSlots; i++) {
     uint16_t x = (uint16_t)(sbm->xPos + 28);
     uint16_t y = (uint16_t)(sbm->yPos - 5 + 18 * i);
-    uint8_t c = sbm->slot[i].pNextStateTransitionFunc ? 0xFF : 0xAA;
+    uint8_t c = sbm->slot[i].transitSlot.pNextStateTransitionFunc ? 0xFF : 0xAA;
 
-    displayDrawText(x, y, sbm->slot[i].pLabel, c, c, c, 0x00, 0x00, 0x00);
+    displayDrawText(x, y, sbm->slot[i].transitSlot.pLabel, c, c, c, 0x00, 0x00, 0x00);
   }
 
   menuDrawCursor(sbm);
 }
 
 void menuMoveCursorUp(SlotBasedMenu_t* sbm) {
-  if (sbm->cursorPos > 0)
-    sbm->cursorPos--;
+  switch (sbm->slot[sbm->cursorPos].type) {
+    case TRANSIT_SLOT: {
+      if (sbm->cursorPos > 0)
+        sbm->cursorPos--;
+      break;
+    }
+
+    default: {
+      hal_printfError("Error: invalid menu type!\n");
+      break;
+    }
+  }
 }
 
 void menuMoveCursorDown(SlotBasedMenu_t* sbm) {
-  if (sbm->cursorPos + 1 < sbm->numSlots)
-    sbm->cursorPos++;
+  switch (sbm->slot[sbm->cursorPos].type) {
+    case TRANSIT_SLOT: {
+      if (sbm->cursorPos + 1 < sbm->numSlots)
+        sbm->cursorPos++;
+      break;
+    }
+
+    default: {
+      hal_printfError("Error: invalid menu type!\n");
+      break;
+    }
+  }
 }
