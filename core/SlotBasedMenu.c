@@ -59,6 +59,20 @@ void menuAddTransitSlot(SlotBasedMenu_t* pSbm, const char* pLabel, TransitionFun
   pSbm->numSlots++;
 }
 
+void menuAddHexValueSlot(SlotBasedMenu_t* pSbm, const char* pLabel, uint32_t* pValue) {
+  if (pSbm->numSlots >= MENU_MAX_SLOTS)
+    return;
+
+  MenuSlot_t* pSlot = &pSbm->pSlot[pSbm->numSlots];
+  pSlot->type = HEXVALUE_SLOT;
+  pSlot->hexValueSlot.inEditMode = false;
+  pSlot->hexValueSlot.digitPos = 0;
+  hal_strcpy_s(pSlot->hexValueSlot.pLabel, MAX_MENU_ITEM_CHARS, pLabel);
+  pSlot->hexValueSlot.pValue = pValue;
+
+  pSbm->numSlots++;
+}
+
 void menuDraw(SlotBasedMenu_t* pSbm) {
   for (int i = 0; i < pSbm->numSlots; i++) {
     uint16_t x = (uint16_t)(pSbm->xPos + 28);

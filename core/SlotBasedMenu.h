@@ -9,7 +9,8 @@
 
 typedef enum {
   INVALID_SLOT,
-  TRANSIT_SLOT
+  TRANSIT_SLOT,
+  HEXVALUE_SLOT
 } SlotType_t;
 
 typedef struct {
@@ -18,8 +19,16 @@ typedef struct {
 } TransitSlot_t;
 
 typedef struct {
+  char pLabel[MAX_MENU_ITEM_CHARS];
+  bool inEditMode;
+  int digitPos;
+  uint32_t* pValue;
+} HexValueSlot_t;
+
+typedef struct {
   SlotType_t type;
   TransitSlot_t transitSlot;
+  HexValueSlot_t hexValueSlot;
 } MenuSlot_t;
 
 typedef struct {
@@ -35,6 +44,7 @@ typedef struct {
 void menuInit(SlotBasedMenu_t* pSbm, StackBasedFsm_t* pFsm, int16_t xPos, int16_t yPos);
 void menuTick(SlotBasedMenu_t* pSbm);
 void menuAddTransitSlot(SlotBasedMenu_t* pSbm, const char* pLabel, TransitionFunc pFunc);
+void menuAddHexValueSlot(SlotBasedMenu_t* pSbm, const char* pLabel, uint32_t* pValue);
 void menuDraw(SlotBasedMenu_t* pSbm);
 void menuMoveCursorUp(SlotBasedMenu_t* pSbm);
 void menuMoveCursorDown(SlotBasedMenu_t* pSbm);
