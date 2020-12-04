@@ -86,14 +86,16 @@ void menuDraw(SlotBasedMenu_t* pSbm) {
       }
 
       case HEXVALUE_SLOT: {
-        uint8_t cl = pSbm->pSlot[i].hexValueSlot.inEditMode ? 0xFF : 0xAA;
-        displayDrawText(x, y, pSbm->pSlot[i].hexValueSlot.pLabel, cl, cl, cl, 0x00, 0x00, 0x00);
-        x += 8 * strlen(pSbm->pSlot[i].hexValueSlot.pLabel);
+        HexValueSlot_t* pSlot = &pSbm->pSlot[i].hexValueSlot;
+
+        uint8_t cl = pSlot->inEditMode ? 0xFF : 0xAA;
+        displayDrawText(x, y, pSlot->pLabel, cl, cl, cl, 0x00, 0x00, 0x00);
+        x += 8 * strlen(pSlot->pLabel);
         displayDrawText(x, y, ": ", cl, cl, cl, 0x00, 0x00, 0x00);
         x += 8 * 2;
 
         for (int j = 0; j < 8; ++j) {
-          uint8_t cd = j == pSbm->pSlot[i].hexValueSlot.digitPos ? 0xFF : 0xAA;
+          uint8_t cd = j == pSlot->inEditMode && pSlot->digitPos ? 0xFF : 0xAA;
 
           displayDrawText(x, y, "X", cd, cd, cd, 0x00, 0x00, 0x00);
 
