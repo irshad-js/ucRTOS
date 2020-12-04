@@ -48,6 +48,8 @@ void menuAddHexValueSlot(SlotBasedMenu_t* pSbm, const char* pLabel, uint32_t* pV
 void menuDraw(SlotBasedMenu_t* pSbm);
 void menuMoveCursorUp(SlotBasedMenu_t* pSbm);
 void menuMoveCursorDown(SlotBasedMenu_t* pSbm);
+void menuMoveCursorLeft(SlotBasedMenu_t* pSbm);
+void menuMoveCursorRight(SlotBasedMenu_t* pSbm);
 void menuAction(SlotBasedMenu_t* pMenu, void* pArgs);
 void menuBack(SlotBasedMenu_t* pMenu);
 

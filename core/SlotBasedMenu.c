@@ -166,3 +166,45 @@ void menuMoveCursorDown(SlotBasedMenu_t* pSbm) {
     }
   }
 }
+
+void menuMoveCursorLeft(SlotBasedMenu_t* pSbm) {
+  switch (pSbm->pSlot[pSbm->cursorPos].type) {
+    case TRANSIT_SLOT:
+      break;
+
+    case HEXVALUE_SLOT: {
+      HexValueSlot_t* pSlot = &pSbm->pSlot[pSbm->cursorPos].hexValueSlot;
+
+      if (pSlot->inEditMode && pSlot->digitPos > 0)
+        pSlot->digitPos--;
+
+      break;
+    }
+
+    default: {
+      hal_printfError("Error: invalid menu type!\n");
+      break;
+    }
+  }
+}
+
+void menuMoveCursorRight(SlotBasedMenu_t* pSbm) {
+  switch (pSbm->pSlot[pSbm->cursorPos].type) {
+    case TRANSIT_SLOT:
+      break;
+
+    case HEXVALUE_SLOT: {
+      HexValueSlot_t* pSlot = &pSbm->pSlot[pSbm->cursorPos].hexValueSlot;
+
+      if (pSlot->inEditMode && pSlot->digitPos + 1 < 8)
+        pSlot->digitPos++;
+
+      break;
+    }
+
+    default: {
+      hal_printfError("Error: invalid menu type!\n");
+      break;
+    }
+  }
+}
