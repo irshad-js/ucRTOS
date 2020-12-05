@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <string.h>
+#include <stdio.h>
 #include "SlotBasedMenu.h"
 #include "images.h"
 #include "display.h"
@@ -104,10 +105,14 @@ void menuDraw(SlotBasedMenu_t* pSbm) {
         displayDrawText(x, y, ": ", cl, cl, cl, 0x00, 0x00, 0x00);
         x += 8 * 2;
 
-        for (int j = 0; j < 8; ++j) {
-          uint8_t cd = pSlot->inEditMode && j == 8 - pSlot->digitPos - 1 ? 0xFF : 0xAA;
+        for (int j = 8 - 1; j >= 0; --j) {
+          uint8_t cd = pSlot->inEditMode && j == pSlot->digitPos ? 0xFF : 0xAA;
 
-          displayDrawText(x, y, "X", cd, cd, cd, 0x00, 0x00, 0x00);
+          char pDigit[2] = {0};
+          uint8_t digit = (*pSlot->pValue >> (j * 4)) & 0xF;
+          sprintf(pDigit, "%01X", digit);
+
+          displayDrawText(x, y, pDigit, cd, cd, cd, 0x00, 0x00, 0x00);
 
           x += 8;
         }
