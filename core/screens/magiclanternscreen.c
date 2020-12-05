@@ -8,6 +8,7 @@
 static struct {
   SlotBasedMenu_t menu;
   uint32_t address;
+  uint32_t size;
 } context;
 
 static void draw() {
@@ -25,10 +26,11 @@ static void onEnter(StackBasedFsm_t* pFsm, void* pParams) {
   hal_printf("magiclantern::onEnter()\n");
 
   context.address = 0;
+  context.size = 0;
 
   menuInit(&context.menu, pFsm, 3, 85);
   menuAddHexValueSlot(&context.menu, "Address", &context.address);
-  menuAddTransitSlot(&context.menu, "Size:    00000000", 0);
+  menuAddHexValueSlot(&context.menu, "Size", &context.size);
   menuAddTransitSlot(&context.menu, "read", 0);
 
   draw();
