@@ -139,8 +139,20 @@ void menuMoveCursorUp(SlotBasedMenu_t* pSbm) {
     }
 
     case HEXVALUE_SLOT: {
-      if (!pSbm->pSlot[pSbm->cursorPos].hexValueSlot.inEditMode && pSbm->cursorPos > 0)
-        pSbm->cursorPos--;
+      HexValueSlot_t* pSlot = &pSbm->pSlot[pSbm->cursorPos].hexValueSlot;
+
+      if (pSlot->inEditMode) {
+        uint8_t digit = ((*pSlot->pValue >> (pSlot->digitPos * 4)) + 1) & 0xF;
+        uint32_t resetVal = 0xF << (pSlot->digitPos * 4);
+        uint32_t digitVal = digit << (pSlot->digitPos * 4);
+
+        *pSlot->pValue &= ~resetVal;
+        *pSlot->pValue |= digitVal;
+      }
+      else {
+        if (pSbm->cursorPos > 0)
+          pSbm->cursorPos--;
+      }
       break;
     }
 
@@ -160,8 +172,20 @@ void menuMoveCursorDown(SlotBasedMenu_t* pSbm) {
     }
 
     case HEXVALUE_SLOT: {
-      if (!pSbm->pSlot[pSbm->cursorPos].hexValueSlot.inEditMode && pSbm->cursorPos + 1 < pSbm->numSlots)
-        pSbm->cursorPos++;
+      HexValueSlot_t* pSlot = &pSbm->pSlot[pSbm->cursorPos].hexValueSlot;
+
+      if (pSlot->inEditMode) {
+        uint8_t digit = ((*pSlot->pValue >> (pSlot->digitPos * 4)) - 1) & 0xF;
+        uint32_t resetVal = 0xF << (pSlot->digitPos * 4);
+        uint32_t digitVal = digit << (pSlot->digitPos * 4);
+
+        *pSlot->pValue &= ~resetVal;
+        *pSlot->pValue |= digitVal;
+      }
+      else {
+        if (pSbm->cursorPos + 1 < pSbm->numSlots)
+          pSbm->cursorPos++;
+      }
       break;
     }
 
