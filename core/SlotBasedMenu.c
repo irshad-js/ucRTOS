@@ -76,7 +76,7 @@ void menuAddHexValueSlot(SlotBasedMenu_t* pSbm, const char* pLabel, uint32_t* pV
   MenuSlot_t* pSlot = &pSbm->pSlot[pSbm->numSlots];
   pSlot->type = HEXVALUE_SLOT;
   pSlot->hexValueSlot.inEditMode = false;
-  pSlot->hexValueSlot.digitPos = 0;
+  pSlot->hexValueSlot.digitPos = 8 - 1;
   hal_strcpy_s(pSlot->hexValueSlot.pLabel, MAX_MENU_ITEM_CHARS, pLabel);
   pSlot->hexValueSlot.pValue = pValue;
 
@@ -105,7 +105,7 @@ void menuDraw(SlotBasedMenu_t* pSbm) {
         x += 8 * 2;
 
         for (int j = 0; j < 8; ++j) {
-          uint8_t cd = pSlot->inEditMode && j == pSlot->digitPos ? 0xFF : 0xAA;
+          uint8_t cd = pSlot->inEditMode && j == 8 - pSlot->digitPos - 1 ? 0xFF : 0xAA;
 
           displayDrawText(x, y, "X", cd, cd, cd, 0x00, 0x00, 0x00);
 
@@ -175,8 +175,8 @@ void menuMoveCursorLeft(SlotBasedMenu_t* pSbm) {
     case HEXVALUE_SLOT: {
       HexValueSlot_t* pSlot = &pSbm->pSlot[pSbm->cursorPos].hexValueSlot;
 
-      if (pSlot->inEditMode && pSlot->digitPos > 0)
-        pSlot->digitPos--;
+      if (pSlot->inEditMode && pSlot->digitPos + 1 < 8)
+        pSlot->digitPos++;
 
       break;
     }
@@ -196,8 +196,8 @@ void menuMoveCursorRight(SlotBasedMenu_t* pSbm) {
     case HEXVALUE_SLOT: {
       HexValueSlot_t* pSlot = &pSbm->pSlot[pSbm->cursorPos].hexValueSlot;
 
-      if (pSlot->inEditMode && pSlot->digitPos + 1 < 8)
-        pSlot->digitPos++;
+      if (pSlot->inEditMode && pSlot->digitPos > 0)
+        pSlot->digitPos--;
 
       break;
     }
