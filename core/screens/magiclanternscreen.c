@@ -79,6 +79,12 @@ static void onDirection(StackBasedFsm_t* pFsm, bool south, bool north, bool west
   if (north)
     menuMoveCursorUp(&context.menu);
 
+  if (west)
+    menuMoveCursorLeft(&context.menu);
+
+  if (east)
+    menuMoveCursorRight(&context.menu);
+
   draw();
 }
 
