@@ -81,4 +81,6 @@ On first execution wxWidgets will be build which can take a few minutes. If code
 Create a Debug configuration and select **platform/simulators/linux/bin/ucrtos.elf** als target. Since the purpose of the simulators is debugging, the executable is always built with debug information.
 
 
+### Pointers to remember
 
+The simulator project file for Visual Studio misses a source file and header file related to magiclantern. Locate them and create links for them for successful build.
